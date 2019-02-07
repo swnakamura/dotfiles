@@ -1,0 +1,21 @@
+[alias]
+    lg  = log --graph --pretty=format:'%Cred%h %Cgreen(%>(15,trunc)%cr, %ci) %C(bold blue)<%an>%Creset -%C(yellow)%d%Creset %s' --abbrev-commit --date=relative
+    lga = log --graph --pretty=format:'%Cred%h %Cgreen(%>(15,trunc)%cr, %ci) %C(bold blue)<%an>%Creset -%C(yellow)%d%Creset %s' --abbrev-commit --date=relative --all
+    co = checkout
+    cm = commit
+    br = branch
+[core]
+    editor = nvim
+    pager = less -S
+    excludesfile = /Users/nakamuraamane/.gitignore_global
+[user]
+    name = woody
+    email = piequalsabout314159@gmail.com
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[merge]
+    conflictstyle = "diff3"
+
