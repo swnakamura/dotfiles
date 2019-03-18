@@ -4,10 +4,13 @@
     co = checkout
     cm = commit
     br = branch
+    cl = clone
+    fu = commit --fixup=HEAD
+    fix = commit --fixup=HEAD
 [core]
     editor = nvim
     pager = less -S
-    excludesfile = /Users/nakamuraamane/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [user]
     name = woody
     email = piequalsabout314159@gmail.com
@@ -18,4 +21,5 @@
     required = true
 [merge]
     conflictstyle = "diff3"
-
+[rebase]
+	autosquash = true
