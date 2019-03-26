@@ -161,10 +161,13 @@ alias d='docker'
 alias latexmk='latexmkandfetchpdf'
 alias pytags='ctags -R --python-kinds=+cfmvi'
 
+# add necessary PATH
 export PATH="/miniconda3/bin:$PATH"
 export PATH="/usr/local/texlive/2018/bin/x86_64-darwin:$PATH"
 export PATH="/usr/local/Homebrew/bin:$PATH"
 export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/opt/llvm/bin:$PATH
+export PATH=/usr/local/opt/openssl/bin:$PATH
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit

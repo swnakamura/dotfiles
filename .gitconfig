@@ -7,6 +7,7 @@
     cl = clone
     fu = commit --fixup=HEAD
     fix = commit --fixup=HEAD
+    st = status
 [core]
     editor = nvim
     pager = less -S
