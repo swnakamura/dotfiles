@@ -124,6 +124,15 @@ latexmkandfetchpdf ()
   ~/.zsh_functions/latexmk.sh $@
 }
 
+tn ()
+{
+    if [ $# -eq 1 ] ; then
+        \tmux new -s "$1"
+    else
+        \tmux
+    fi
+}
+
 alias cd="cdls"
 alias ls="ls -F"
 alias ll="ls -lFh"
@@ -140,7 +149,7 @@ alias gc="gcc -Wall -std=c17"
 alias cleantextmp="rm -rf ~/.tmp/tex"
 
 alias scpinlan="scp -P 1050 -C -i ~/.ssh/id_rsa"
-alias tmux="env TERM=xterm-256color tmux"
+alias tm="tn"
 alias ks="tmux kill-session -t"
 alias kp="tmux kill-pane -t"
 alias kw="tmux kill-window -t"
@@ -160,6 +169,7 @@ alias da='docker attach'
 alias d='docker'
 alias latexmk='latexmkandfetchpdf'
 alias pytags='ctags -R --python-kinds=+cfmvi'
+alias nf='neofetch'
 
 # add necessary PATH
 export PATH="/miniconda3/bin:$PATH"
@@ -168,9 +178,18 @@ export PATH="/usr/local/Homebrew/bin:$PATH"
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/opt/llvm/bin:$PATH
 export PATH=/usr/local/opt/openssl/bin:$PATH
+export PATH=~/my_dev_apps/nvim-osx64/bin:$PATH
+
+# add GOPATH
+export GOPATH=$HOME/go
+export PATH=$PATH:$(go env GOPATH)/bin
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_USER_SHOW=false
+SPACESHIP_CHAR_SYMBOL="$ "
 prompt spaceship
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -195,3 +214,6 @@ preexec() {
    if overridden; then return; fi
    printf "\033]0;%s\a" "${1%% *} | $cwd$(gitDirty)" # Omit construct from $1 to show args
 }
+
+# fzf configuration
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
