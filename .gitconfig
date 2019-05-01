@@ -8,9 +8,6 @@
     fu = commit --fixup=HEAD
     fix = commit --fixup=HEAD
     st = status
-    cl = clone
-    fu = commit --fixup=HEAD
-    fix = commit --fixup=HEAD
 [core]
     editor = nvim
     pager = less -S
