@@ -8,12 +8,14 @@
     fu = commit --fixup=HEAD
     fix = commit --fixup=HEAD
     st = status
+    unstage = reset HEAD
+    stage = add
 [core]
     editor = nvim
-    pager = less -S
+    pager = less -SFRX
     excludesfile = ~/.gitignore_global
 [user]
-    name = woody
+    name = woodyZootopia
     email = piequalsabout314159@gmail.com
 [filter "lfs"]
     clean = git-lfs clean -- %f

@@ -148,7 +148,6 @@ alias gp="g++ -std=c++11 -Wall"
 alias gc="gcc -Wall -std=c17"
 alias cleantextmp="rm -rf ~/.tmp/tex"
 
-alias scpinlan="scp -P 1050 -C -i ~/.ssh/id_rsa"
 alias tm="tn"
 alias ks="tmux kill-session -t"
 alias kp="tmux kill-pane -t"
