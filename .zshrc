@@ -4,10 +4,12 @@
 # ------------------------------
 # General Settings
 # ------------------------------
-export LANG=en_US.UTF-8  # 文字コードをUTF-8に設定
+# export LANG=en_US.UTF-8  # 文字コードをUTF-8に設定
 export KCODE=u           # KCODEにUTF-8を設定
 export AUTOFEATURE=true  # autotestでfeatureを動かす
 export LESS="-iMR"
+
+export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
 setopt auto_cd # 自動でcdする
 
@@ -38,14 +40,6 @@ setopt list_types              # 補完候補にファイルの種類も表示�
 bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を区別しない
 
-### VirtualEnvWrapper ###
-if [ -f /Library/Frameworks/Python.framework/Versions/3.6/bin/virtualenvwrapper.sh ]; then
-   #export VIRTUALENVWRAPPER_PYTHON=/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
-   #export WORKON_HOME=$HOME/.virtualenvs
-   #source /Library/Frameworks/Python.framework/Versions/3.6/bin/virtualenvwrapper.sh
-
-fi
-
 ### History ###
 HISTFILE=~/.zsh_history   # ヒストリを保存するファイル
 HISTSIZE=10000            # メモリに保存されるヒストリの件数
@@ -55,16 +49,6 @@ setopt extended_history   # ヒストリに実行時間も保存する
 setopt hist_ignore_dups   # 直前と同じコマンドはヒストリに追加しない
 setopt share_history      # 他のシェルのヒストリをリアルタイムで共有する
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
-
-# マッチしたコマンドのヒストリを表示できるようにする
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-
-# すべてのヒストリを表示する
-function history-all { history -E 1 }
 
 # ------------------------------
 # Look And Feel Settings
@@ -81,21 +65,6 @@ export CLICOLOR=true
 # 補完候補に色を付ける
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-#Title
-#時刻を表示させる
-precmd() {
-   #[[ -t 1 ]] || return
-   #case $TERM in
-       #*xterm*|rxvt|(dt|k|E)term)
-       #print -Pn "\e]2;[%~]\a"    
- #;;
-       ## screen)
-       ##      #print -Pn "\e]0;[%n@%m %~] [%l]\a"
-       ##      print -Pn "\e]0;[%n@%m %~]\a"
-       ##      ;;
-   #esac
-}
-
 
 # ------------------------------
 # Other Settings
@@ -104,24 +73,9 @@ precmd() {
 ### Aliases ###
 alias history='history -E'
 
-banditssh()
-{
-  ssh bandit"$@"@bandit.labs.overthewire.org -p 2220
-}
-
 cdls ()
 {
-  \cd "$@" && ls
-}
-
-fetchlatexpdf ()
-{
-  ~/.zsh_functions/fetchlatexpdf.sh $@
-}
-
-latexmkandfetchpdf ()
-{
-  ~/.zsh_functions/latexmk.sh $@
+  \cd "$@" && ls -F --color=auto
 }
 
 tn ()
@@ -133,20 +87,28 @@ tn ()
     fi
 }
 
+alias c="cdls"
 alias cd="cdls"
-alias ls="ls -F"
-alias ll="ls -lFh"
-alias la="ls -a"
-alias lal="ls -laFh"
-alias lla="ls -laFh"
-alias vim="nvim"
-alias vi="nvim"
+alias ls="ls -F --color=auto"
+alias ll="ls -lFh --color=auto"
+alias la="ls -a --color=auto"
+alias lal="ls -laFh --color=auto"
+alias lla="ls -laFh --color=auto"
 alias v="nvim"
 alias e="emacs"
 alias duh="du -h -d1"
 alias gp="g++ -std=c++11 -Wall"
 alias gc="gcc -Wall -std=c17"
 alias cleantextmp="rm -rf ~/.tmp/tex"
+alias kill9="kill -9"
+
+alias g="git"
+alias gs="git branch;git status"
+alias gf="git fetch"
+alias gl='git l'
+alias gld='git ld'
+
+alias open="xdg-open"
 
 alias tm="tn"
 alias ks="tmux kill-session -t"
@@ -154,44 +116,33 @@ alias kp="tmux kill-pane -t"
 alias kw="tmux kill-window -t"
 alias tls="tmux ls"
 alias ta="tmux a -t"
+alias tac="tmux a -c \`pwd\` -t" # attach and set current directory the default directory for the session
 alias pip_update_all='pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U'
-alias pyv='source ~/3.7/bin/activate'
-alias de='deactivate'
+# alias pyv='source ~/3.7/bin/activate'
+alias de='conda deactivate'
 alias py='python3'
 alias ipy='ipython'
 alias jn='jupyter notebook'
-alias g='git'
-alias dcp='docker cp'
-alias dc='docker container'
-alias di='docker image'
-alias da='docker attach'
-alias d='docker'
-alias latexmk='latexmkandfetchpdf'
-alias pytags='ctags -R --python-kinds=+cfmvi'
+# alias dcp='docker cp'
+# alias dc='docker container'
+# alias di='docker image'
+# alias da='docker attach'
+# alias d='docker'
 alias nf='neofetch'
+alias nem='neomutt'
+# alias wcache='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
+alias jl='julia'
 
 # add necessary PATH
-export PATH="/miniconda3/bin:$PATH"
-export PATH="/usr/local/texlive/2018/bin/x86_64-darwin:$PATH"
-export PATH="/usr/local/Homebrew/bin:$PATH"
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/opt/llvm/bin:$PATH
-export PATH=/usr/local/opt/openssl/bin:$PATH
-export PATH=~/my_dev_apps/nvim-osx64/bin:$PATH
+export PATH=~/.cargo/bin:$PATH
+export PATH=~/bin:$PATH
+export PATH=~/.neovim/bin:$PATH
 
-# add GOPATH
-export GOPATH=$HOME/go
-export PATH=$PATH:$(go env GOPATH)/bin
-
-# Set Spaceship ZSH as a prompt
+zmodload zsh/datetime
+autoload -Uz add-zsh-hook
 autoload -U promptinit; promptinit
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_USER_SHOW=false
-SPACESHIP_CHAR_SYMBOL="$ "
-prompt spaceship
+# prompt bigfade
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 # Override auto-title when static titles are desired ($ title My new title)
 title() { export TITLE_OVERRIDDEN=1; echo -en "\e]0;$*\a"}
 # Turn off static titles ($ autotitle)
@@ -201,12 +152,18 @@ overridden() { [[ $TITLE_OVERRIDDEN == 1 ]]; }
 # Echo asterisk if git state is dirty
 gitDirty() { [[ $(git status 2> /dev/null | grep -o '\w\+' | tail -n1) != ("clean"|"") ]] && echo "*" }
 
+
 # Show cwd when shell prompts for input.
-precmd() {
+precmd1() {
    if overridden; then return; fi
    cwd=${$(pwd)##*/} # Extract current working dir only
    print -Pn "\e]0;$cwd$(gitDirty)\a" # Replace with $pwd to show full path
 }
+PROMPT_COMMAND="pwd>/tmp/whereami"
+precmd2(){ eval $PROMPT_COMMAND }
+
+add-zsh-hook precmd precmd1
+add-zsh-hook precmd precmd2
 
 # Prepend command (w/o arguments) to cwd while waiting for command to complete.
 preexec() {
@@ -214,5 +171,13 @@ preexec() {
    printf "\033]0;%s\a" "${1%% *} | $cwd$(gitDirty)" # Omit construct from $1 to show args
 }
 
-# fzf configuration
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# zplug
+source /usr/share/zsh/scripts/zplug/init.zsh
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug load
+
+# fzf settings
+source ~/.fzf.zsh
+
+eval "$(almel init zsh)"
