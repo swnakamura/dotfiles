@@ -1,3 +1,14 @@
+# Source manjaro-zsh-configuration
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
+# Use manjaro zsh prompt
+if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+  source /usr/share/zsh/manjaro-zsh-prompt
+fi
+
+##### personal settings #####
+
 [ -z "$PS1" ] && return
 # (d) is default on
 
@@ -95,6 +106,7 @@ alias la="ls -a --color=auto"
 alias lal="ls -laFh --color=auto"
 alias lla="ls -laFh --color=auto"
 alias v="nvim"
+alias nv="~/src/neovide/target/release/neovide --multiGrid"
 alias e="emacs"
 alias duh="du -h -d1"
 alias gp="g++ -std=c++11 -Wall"
