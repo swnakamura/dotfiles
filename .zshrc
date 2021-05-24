@@ -150,6 +150,11 @@ export PATH=~/.cargo/bin:$PATH
 export PATH=~/bin:$PATH
 export PATH=~/.neovim/bin:$PATH
 
+if command -v nvim &> /dev/null
+then
+    export EDITOR=$(which nvim)
+fi
+
 zmodload zsh/datetime
 autoload -Uz add-zsh-hook
 autoload -U promptinit; promptinit
