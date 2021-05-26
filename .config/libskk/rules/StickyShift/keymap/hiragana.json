@@ -4,6 +4,8 @@
     ],
     "define": {
         "keymap": {
+            "l": "set-input-mode-hiragana",
+            "q": "set-input-mode-katakana",
             ";": "start-preedit-no-delete"
         }
     }
