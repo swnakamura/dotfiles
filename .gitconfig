@@ -48,3 +48,5 @@
     ff = only
 [cola]
 	spellcheck = false
+[init]
+	defaultBranch = master
