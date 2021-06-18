@@ -92,9 +92,9 @@ cdls ()
 tn ()
 {
     if [ $# -eq 1 ] ; then
-        \tmux new -s "$1"
+        \tmux new -u -s "$1"
     else
-        \tmux
+        \tmux -u
     fi
 }
 
