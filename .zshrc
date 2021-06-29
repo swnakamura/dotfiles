@@ -197,4 +197,15 @@ zplug load
 # fzf settings
 source ~/.fzf.zsh
 
+# use fzf to find repos in ghq
+fzf_pjc() {
+    local project_name=$(ghq list | sort | fzf)
+    if [ -n "${project_name}" ]; then
+        local project_full_path=$(ghq root)/${project_name}
+        LBUFFER="cd ${project_full_path}"
+    fi
+}
+zle -N fzf_pjc
+bindkey '^]' fzf_pjc
+
 eval "$(almel init zsh)"
