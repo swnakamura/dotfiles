@@ -106,7 +106,7 @@ alias la="ls -a --color=auto"
 alias lal="ls -laFh --color=auto"
 alias lla="ls -laFh --color=auto"
 alias v="nvim"
-alias nv="~/src/neovide/target/release/neovide --multiGrid"
+alias nv="~/ghq/github.com/Kethku/neovide/target/release/neovide --multiGrid"
 alias e="emacs"
 alias duh="du -h -d1"
 alias gp="g++ -std=c++11 -Wall"
@@ -149,6 +149,8 @@ alias jl='julia'
 export PATH=~/.cargo/bin:$PATH
 export PATH=~/bin:$PATH
 export PATH=~/.neovim/bin:$PATH
+export PATH=~/.local/share/gem/ruby/3.0.0/bin:$PATH
+export PATH=~/ghq/github.com/latex-lsp/texlab/target/release:$PATH
 
 if command -v nvim &> /dev/null
 then
