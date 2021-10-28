@@ -106,13 +106,12 @@ alias la="ls -a --color=auto"
 alias lal="ls -laFh --color=auto"
 alias lla="ls -laFh --color=auto"
 alias v="nvim"
-alias nv="~/ghq/github.com/Kethku/neovide/target/release/neovide --multiGrid"
+alias nv="~/ghq/github.com/Kethku/neovide/target/release/neovide --multigrid"
 alias e="emacs"
 alias duh="du -h -d1"
-alias gp="g++ -std=c++11 -Wall"
-alias gc="gcc -Wall -std=c17"
-alias cleantextmp="rm -rf ~/.tmp/tex"
 alias kill9="kill -9"
+
+alias rn='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 alias g="git"
 alias gs="git branch;git status"
