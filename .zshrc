@@ -205,6 +205,7 @@ fzf_pjc() {
         local project_full_path=$(ghq root)/${project_name}
         # LBUFFER="cd ${project_full_path}"
         cd ${project_full_path}
+        zle redisplay
     fi
 }
 zle -N fzf_pjc
