@@ -2,10 +2,6 @@
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
     <description>Force using Japanese font</description>
-    <match>
-        <test name="lang" compare="contains"><string>en</string></test>
-        <edit name="lang" mode="assign" binding="same"><string>ja</string></edit>
-    </match>
     <alias>
         <family>serif</family>
         <prefer>
