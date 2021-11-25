@@ -8,3 +8,4 @@ ln -fs ~/dotfiles/.fzf.zsh ~/.fzf.zsh
 ln -sf ~/dotfiles/.config/libskk ~/.config/libskk/
 ln -sf ~/dotfiles/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 ln -sf ~/dotfiles/.config/almel/almel.yaml ~/.config/almel/almel.yml
+ln -sf ~/dotfiles/.config/fontconfig/conf.d ~/.config/fontconfig/conf.d
