@@ -111,7 +111,7 @@ alias e="emacs"
 alias duh="du -h -d1"
 alias kill9="kill -9"
 
-alias rn='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
 alias g="git"
 alias gs="git branch;git status"
@@ -139,6 +139,7 @@ alias jn='jupyter notebook'
 # alias di='docker image'
 # alias da='docker attach'
 # alias d='docker'
+alias drun='docker run -it --rm --gpus all --device /dev/nvidia0 --device /dev/nvidia-uvm --device /dev/nvidia-uvm-tools --device /dev/nvidiactl'
 alias nf='neofetch'
 alias nem='neomutt'
 # alias wcache='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
@@ -211,4 +212,4 @@ fzf_pjc() {
 zle -N fzf_pjc
 bindkey '^]' fzf_pjc
 
-eval "$(almel init zsh)"
+eval "$(starship init zsh)"
