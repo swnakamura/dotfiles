@@ -146,11 +146,11 @@ alias nem='neomutt'
 alias jl='julia'
 
 # add necessary PATH
-export PATH=~/.cargo/bin:$PATH
-export PATH=~/bin:$PATH
-export PATH=~/.neovim/bin:$PATH
-export PATH=~/.local/share/gem/ruby/3.0.0/bin:$PATH
-export PATH=~/ghq/github.com/latex-lsp/texlab/target/release:$PATH
+export PATH=~/.cargo/bin:${PATH}
+export PATH=~/bin:${PATH}
+export PATH=~/.neovim/bin:${PATH}
+export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
+export PATH=~/ghq/github.com/latex-lsp/texlab/target/release:${PATH}
 
 if command -v nvim &> /dev/null
 then
