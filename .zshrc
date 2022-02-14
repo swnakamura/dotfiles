@@ -144,6 +144,7 @@ alias nf='neofetch'
 alias nem='neomutt'
 # alias wcache='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 alias jl='julia'
+alias ssh="kitty +kitten ssh"
 
 # add necessary PATH
 export PATH=~/.cargo/bin:${PATH}
