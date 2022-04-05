@@ -146,6 +146,19 @@ alias nem='neomutt'
 alias jl='julia'
 alias ssh="kitty +kitten ssh"
 
+git_diff_wc(){
+    args1=$1
+    args2=$2
+    [ -z $args1 ] && args1="1.day"
+    [ -z $args2 ] && args2="HEAD"
+    echo $args1 vs $args2
+    git diff --word-diff-regex='.' `git log --before=$args1 -1 --format='%h'` $args2 \
+    | sed -e 's/{+/\n{+/g' -e 's/+}/+}\n/g' -e 's/\[-/\n\[-/g' -e 's/-\]/-\]\n/g' \
+    | rg '[\{\[][^\}\]]*[\}\]]' \
+    | sed -e 's/{+//' -e 's/+}//' -e 's/\[-//' -e 's/-\]//' \
+    | wc -m
+}
+
 # add necessary PATH
 export PATH=~/.cargo/bin:${PATH}
 export PATH=~/bin:${PATH}
