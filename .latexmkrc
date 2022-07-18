@@ -1,7 +1,6 @@
 #!/usr/bin/perl
-$latex                   = 'uplatex -interaction=nonstopmode -synctex=1 -halt-on-error';
-$latex_silent            = 'uplatex -interaction=batchmode';
-$dvips                   = 'dvips';
+$latex                   = 'lualatex -interaction=nonstopmode -synctex=1 -halt-on-error';
+$latex_silent            = 'lualatex -interaction=batchmode';
 $bibtex                  = 'pbibtex';
 $dvipdf                  = 'dvipdfmx %O -o %D %S';
 $pdf_previewer           = 'xdg-open';
