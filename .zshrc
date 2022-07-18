@@ -127,7 +127,7 @@ alias kp="tmux kill-pane -t"
 alias kw="tmux kill-window -t"
 alias tls="tmux ls"
 alias ta="tmux a -t"
-alias tac="tmux a -c \`pwd\` -t" # attach and set current directory the default directory for the session
+# alias tac="tmux a -c \`pwd\` -t" # attach and set current directory the default directory for the session
 alias pip_update_all='pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U'
 # alias pyv='source ~/3.7/bin/activate'
 alias de='conda deactivate'
