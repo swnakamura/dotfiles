@@ -114,7 +114,7 @@ alias kill9="kill -9"
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
 alias g="git"
-alias gs="git branch;git status"
+alias gs="git branch -v;git status -s"
 alias gf="git fetch"
 alias gl='git l'
 alias gld='git ld'
