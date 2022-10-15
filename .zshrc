@@ -144,7 +144,6 @@ alias nf='neofetch'
 alias nem='neomutt'
 # alias wcache='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 alias jl='julia'
-alias ssh="kitty +kitten ssh"
 
 git_diff_wc(){
     args1=$1
@@ -162,7 +161,6 @@ git_diff_wc(){
 # add necessary PATH
 export PATH=~/.cargo/bin:${PATH}
 export PATH=~/bin:${PATH}
-export PATH=~/.neovim/bin:${PATH}
 export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
 
 if command -v nvim &> /dev/null

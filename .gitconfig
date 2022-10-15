@@ -1,5 +1,6 @@
 [alias]
     l = log --graph  --abbrev-commit --all
+    lo = log --graph  --abbrev-commit --all --oneline
     ld = log --graph  --abbrev-commit --all --date-order
     cm = commit
     co = "!f() { args=$@; if [ -z \"$args\" ]; then branch=$(git branch --all | grep -v HEAD | fzf --preview 'echo {} | cut -c 3- | xargs git log --color=always' | cut -c 3-); git checkout $(echo $branch | sed 's#remotes/##'); else git checkout $args; fi }; f"

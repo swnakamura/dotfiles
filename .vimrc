@@ -20,12 +20,6 @@ set encoding=utf-8 fileencodings=utf-8,ios-2022-jp,euc-jp,sjis,cp932
 " use gui colors
 set termguicolors
 
-" assign temporary file
-set backupdir =~/.config/nvim/tmp//
-set directory =~/.config/nvim/tmp//
-set undodir   =~/.config/nvim/tmp//
-set viewdir   =~/.config/nvim/tmp//
-
 " don't use preview window; I prefer popup/floating window
 set completeopt-=preview
 
@@ -65,8 +59,6 @@ set foldlevel=99
 " set foldcolumn=2
 
 set backspace=eol,indent,start
-
-set diffopt+=vertical,algorithm:patience,indent-heuristic
 
 set wildmenu
 set wildmode=list:full
