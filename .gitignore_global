@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+livepreview/
 
 # Packages #
 ############
@@ -28,6 +29,7 @@
 *.las
 *.pyc
 *.pycache
+*.ltjruby
 
 # OS generated files #
 ######################
@@ -38,3 +40,5 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+.ipynb_checkpoints/
