@@ -24,6 +24,8 @@ export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く
 
 setopt auto_cd # 自動でcdする
 
+stty stop undef # ctrl-sを使わない
+
 # ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
 setopt hist_ignore_all_dups
 # ヒストリを呼び出してから実行する間に一旦編集可能
