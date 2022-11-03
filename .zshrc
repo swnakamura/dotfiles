@@ -227,3 +227,4 @@ zle -N fzf_pjc
 bindkey '^]' fzf_pjc
 
 eval "$(starship init zsh)"
+eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
