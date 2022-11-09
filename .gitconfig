@@ -49,3 +49,7 @@
 	spellcheck = false
 [init]
 	defaultBranch = master
+
+# tig configuration
+[tig "color"]
+    cursor = 7 8
