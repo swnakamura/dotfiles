@@ -37,6 +37,7 @@ setopt hist_no_store
 # 補完時にヒストリを自動的に展開
 setopt hist_expand
 
+setopt caseglob # case SENSITIVE glob
 
 setopt auto_pushd        # cd時にディレクトリスタックにpushdする
 setopt correct           # コマンドのスペルを訂正する
