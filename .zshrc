@@ -103,6 +103,7 @@ tn ()
 
 alias c="cdls"
 alias cd="cdls"
+alias zc="z -c"
 alias ls="ls -F --color=auto"
 alias ll="ls -lFh --color=auto"
 alias la="ls -a --color=auto"
@@ -147,6 +148,7 @@ alias nf='neofetch'
 alias nem='neomutt'
 # alias wcache='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 alias jl='julia'
+alias manj='LANG=ja_JP.UTF-8 man'
 
 git_diff_wc(){
     args1=$1
