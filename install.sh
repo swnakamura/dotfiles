@@ -1,12 +1,14 @@
 SCRIPTHOME="$( cd "$(dirname "$0")" ; pwd -P )"
-ln -fs $SCRIPTHOME/.w3m ~/.w3m
-ln -fs $SCRIPTHOME/.tmux.conf ~/.tmux.conf
-ln -fs $SCRIPTHOME/.gitconfig ~/.gitconfig
-ln -fs $SCRIPTHOME/.latexmkrc ~/.latexmkrc
-ln -fs $SCRIPTHOME/.zshrc ~/.zshrc
-ln -fs $SCRIPTHOME/.fzf.bash ~/.fzf.bash
-ln -fs $SCRIPTHOME/.fzf.zsh ~/.fzf.zsh
-ln -sf $SCRIPTHOME/.config/libskk ~/.config/libskk/
-ln -sf $SCRIPTHOME/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-ln -sf $SCRIPTHOME/.config/almel/almel.yaml ~/.config/almel/almel.yml
-ln -sf $SCRIPTHOME/.config/fontconfig/conf.d ~/.config/fontconfig/conf.d
+echo $SCRIPTHOME
+ln -s $SCRIPTHOME/.tmux.conf ~/.tmux.conf
+ln -s $SCRIPTHOME/.gitconfig ~/.gitconfig
+ln -s $SCRIPTHOME/.latexmkrc ~/.latexmkrc
+ln -s $SCRIPTHOME/.zshrc     ~/.zshrc
+ln -s $SCRIPTHOME/.fzf.bash  ~/.fzf.bash
+ln -s $SCRIPTHOME/.fzf.zsh   ~/.fzf.zsh
+
+# ln -s $SCRIPTHOME/.w3m ~/.w3m
+# ln -s $SCRIPTHOME/.config/libskk ~/.config/libskk/
+# ln -s $SCRIPTHOME/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+# ln -s $SCRIPTHOME/.config/almel/almel.yaml ~/.config/almel/almel.yml
+# ln -s $SCRIPTHOME/.config/fontconfig/conf.d ~/.config/fontconfig/conf.d
