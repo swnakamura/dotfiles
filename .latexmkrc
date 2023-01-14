@@ -7,6 +7,5 @@ $pdf_previewer           = 'xdg-open';
 $preview_continuous_mode = 1;
 $pdf_mode                = 3;
 $pdf_update_method       = 4;
-# $aux_dir                 = "$ENV{HOME}/.tmp/tex/" . basename(getcwd);
-# $out_dir                 = $aux_dir;
+$out_dir                 = 'livepreview';
 $makeindex               = 'mendex %O -o %D %S -s /home/woody/Documents/macros/myindex.ist';
