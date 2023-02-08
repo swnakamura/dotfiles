@@ -18,7 +18,7 @@ fi
 # export LANG=en_US.UTF-8  # 文字コードをUTF-8に設定
 export KCODE=u           # KCODEにUTF-8を設定
 export AUTOFEATURE=true  # autotestでfeatureを動かす
-export LESS="-iMR"
+export LESS="-iMRJj$(($(tput lines)/2))"
 
 export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
@@ -104,6 +104,7 @@ tn ()
 alias c="cdls"
 alias cd="cdls"
 alias zc="z -c"
+alias zi="z -I"
 alias ls="ls -F --color=auto"
 alias ll="ls -lFh --color=auto"
 alias la="ls -a --color=auto"
@@ -123,7 +124,17 @@ alias gf="git fetch"
 alias gl='git l'
 alias gld='git ld'
 
-alias open="xdg-open"
+xdg_open2() {
+    if uname -r | grep -q 'microsoft'; then
+        explorer.exe .
+    fi
+    if [ -z $* ]; then
+        xdg-open .
+    else
+        xdg-open $*
+    fi
+}
+alias o="xdg_open2"
 
 alias tm="tn"
 alias ks="tmux kill-session -t"
