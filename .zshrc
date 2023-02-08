@@ -126,7 +126,12 @@ alias gld='git ld'
 
 xdg_open2() {
     if uname -r | grep -q 'microsoft'; then
-        explorer.exe .
+        if [ -z $* ]; then
+            explorer.exe .
+        else
+            (\cd $*; explorer.exe .)
+        fi
+        return 0
     fi
     if [ -z $* ]; then
         xdg-open .
