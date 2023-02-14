@@ -192,27 +192,37 @@ then
 fi
 
 # zplug
-source /usr/share/zsh/scripts/zplug/init.zsh
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug load
+if command -v zplug &> /dev/null; then
+    source /usr/share/zsh/scripts/zplug/init.zsh
+    zplug "zsh-users/zsh-autosuggestions"
+    zplug "zsh-users/zsh-syntax-highlighting", defer:2
+    zplug load
+fi
 
-# fzf settings
-source ~/.fzf.zsh
+if [[ -f ~/.fzf.zsh ]]; then
+    # fzf settings
+    source ~/.fzf.zsh
 
-# use fzf to find repos in ghq
-fzf_pjc() {
-    local project_name=$(ghq list | sort | fzf)
-    if [ -n "${project_name}" ]; then
-        local project_full_path=$(ghq root)/${project_name}
-        # LBUFFER="cd ${project_full_path}"
-        cd ${project_full_path}
-        ls
-        zle redisplay
-    fi
-}
-zle -N fzf_pjc
-bindkey '^]' fzf_pjc
+    # use fzf to find repos in ghq
+    fzf_pjc() {
+        local project_name=$(ghq list | sort | fzf)
+        if [ -n "${project_name}" ]; then
+            local project_full_path=$(ghq root)/${project_name}
+            # LBUFFER="cd ${project_full_path}"
+            cd ${project_full_path}
+            ls
+            zle redisplay
+        fi
+    }
+    zle -N fzf_pjc
+    bindkey '^]' fzf_pjc
+fi
 
-eval "$(starship init zsh)"
-eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
+if command -v starship &> /dev/null; then
+    eval "$(starship init zsh)"
+fi
+
+if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
+    eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
+fi
+[ -f /opt/mambaforge/etc/profile.d/conda.sh ] && source /opt/mambaforge/etc/profile.d/conda.sh
