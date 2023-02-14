@@ -18,7 +18,7 @@ fi
 # export LANG=en_US.UTF-8  # 文字コードをUTF-8に設定
 export KCODE=u           # KCODEにUTF-8を設定
 export AUTOFEATURE=true  # autotestでfeatureを動かす
-export LESS="-iMRJj$(($(tput lines)/2))"
+export LESS="-iMRj$(($(tput lines)/2))"
 
 export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
