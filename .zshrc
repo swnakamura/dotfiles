@@ -192,7 +192,7 @@ then
 fi
 
 # zplug
-if command -v zplug &> /dev/null; then
+if [ -f /usr/share/zsh/scripts/zplug/init.zsh ]; then
     source /usr/share/zsh/scripts/zplug/init.zsh
     zplug "zsh-users/zsh-autosuggestions"
     zplug "zsh-users/zsh-syntax-highlighting", defer:2
