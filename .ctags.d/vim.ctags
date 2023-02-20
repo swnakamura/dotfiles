@@ -1,6 +1,12 @@
 --langdef=Vimhelp
---langmap=Vimhelp:.txt
---regex-Vimhelp=/\|([[:graph:]]+)\|/\1/r,refs/
---regex-Vimhelp=/\*([[:graph:]]+)\*$/\1/l,labels/
---mline-regex-Vimhelp=/^=====+[[:space:]]*([[:print:]]+)/\1/s,sections/{mgroup=1}
---mline-regex-Vimhelp=/^-----+[[:space:]]*([[:print:]]+)/\1/s,subsections/{mgroup=1}
+--map-Vimhelp=.txt
+
+--kinddef-Vimhelp=s,Section,Section
+--kinddef-Vimhelp=b,Subsection,Subsection
+--kinddef-Vimhelp=r,Reference,Reference
+--kinddef-Vimhelp=d,Definition,Definition
+
+--mline-regex-Vimhelp=/^=====+[[:space:]]*([[:print:]]+)/\1/s/{mgroup=1}
+--mline-regex-Vimhelp=/^-----+[[:space:]]*([[:print:]]+)/\1/b/{mgroup=1}
+--regex-Vimhelp=/\|([[:graph:]]+)\|/\1/r/{scope=ref}
+--regex-Vimhelp=/\*([[:graph:]]+)\*$/\1/d/{scope=ref}
