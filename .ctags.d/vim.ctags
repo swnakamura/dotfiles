@@ -1,12 +1,30 @@
---langdef=Vimhelp
---map-Vimhelp=.txt
+--langdef=vimhelp
+--map-vimhelp=.txt
 
---kinddef-Vimhelp=s,Section,Section
---kinddef-Vimhelp=b,Subsection,Subsection
---kinddef-Vimhelp=r,Reference,Reference
---kinddef-Vimhelp=d,Definition,Definition
+--kinddef-vimhelp=s,section,Section
+--kinddef-vimhelp=b,subsection,Subsection
+--kinddef-vimhelp=r,reference,Reference
+--kinddef-vimhelp=d,definition,Definition
+--kinddef-vimhelp=k,keyword,Keyword
 
---mline-regex-Vimhelp=/^=====+[[:space:]]*([[:print:]]+)/\1/s/{mgroup=1}
---mline-regex-Vimhelp=/^-----+[[:space:]]*([[:print:]]+)/\1/b/{mgroup=1}
---regex-Vimhelp=/\|([[:graph:]]+)\|/\1/r/{scope=ref}
---regex-Vimhelp=/\*([[:graph:]]+)\*$/\1/d/{scope=ref}
+--_tabledef-vimhelp=toplevel
+--_tabledef-vimhelp=sectiontitle
+--_tabledef-vimhelp=subsectiontitle
+--_tabledef-vimhelp=section
+--_tabledef-vimhelp=subsection
+
+--_mtable-regex-vimhelp=toplevel/====================+\n///{tenter=sectiontitle}{placeholder}
+--_mtable-regex-vimhelp=toplevel/[^\n]*\n//
+
+--_mtable-regex-vimhelp=sectiontitle/[[:space:]]{,2}(([[:graph:]]+ {,2})+)[^\n]*\n/\1/s/{scope=push}{tenter=section}
+
+--_mtable-regex-vimhelp=subsectiontitle/[[:space:]]{,2}(([[:graph:]]+ {,2})+)[^\n]*\n/\1/s/{scope=push}{tenter=subsection}
+
+--_mtable-regex-vimhelp=section/====================+\n///{tenter=sectiontitle}{scope=clear}{placeholder}
+--_mtable-regex-vimhelp=section/--------------------+\n///{tenter=subsectiontitle}{placeholder}
+--_mtable-regex-vimhelp=section/[^\n]*\n//
+
+--_mtable-regex-vimhelp=subsection/====================+\n///{tenter=sectiontitle}{scope=clear}{placeholder}
+--_mtable-regex-vimhelp=subsection/--------------------+\n///{tenter=subsectiontitle}{scope=pop}{placeholder}
+--_mtable-regex-vimhelp=subsection/[^\n]*\n//
+
