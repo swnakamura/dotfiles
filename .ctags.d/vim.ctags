@@ -28,3 +28,5 @@
 --_mtable-regex-vimhelp=subsection/--------------------+\n///{tenter=subsectiontitle}{scope=pop}{placeholder}
 --_mtable-regex-vimhelp=subsection/[^\n]*\n//
 
+--regex-Vimhelp=/\|([[:graph:]]+)\|/\1/r/{scope=ref}
+--regex-Vimhelp=/\*([[:graph:]]+)\*$/\1/d/{scope=ref}
