@@ -220,9 +220,32 @@ fi
 
 if command -v starship &> /dev/null; then
     eval "$(starship init zsh)"
+else
+    PROMPT_TIME='%F{3}%D{%m-%d %H:%M:%S}%f'
+    PROMPT_USER_NAME='%F{2}%n%f'
+    PROMPT_CWD='%F{6}%~%f'
+    PROMPT='%B$PROMPT_TIME%b %B$PROMPT_USER_NAME%b in %B${PROMPT_CWD}%b -> '
 fi
 
 if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
     eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
 fi
 [ -f /opt/mambaforge/etc/profile.d/conda.sh ] && source /opt/mambaforge/etc/profile.d/conda.sh
+
+export BIND_HB="/home/projects,\
+/d/cache,\
+/d/cache/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-25-livingroom:image-src=/,\
+/d/cache/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-24-livingroom:image-src=/,\
+/d/cache/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-19-livingroom:image-src=/,\
+/d/cache/snakamura/squashed/2023-01-18-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-18-livingroom:image-src=/,\
+/d/cache/snakamura/squashed/2023-01-17-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-17-livingroom:image-src=/\
+"
+
+export BIND_GPU="/home/projects,\
+/d/temp,\
+/d/temp/snakamura/squashed/2023-01-25-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-25-livingroom:image-src=/,\
+/d/temp/snakamura/squashed/2023-01-24-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-24-livingroom:image-src=/,\
+/d/temp/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-19-livingroom:image-src=/,\
+/d/temp/snakamura/squashed/2023-01-18-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-18-livingroom:image-src=/,\
+/d/temp/snakamura/squashed/2023-01-17-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-17-livingroom:image-src=/\
+"
