@@ -79,6 +79,10 @@ export CLICOLOR=true
 # 補完候補に色を付ける
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+# <C-o> to edit current line in $EDITOR
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^O" edit-command-line
 
 # ------------------------------
 # Other Settings
