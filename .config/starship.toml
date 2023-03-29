@@ -1,7 +1,7 @@
 add_newline=false
 [time]
 disabled=false
-format='🕙[$time]($style) '
+format='[$time]($style) '
 time_format='%F %T'
 [status]
 symbol = ""
