@@ -1,0 +1,27 @@
+keymap:
+  - name: macOS binding
+    remap:
+      ALT-W: CTRL-W
+      ALT-A: CTRL-A
+      ALT-R: CTRL-R
+      ALT-F: CTRL-F
+      ALT-N: CTRL-N
+      ALT-PageUp: CTRL-PageUp
+      ALT-PageDown: CTRL-PageDown
+
+  - name: macOS newtab for kitty
+    application:
+      only: kitty
+    remap:
+      ALT-C: CTRL-SHIFT-C
+      ALT-V: CTRL-SHIFT-V
+      ALT-T: CTRL-SHIFT-T
+  - name: macOS newtab for other than kitty
+    application:
+      not: kitty
+    remap:
+      ALT-C: CTRL-C
+      ALT-V: CTRL-V
+      ALT-T: CTRL-T
+      ALT-LEFTBRACE: ALT-Left
+      ALT-RIGHTBRACE: ALT-Right
