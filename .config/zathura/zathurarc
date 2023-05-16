@@ -35,3 +35,5 @@ set render-loading-fg           "#6b7089"
 set recolor-lightcolor          "#161821"
 set recolor-darkcolor           "#d2d4de"
 # set recolor                     "true"
+
+set selection-clipboard clipboard
