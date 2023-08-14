@@ -280,8 +280,10 @@ if [[ -f ~/.fzf.zsh ]] && [[ -f /usr/share/z.lua/z.lua ]]; then
     bindkey "^K" zlua_fzf
 fi
 
-[ -f /opt/mambaforge/etc/profile.d/conda.sh ] && source /opt/mambaforge/etc/profile.d/conda.sh
-conda activate base
+if [[ -f /opt/mambaforge/etc/profile.d/conda.sh ]]; then
+    source /opt/mambaforge/etc/profile.d/conda.sh
+    conda activate base
+fi
 
 export BIND_HB="/home/projects,\
 /d/cache,\
