@@ -263,7 +263,25 @@ fi
 if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
     eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
 fi
+
+if [[ -f ~/.fzf.zsh ]] && [[ -f /usr/share/z.lua/z.lua ]]; then
+
+    # use fzf to find repos in ghq
+    zlua_fzf() {
+        local dir_name=$(z | fzf)
+        local dir_name=${dir_name##* }
+        if [ -n "${dir_name}" ]; then
+            \cd ${dir_name}
+            ls
+            zle redisplay
+        fi
+    }
+    zle -N zlua_fzf
+    bindkey "^K" zlua_fzf
+fi
+
 [ -f /opt/mambaforge/etc/profile.d/conda.sh ] && source /opt/mambaforge/etc/profile.d/conda.sh
+conda activate base
 
 export BIND_HB="/home/projects,\
 /d/cache,\
