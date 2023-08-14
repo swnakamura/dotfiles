@@ -18,7 +18,7 @@ fi
 # export LANG=en_US.UTF-8  # 文字コードをUTF-8に設定
 export KCODE=u           # KCODEにUTF-8を設定
 export AUTOFEATURE=true  # autotestでfeatureを動かす
-export LESS="-iMRj5"
+export LESS="-iMRj15"
 
 export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
