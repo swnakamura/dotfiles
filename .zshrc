@@ -159,6 +159,7 @@ alias gld='git ld'
 
 xdg_open2() {
     if uname -r | grep -q 'microsoft'; then
+        # WSL
         if [ -z $* ]; then
             explorer.exe .
         else
@@ -166,6 +167,16 @@ xdg_open2() {
         fi
         return 0
     fi
+    if uname | grep -q 'Darwin'; then
+        # macOS
+        if [[ -z $* ]]; then
+            open .
+        else
+            open $*
+        fi
+        return 0
+    fi
+    # otherwise Linux
     if [ -z $* ]; then
         xdg-open .
     else
@@ -263,12 +274,15 @@ fi
 if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
     eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
 fi
+if $(command -v brew &> /dev/null); then
+    eval "$(lua $(brew --prefix z.lua)/share/z.lua/z.lua --init zsh)"
+fi
 
-if [[ -f ~/.fzf.zsh ]] && [[ -f /usr/share/z.lua/z.lua ]]; then
+if [[ -f ~/.fzf.zsh ]] && $(command -v z > /dev/null); then
 
     # use fzf to find repos in ghq
     zlua_fzf() {
-        local dir_name=$(z | fzf)
+        local dir_name=$(z | sort --reverse --numeric-sort | fzf)
         local dir_name=${dir_name##* }
         if [ -n "${dir_name}" ]; then
             \cd ${dir_name}
