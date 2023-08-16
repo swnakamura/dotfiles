@@ -229,6 +229,8 @@ export PATH=~/bin:${PATH}
 export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
 export PATH=~/.neovim/bin:${PATH}
 # export PATH=~/.pyenv/shims:${PATH}
+# Add coreutils path for macOS
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 if command -v nvim &> /dev/null
 then
@@ -282,7 +284,7 @@ if [[ -f ~/.fzf.zsh ]] && $(command -v z > /dev/null); then
 
     # use fzf to find repos in ghq
     zlua_fzf() {
-        local dir_name=$(z | sort --reverse --numeric-sort | fzf)
+        local dir_name=$(z | tac | fzf +s)
         local dir_name=${dir_name##* }
         if [ -n "${dir_name}" ]; then
             \cd ${dir_name}
