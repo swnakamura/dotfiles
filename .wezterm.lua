@@ -28,11 +28,9 @@ config.color_scheme = 'My Iceberg'
 
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 
-config.use_ime = true
-
-config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Hiragino Kaku Gothic Pro" })
+config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Hiragino Maru Gothic Pro" })
 
 config.font_size = 13
 
--- and finally, return the configuration to wezterm
+config.tab_bar_at_bottom = true
 return config
