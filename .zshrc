@@ -15,27 +15,13 @@ fi
 # ------------------------------
 # General Settings
 # ------------------------------
-# export LANG=en_US.UTF-8  # 文字コードをUTF-8に設定
-export KCODE=u           # KCODEにUTF-8を設定
-export AUTOFEATURE=true  # autotestでfeatureを動かす
 export LESS="-iMRj15"
+
+bindkey -e # emacs-like mapping
 
 export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
-setopt auto_cd # 自動でcdする
-
 stty stop undef # ctrl-sを使わない
-
-# ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
-setopt hist_ignore_all_dups
-# ヒストリを呼び出してから実行する間に一旦編集可能
-setopt hist_verify
-# 余分な空白は詰めて記録
-setopt hist_reduce_blanks
-# historyコマンドは履歴に登録しない
-setopt hist_no_store
-# 補完時にヒストリを自動的に展開
-setopt hist_expand
 
 setopt caseglob # case SENSITIVE glob
 
@@ -45,7 +31,7 @@ setopt prompt_subst      # プロンプト定義内で変数置換やコマン�
 setopt notify            # バックグラウンドジョブの状態変化を即時報告する
 setopt equals            # =commandを`which command`と同じ処理にする
 
-### Complement ###
+### Completion ###
 autoload -U compinit; compinit # 補完機能を有効にする
 setopt auto_list               # 補完候補を一覧で表示する(d)
 setopt auto_menu               # 補完キー連打で補完候補を順に表示する(d)
@@ -63,6 +49,10 @@ setopt extended_history   # ヒストリに実行時間も保存する
 setopt hist_ignore_all_dups   # 直前と同じコマンドはヒストリに追加しない
 setopt share_history      # 他のシェルのヒストリをリアルタイムで共有する
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
+setopt hist_verify # ヒストリを呼び出してから実行する間に一旦編集可能
+setopt hist_no_store # historyコマンドは履歴に登録しない
+setopt hist_expand # 補完時にヒストリを自動的に展開
+setopt append_history # ヒストリをすぐに追加
 
 # ------------------------------
 # OSC 133
@@ -144,7 +134,6 @@ alias la="ls -a --color=auto"
 alias lal="ls -laFh --color=auto"
 alias lla="ls -laFh --color=auto"
 alias v="nvim"
-alias nv="~/ghq/github.com/Kethku/neovide/target/release/neovide --multigrid"
 alias e="emacs"
 alias duh="du -h -d1"
 alias kill9="kill -9"
@@ -152,10 +141,16 @@ alias kill9="kill -9"
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
 alias g="git"
-alias gs="git branch -v;git status -s"
 alias gf="git fetch"
 alias gl='git l'
 alias gld='git ld'
+
+bindkey "^G^S" git_status
+git_status() {
+    git branch -v
+    git status -s
+}
+zle -N git_status
 
 xdg_open2() {
     if uname -r | grep -q 'microsoft'; then
