@@ -2,10 +2,6 @@
 if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
   source /usr/share/zsh/manjaro-zsh-config
 fi
-# Use manjaro zsh prompt
-# if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-#   source /usr/share/zsh/manjaro-zsh-prompt
-# fi
 
 ##### personal settings #####
 
@@ -36,9 +32,15 @@ autoload -U compinit; compinit # 補完機能を有効にする
 setopt auto_list               # 補完候補を一覧で表示する(d)
 setopt auto_menu               # 補完キー連打で補完候補を順に表示する(d)
 setopt list_packed             # 補完候補をできるだけ詰めて表示する
+setopt menu_complete           # 一度のTabで保管だけでなく絞り込みまで始める
 setopt list_types              # 補完候補にファイルの種類も表示する
 bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を区別しない
+
+zmodload zsh/complist
+bindkey -M menuselect '^g' .send-break                        # send-break2回分の効果
+bindkey -M menuselect '^k' accept-and-infer-next-history      # 次の補完メニューを表示する
+bindkey -M menuselect '^r' history-incremental-search-forward # 補完候補内インクリメンタルサーチ
 
 ### History ###
 HISTFILE=~/.zsh_history   # ヒストリを保存するファイル
@@ -225,11 +227,16 @@ export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
 export PATH=~/.neovim/bin:${PATH}
 # export PATH=~/.pyenv/shims:${PATH}
 # Add coreutils path for macOS
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+MACOS_COREUTILS_PATH="/opt/homebrew/opt/coreutils/libexec/gnubin"
+if [[ -d $MACOS_COREUTILS_PATH ]]; then
+    export PATH="$MACOS_COREUTILS_PATH:$PATH"
+fi
 
 if command -v nvim &> /dev/null
 then
     export EDITOR=$(which nvim)
+else
+    echo "nvim not found"
 fi
 
 # zplug
@@ -238,6 +245,8 @@ if [ -f /usr/share/zsh/scripts/zplug/init.zsh ]; then
     zplug "zsh-users/zsh-autosuggestions"
     zplug "zsh-users/zsh-syntax-highlighting", defer:2
     zplug load
+else
+    echo "zplug not loaded"
 fi
 
 if [[ -f ~/.fzf.zsh ]]; then
@@ -257,6 +266,8 @@ if [[ -f ~/.fzf.zsh ]]; then
     }
     zle -N fzf_pjc
     bindkey '^]' fzf_pjc
+else
+    echo "fzf not found"
 fi
 
 if command -v starship &> /dev/null; then
@@ -270,9 +281,10 @@ fi
 
 if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
     eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
-fi
-if $(command -v brew &> /dev/null); then
+elif $(command -v brew &> /dev/null); then
     eval "$(lua $(brew --prefix z.lua)/share/z.lua/z.lua --init zsh)"
+else
+    echo "z.lua not loaded"
 fi
 
 if [[ -f ~/.fzf.zsh ]] && $(command -v z > /dev/null); then
