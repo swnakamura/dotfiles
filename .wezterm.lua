@@ -32,6 +32,13 @@ config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Hiragino Maru Goth
 
 config.font_size = 13
 
+config.window_padding = {
+  left = '0',
+  right = '0',
+  top = '0',
+  bottom = '0',
+}
+
 config.tab_bar_at_bottom = true
 
 local act = wezterm.action
