@@ -39,10 +39,17 @@ setopt list_types    # 補完候補にファイルの種類も表示する
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' # Case insensitive tab completion
 zstyle ':completion:*' rehash true                              # automatically find new executables in path 
 zstyle ':completion:*' menu select                              # Highlight menu selection
-# Speed up completions
+## Speed up completions
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
+
+## Add coreutils path for macOS
+## This is added here to load dircolors
+MACOS_COREUTILS_PATH="/opt/homebrew/opt/coreutils/libexec/gnubin"
+if [[ -d $MACOS_COREUTILS_PATH ]]; then
+    export PATH="$MACOS_COREUTILS_PATH:$PATH"
+fi
 
 export LSCOLORS=Exfxcxdxbxegedabagacad
 eval "$(dircolors -b)"
@@ -518,11 +525,6 @@ export PATH=~/bin:${PATH}
 export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
 export PATH=~/.neovim/bin:${PATH}
 # export PATH=~/.pyenv/shims:${PATH}
-# Add coreutils path for macOS
-MACOS_COREUTILS_PATH="/opt/homebrew/opt/coreutils/libexec/gnubin"
-if [[ -d $MACOS_COREUTILS_PATH ]]; then
-    export PATH="$MACOS_COREUTILS_PATH:$PATH"
-fi
 
 if command -v nvim &> /dev/null
 then
