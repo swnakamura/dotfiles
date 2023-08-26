@@ -564,26 +564,3 @@ elif $(command -v brew &> /dev/null); then
 else
     echo "z.lua not loaded"
 fi
-
-if [[ -f /opt/mambaforge/etc/profile.d/conda.sh ]]; then
-    source /opt/mambaforge/etc/profile.d/conda.sh
-    conda activate base
-fi
-
-export BIND_HB="/home/projects,\
-/d/cache,\
-/d/cache/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-25-livingroom:image-src=/,\
-/d/cache/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-24-livingroom:image-src=/,\
-/d/cache/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-19-livingroom:image-src=/,\
-/d/cache/snakamura/squashed/2023-01-18-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-18-livingroom:image-src=/,\
-/d/cache/snakamura/squashed/2023-01-17-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-17-livingroom:image-src=/\
-"
-
-export BIND_GPU="/home/projects,\
-/d/temp,\
-/d/temp/snakamura/squashed/2023-01-25-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-25-livingroom:image-src=/,\
-/d/temp/snakamura/squashed/2023-01-24-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-24-livingroom:image-src=/,\
-/d/temp/snakamura/squashed/2023-01-19-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-19-livingroom:image-src=/,\
-/d/temp/snakamura/squashed/2023-01-18-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-18-livingroom:image-src=/,\
-/d/temp/snakamura/squashed/2023-01-17-livingroom:/home/snakamura/pointing-dataset/squashed-mount/2023-01-17-livingroom:image-src=/\
-"
