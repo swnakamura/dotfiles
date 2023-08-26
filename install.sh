@@ -1,3 +1,4 @@
+#!/bin/bash
 SCRIPTHOME="$( cd "$(dirname "$0")" ; pwd -P )"
 echo $SCRIPTHOME
 ln -s $SCRIPTHOME/.tmux.conf ~/.tmux.conf
