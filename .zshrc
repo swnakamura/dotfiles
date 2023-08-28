@@ -131,23 +131,6 @@ else
     echo "fzf not found"
 fi
 
-## fzf+z.lua binding
-if [[ -f ~/.fzf.zsh ]] && $(command -v z > /dev/null); then
-
-    # use fzf to find repos in ghq
-    zlua_fzf() {
-        local dir_name=$(z | tac | fzf +s)
-        local dir_name=${dir_name##* }
-        if [ -n "${dir_name}" ]; then
-            \cd ${dir_name}
-            ls
-            zle redisplay
-        fi
-    }
-    zle -N zlua_fzf
-    bindkey "^K" zlua_fzf
-fi
-
 ### Alias section
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
@@ -564,3 +547,22 @@ elif $(command -v brew &> /dev/null); then
 else
     echo "z.lua not loaded"
 fi
+
+## fzf+z.lua binding
+if which fzf > /dev/null && which _zlua > /dev/null; then
+    # use fzf to find repos in ghq
+    zlua_fzf() {
+        local dir_name=$(z | tac | fzf +s)
+        local dir_name=${dir_name##* }
+        if [ -n "${dir_name}" ]; then
+            \cd ${dir_name}
+            ls
+            zle redisplay
+        fi
+    }
+    zle -N zlua_fzf
+    bindkey "^K" zlua_fzf
+else
+    echo "zlua_fzf" not loaded
+fi
+
