@@ -200,6 +200,7 @@ xdg_open2() {
     fi
 }
 alias o="xdg_open2"
+alias imo='f(){convert $1 sixel:-;}; f'
 
 alias tm="tn"
 alias ks="tmux kill-session -t"
