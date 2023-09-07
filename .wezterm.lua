@@ -39,6 +39,8 @@ config.window_padding = {
   bottom = '0',
 }
 
+config.warn_about_missing_glyphs = false
+
 config.tab_bar_at_bottom = true
 
 local act = wezterm.action
