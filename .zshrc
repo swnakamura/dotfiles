@@ -33,7 +33,7 @@ setopt append_history       # ヒストリをすぐに追加
 setopt auto_list     # 補完候補を一覧で表示する(d)
 setopt auto_menu     # 補完キー連打で補完候補を順に表示する(d)
 setopt list_packed   # 補完候補をできるだけ詰めて表示する
-setopt menu_complete # 一度のTabで保管だけでなく絞り込みまで始める
+# setopt menu_complete # 一度のTabで補完だけでなく絞り込みまで始める
 setopt list_types    # 補完候補にファイルの種類も表示する
 
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' # Case insensitive tab completion
