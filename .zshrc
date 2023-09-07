@@ -168,7 +168,7 @@ myls ()
 alias cd="cdls"
 alias zc="z -c"
 alias zi="z -I"
-alias ls="myls"
+alias ls="ls --color=auto"
 alias ll="myls -l"
 alias la="myls -a"
 alias lal="myls -la"
