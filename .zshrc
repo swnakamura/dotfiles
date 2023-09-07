@@ -121,7 +121,7 @@ if [[ -f ~/.fzf.zsh ]]; then
             local project_full_path=$(ghq root)/${project_name}
             # LBUFFER="cd ${project_full_path}"
             cd ${project_full_path}
-            ls
+            myls
             zle redisplay
         fi
     }
@@ -140,7 +140,7 @@ alias history='history -E'
 
 cdls ()
 {
-  \cd "$@" && ls -F --color=auto
+  \cd "$@" && myls
 }
 
 tn ()
@@ -152,15 +152,23 @@ tn ()
     fi
 }
 
-alias c="cdls"
+myls ()
+{
+    if command -v lsd &> /dev/null; then
+        lsd $*
+    else
+        ls $*
+    fi
+}
+
 alias cd="cdls"
 alias zc="z -c"
 alias zi="z -I"
-alias ls="ls -F --color=auto"
-alias ll="ls -lFh --color=auto"
-alias la="ls -a --color=auto"
-alias lal="ls -laFh --color=auto"
-alias lla="ls -laFh --color=auto"
+alias ls="myls"
+alias ll="myls -l"
+alias la="myls -a"
+alias lal="myls -la"
+alias lla="myls -la"
 alias v="nvim"
 alias e="emacs"
 alias duh="du -h -d1"
