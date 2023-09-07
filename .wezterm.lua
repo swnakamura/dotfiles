@@ -64,6 +64,8 @@ config.keys = {
     { key = '9',         mods = 'ALT',        action = act.ActivateTab(-1) },
     { key = 'UpArrow',   mods = 'SHIFT',      action = act.ScrollToPrompt(-1) },
     { key = 'DownArrow', mods = 'SHIFT',      action = act.ScrollToPrompt(1) },
+    { key = 'Z',         mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
+    { key = 'Enter',     mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
     { key = 't',         mods = 'ALT',        action = act.SpawnTab 'CurrentPaneDomain' },
     { key = 'h',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Left' },
     { key = 'l',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Right' },
