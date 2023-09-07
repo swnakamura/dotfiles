@@ -138,6 +138,10 @@ alias free='free -m'                                            # Show sizes in 
 alias gitu='git add . && git commit && git push'
 alias history='history -E'
 
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
 cdls ()
 {
   \cd "$@" && myls
