@@ -529,20 +529,23 @@ else
     echo "nvim not found"
 fi
 
-# zplug
-if [ -f /usr/share/zsh/scripts/zplug/init.zsh ]; then
-    ZPLUG_INIT=/usr/share/zsh/scripts/zplug/init.zsh
-elif [ -f /opt/homebrew/opt/zplug/init.zsh ]; then
-    ZPLUG_INIT=/opt/homebrew/opt/zplug/init.zsh
-fi
-if [ -n $ZPLUG_INIT ]; then
-    source $ZPLUG_INIT
-    zplug "zsh-users/zsh-autosuggestions"
-    zplug "zsh-users/zsh-syntax-highlighting", defer:2
-    zplug load
+# sheldon
+if command -v sheldon &> /dev/null; then
+    eval "$(sheldon source)"
 else
     echo "zplug not loaded"
 fi
+
+# sheldon
+cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
+sheldon_cache="$cache_dir/sheldon.zsh"
+sheldon_toml="$HOME/.config/sheldon/plugins.toml"
+if [[ ! -r "$sheldon_cache" || "$sheldon_toml" -nt "$sheldon_cache" ]]; then
+  mkdir -p $cache_dir
+  sheldon source > $sheldon_cache
+fi
+source "$sheldon_cache"
+unset cache_dir sheldon_cache sheldon_toml
 
 if command -v starship &> /dev/null; then
     eval "$(starship init zsh)"
