@@ -25,13 +25,3 @@ mkdir -p ~/.config/karabiner
 link_to_home .config/karabiner/karabiner.json
 link_to_home .config/git
 link_to_home .config/zathura
-
-# mkdir -p ~/.config/git; ln -sf "$SCRIPTHOME"/.gitignore_global ~/.config/git/ignore
-# mkdir -p ~/.ctags.d/; ln -sf "$SCRIPTHOME"/.ctags.d/vim.ctags   ~/.ctags.d/vim.ctags
-# mkdir -p ~/.config/kitty; ln -sf "$SCRIPTHOME"/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
-
-# ln -s "$SCRIPTHOME"/.config/fontconfig/conf.d ~/.config/fontconfig/conf.d
-# ln -s "$SCRIPTHOME"/.w3m ~/.w3m
-# ln -s "$SCRIPTHOME"/.config/libskk ~/.config/libskk/
-# ln -s "$SCRIPTHOME"/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-# ln -s "$SCRIPTHOME"/.config/almel/almel.yaml ~/.config/almel/almel.yml
