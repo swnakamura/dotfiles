@@ -1,27 +1,74 @@
 keymap:
-  - name: macOS binding
+  - name: macOS binding for all applications
     remap:
-      ALT-W: CTRL-W
       ALT-A: CTRL-A
       ALT-R: CTRL-R
       ALT-F: CTRL-F
-      ALT-N: CTRL-N
+      ALT-Z: CTRL-Z
+      ALT-L: CTRL-L
+      ALT-K: CTRL-K
+      ALT-D: CTRL-D
+      ALT-LEFTBRACE: ALT-Left
+      ALT-RIGHTBRACE: ALT-Right
       ALT-PageUp: CTRL-PageUp
       ALT-PageDown: CTRL-PageDown
+      CTRL-M: Enter
+      Super-Grave: Esc
 
-  - name: macOS newtab for kitty
+  - name: wezterm # not working somehow
     application:
-      only: kitty
+      only: wezterm
     remap:
       ALT-C: CTRL-SHIFT-C
       ALT-V: CTRL-SHIFT-V
-      ALT-T: CTRL-SHIFT-T
-  - name: macOS newtab for other than kitty
+
+  - name: non-wezterm
     application:
-      not: kitty
+      not: wezterm
     remap:
       ALT-C: CTRL-C
+      ALT-X: CTRL-X
       ALT-V: CTRL-V
       ALT-T: CTRL-T
-      ALT-LEFTBRACE: ALT-Left
-      ALT-RIGHTBRACE: ALT-Right
+      ALT-N: CTRL-N
+      ALT-P: CTRL-P
+      ALT-Comma: CTRL-Comma # config
+
+  - name: obsidian
+    application:
+      only: obsidian
+    remap:
+      ALT-J: CTRL-J # toggle bullet list
+      ALT-B: CTRL-B # toggle bold
+      ALT-I: CTRL-I # toggle italic shape
+      ALT-M: CTRL-M # toggle strikethrough
+      ALT-W: CTRL-W # close window (by alt+shift+w)
+      ALT-O: CTRL-O # open file
+      ALT-G: CTRL-G # open graph view
+      CTRL-Leftbrace: Esc # open graph view
+
+  - name: delete window
+    application:
+      not: [obsidian, wezterm]
+    remap:
+      ALT-W: CTRL-W
+
+  - name: macOS binding for slack, obsidian
+    application:
+      only: [Slack, obsidian]
+    remap:
+      ALT-1: CTRL-1 # change workspace
+      ALT-2: CTRL-2
+      ALT-3: CTRL-3
+      ALT-4: CTRL-4
+      ALT-5: CTRL-5
+      ALT-6: CTRL-6
+      ALT-7: CTRL-7
+      ALT-8: CTRL-8
+      ALT-9: CTRL-9
+
+  - name: hide window
+    application:
+      not: wezterm
+    remap:
+      ALT-H: SUPER-H

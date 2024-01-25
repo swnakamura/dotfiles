@@ -1,3 +1,44 @@
+[core]
+    editor = nvim
+    pager = delta
+    filemode = false
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    side-by-side = true
+    syntax-theme = Nord
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
+[user]
+    name = swnakamura
+    email = piequalsabout314159@gmail.com
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[rebase]
+    autosquash = true
+[push]
+    default = current
+[pull]
+    ff = only
+[cola]
+	spellcheck = false
+[init]
+	defaultBranch = master
+
+# tig configuration
+[tig "color"]
+    cursor = 7 8
+[safe]
+	directory = /home/snakamura/remote/home/yubisashi_object_detection
+	directory = /home/snakamura/remote/home/pointing-dataset
+
 [alias]
     l = log --graph  --abbrev-commit --all
     lo = log --graph  --abbrev-commit --all --oneline
@@ -24,32 +65,3 @@
     st = status
     unstage = reset HEAD
     stage = add
-[core]
-    editor = nvim
-    pager = less -SFRX
-    excludesfile = $HOME/.config/git/ignore
-    filemode = false
-[user]
-    name = woodyZootopia
-    email = piequalsabout314159@gmail.com
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-[merge]
-    conflictstyle = "diff3"
-[rebase]
-    autosquash = true
-[push]
-    default = current
-[pull]
-    ff = only
-[cola]
-	spellcheck = false
-[init]
-	defaultBranch = master
-
-# tig configuration
-[tig "color"]
-    cursor = 7 8

@@ -90,9 +90,9 @@ bindkey -M menuselect '^r' history-incremental-search-forward # 補完候補内�
 ## Navigate words with ctrl+arrow keys
 bindkey '^[Oc' forward-word                                     #
 bindkey '^[Od' backward-word                                    #
-bindkey '^[[1;5D' backward-word                                 #
-bindkey '^[[1;5C' forward-word                                  #
-bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
+# bindkey '^[[1;5D' backward-word                                 #
+# bindkey '^[[1;5C' forward-word                                  #
+# bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
 ## <C-o> to edit current line in $EDITOR
@@ -105,7 +105,6 @@ bindkey "^G^S" git_status
 git_status() {
     git branch -v
     git status -s
-    eval $PROMPT
 }
 zle -N git_status
 
@@ -135,7 +134,9 @@ fi
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
-alias gitu='git add . && git commit && git push'
+if uname -r | grep -q 'Darwin'; then
+    alias gitu='git add . && git commit && git push'
+fi
 alias history='history -E'
 
 alias ...='cd ../..'
@@ -144,7 +145,7 @@ alias .....='cd ../../../..'
 
 cdls ()
 {
-  \cd "$@" && myls
+  \cd "$@" && ls -U --color
 }
 
 tn ()
@@ -168,7 +169,7 @@ myls ()
 alias cd="cdls"
 alias zc="z -c"
 alias zi="z -I"
-alias ls="ls --color=auto"
+alias ls="myls"
 alias ll="myls -l"
 alias la="myls -a"
 alias lal="myls -la"
@@ -184,6 +185,8 @@ alias g="git"
 alias gf="git fetch"
 alias gl='git l'
 alias gld='git ld'
+
+alias fzfkill="(date; ps -ef) | fzf --bind='ctrl-r:reload(date; ps -ef)' --header=$'Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9"
 
 xdg_open2() {
     if uname -r | grep -q 'microsoft'; then
@@ -229,6 +232,73 @@ alias jn='jupyter notebook'
 alias wget_cache_website='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 alias jl='julia'
 alias manj='LANG=ja_JP.UTF-8 man'
+
+### suffix alias
+function extract() {
+  local tmp_dir="$(mktemp -d --tmpdir=./)"
+  local archive_file_name="$(basename "$1")"
+  # /dev/null に投げてるのはchpwd対策
+  local absolute_path="$(cd $(dirname $1) > /dev/null 2>&1 && pwd)/${archive_file_name}"
+
+  while read line; do
+    local suf=$(echo -n $line | cut -d' ' -f1)
+    if [[ ${archive_file_name} == *${suf} ]] then
+      local suffix=$suf
+      local command="$(echo $line | sed -E 's/^[.a-zA-Z0-9]+ +//')"
+      break
+    fi
+  done < <(echo  \
+'.tar.gz  tar xzvf
+.tgz     tar xzvf
+.tar.xz  tar Jxvf
+.zip     unzip
+.lzh     lha e
+.tar.bz2 tar xjvf
+.tbz     tar xjvf
+.tar.Z   tar zxvf
+.gz      gzip -dc
+.bz2     bzip2 -dc
+.Z       uncompress
+.tar     tar xvf')
+
+  # 展開
+  ln -s "${absolute_path}" "${tmp_dir}/${archive_file_name}"
+  (
+    cd "${tmp_dir}" > /dev/null 2>&1
+    ${=command} ${archive_file_name} || exit 1
+    rm "${archive_file_name}"
+  )
+  # 展開が失敗していれば、tmp_dirを消して1を返す
+  if [[ $? != '0' ]] ; then
+    rm -rf "${tmp_dir}"
+    return 1
+  fi
+
+  local dir_name="$(ls -A "${tmp_dir}")"
+  if [[ -d "${tmp_dir}/${dir_name}" ]]; then
+    if [[ -d "./${dir_name}" ]]; then
+      (
+        echo "cannot move directory '${dir_name}': File exists"
+        echo "extracted files in ${tmp_dir}/${dir_name}"
+      ) 1>&2
+      return 1
+    else
+      'mv' "${tmp_dir}/${dir_name}" ./
+      rm -rf "${tmp_dir}"
+    fi
+  else
+    local dir_name="$(basename "${archive_file_name}" "${suffix}")"
+    if [[ -d "./${dir_name}" ]]; then
+      (
+        echo "cannot move directory '${dir_name}': File exists"
+        echo "extracted directory as ${tmp_dir}"
+      ) 1>&2
+    else
+      'mv' "${tmp_dir}" "${dir_name}"
+    fi
+  fi
+}
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 # Theming section  
 autoload -U compinit colors zcalc
@@ -519,8 +589,6 @@ git_diff_wc(){
 export PATH=~/.cargo/bin:${PATH}
 export PATH=~/bin:${PATH}
 export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
-export PATH=~/.neovim/bin:${PATH}
-# export PATH=~/.pyenv/shims:${PATH}
 
 if command -v nvim &> /dev/null
 then
@@ -531,29 +599,30 @@ fi
 
 # sheldon
 if command -v sheldon &> /dev/null; then
-    eval "$(sheldon source)"
+    cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
+    sheldon_cache="$cache_dir/sheldon.zsh"
+    sheldon_toml="$HOME/.config/sheldon/plugins.toml"
+    if [[ ! -r "$sheldon_cache" || ! -s "$sheldon_cache" || "$sheldon_toml" -nt "$sheldon_cache" ]]; then
+        mkdir -p $cache_dir
+        sheldon source > $sheldon_cache
+    fi
+    source "$sheldon_cache"
+    unset cache_dir sheldon_cache sheldon_toml
 else
-    echo "zplug not loaded"
+    echo "sheldon not loaded"
 fi
-
-# sheldon
-cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
-sheldon_cache="$cache_dir/sheldon.zsh"
-sheldon_toml="$HOME/.config/sheldon/plugins.toml"
-if [[ ! -r "$sheldon_cache" || "$sheldon_toml" -nt "$sheldon_cache" ]]; then
-  mkdir -p $cache_dir
-  sheldon source > $sheldon_cache
-fi
-source "$sheldon_cache"
-unset cache_dir sheldon_cache sheldon_toml
 
 if command -v starship &> /dev/null; then
     eval "$(starship init zsh)"
 else
     PROMPT_TIME='%F{3}%D{%m-%d %H:%M:%S}%f'
     PROMPT_USER_NAME='%F{2}%n%f'
+    PROMPT_HOST_NAME='%F{2}%m%f'
     PROMPT_CWD='%F{6}%~%f'
-    PROMPT='%B$PROMPT_TIME%b %B$PROMPT_USER_NAME%b in %B${PROMPT_CWD}%b -> '
+    PROMPT="%B$PROMPT_TIME%b \
+%B$PROMPT_USER_NAME%b \
+in %{[1;2;32m%}$PROMPT_HOST_NAME%{[0m%} \
+in %B${PROMPT_CWD}%b -> "
 fi
 
 if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
@@ -568,7 +637,7 @@ fi
 if which fzf > /dev/null && which _zlua > /dev/null; then
     # use fzf to find repos in ghq
     zlua_fzf() {
-        local dir_name=$(z | tac | fzf +s)
+        local dir_name=$(z | tac | fzf --scheme=path)
         local dir_name=${dir_name##* }
         if [ -n "${dir_name}" ]; then
             \cd ${dir_name}
@@ -582,3 +651,51 @@ else
     echo "zlua_fzf" not loaded
 fi
 
+
+alias gpustat-all='ssh as gpustat-all'
+alias gtop="~/scripts/gtop"
+alias gtopa="~/scripts/gtop-all"
+alias ssync="~/scripts/ssync"
+
+gpustat ()
+{
+    ssh "$@" "/usr/bin/gpustat -up; ps aux --sort -%cpu" | head -n $(($(tput lines)-2)) | cut -c -$(tput cols)
+}
+watch-gpustat ()
+{
+    watch 'ssh' $@' "/usr/bin/gpustat -up; ps aux --sort -%cpu" | head -n $(($(tput lines)-2)) | cut -c -$(tput cols)'
+}
+
+compdef gtop=ssh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/mambaforge/etc/profile.d/conda.sh" ]; then
+        . "/opt/mambaforge/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/mambaforge/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/opt/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/opt/mambaforge/etc/profile.d/mamba.sh"
+fi
+# # <<< conda initialize <<<
+
+export BIND="\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-25-livingroom:/data/frames/2023-01-25-livingroom:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-24-livingroom:/data/frames/2023-01-24-livingroom:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-19-livingroom:/data/frames/2023-01-19-livingroom:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-18-livingroom:/data/frames/2023-01-18-livingroom:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-17-livingroom:/data/frames/2023-01-17-livingroom:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-25-openoffice:/data/frames/2023-01-25-openoffice:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-24-openoffice:/data/frames/2023-01-24-openoffice:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-19-openoffice:/data/frames/2023-01-19-openoffice:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-18-openoffice:/data/frames/2023-01-18-openoffice:image-src=/,\
+/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-17-openoffice:/data/frames/2023-01-17-openoffic:image-src=/\
+"

@@ -3,6 +3,9 @@ add_newline=false
 disabled=false
 format='[$time]($style) '
 time_format='%F %T'
+[directory]
+truncation_symbol = '…/'
+truncate_to_repo=false
 [status]
 symbol = ""
 format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
