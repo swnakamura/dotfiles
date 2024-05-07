@@ -14,23 +14,45 @@ end
 
 
 -- For example, changing the color scheme:
-config.color_scheme = 'iceberg-dark'
 
+local mycolor_dark = wezterm.color.get_builtin_schemes()['rose-pine-moon']
+local mycolor_light = wezterm.color.get_builtin_schemes()['rose-pine-dawn']
 
-local iceberg = wezterm.color.get_builtin_schemes()['iceberg-dark']
 -- selection_bg is used as the conversion text, so make it different from conposition text for visibility
-iceberg.selection_bg = 'gray'
+mycolor_dark.selection_bg = 'silver'
+mycolor_light.selection_bg = 'gray'
 
 config.color_schemes = {
-    ['My Iceberg'] = iceberg,
+    ['My Color Dark'] = mycolor_dark,
+    ['My Color Light'] = mycolor_light,
 }
-config.color_scheme = 'My Iceberg'
+
+
+local function scheme_for_appearance(appearance)
+  if appearance:find 'Dark' then
+    return 'My Color Dark'
+  else
+    return 'My Color Light'
+  end
+end
+
+wezterm.on('window-config-reloaded', function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+  local appearance = window:get_appearance()
+  local scheme = scheme_for_appearance(appearance)
+  if overrides.color_scheme ~= scheme then
+    overrides.color_scheme = scheme
+    window:set_config_overrides(overrides)
+  end
+end)
 
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 
 config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Hiragino Maru Gothic Pro" })
 
 config.font_size = 13
+
+config.enable_kitty_graphics = true
 
 -- config.window_background_opacity = 0.95
 -- config.text_background_opacity = 0.8
@@ -75,7 +97,7 @@ config.keys = {
     { key = 'l',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Right' },
     { key = 'k',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Up' },
     { key = 'j',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Down' },
-    { key = 'w',         mods = 'SHIFT|CTRL', action = act.CloseCurrentPane { confirm = true } },
+    { key = 'w',         mods = 'SUPER', action = act.CloseCurrentPane { confirm = true } },
 }
 
 return config

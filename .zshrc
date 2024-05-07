@@ -42,7 +42,7 @@ zstyle ':completion:*' menu select                              # Highlight menu
 ## Speed up completions
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' cache-path $HOME/.zsh/cache
 
 ## Add coreutils path for macOS
 ## This is added here to load dircolors
@@ -57,7 +57,7 @@ export ZLS_COLORS=$LS_COLORS
 export CLICOLOR=true
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
 
-HISTFILE=~/.zsh_history
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
@@ -103,15 +103,23 @@ bindkey "^O" edit-command-line
 # ^G^S to view git status
 bindkey "^G^S" git_status
 git_status() {
-    git branch -v
+    echo ""
+    echo "\e[1;4;32mgit branches\e[m:"
+    git branch -vv
+    echo ""
+    echo "\e[1;4;32mgit status\e[m:"
     git status -s
+    echo ""
+    echo ""
+    # show prompt again
+    zle reset-prompt
 }
 zle -N git_status
 
 ## fzf binding
-if [[ -f ~/.fzf.zsh ]]; then
+if [[ -f $HOME/.fzf.zsh ]]; then
     # fzf settings
-    source ~/.fzf.zsh
+    source $HOME/.fzf.zsh
 
     # use fzf to find repos in ghq
     fzf_pjc() {
@@ -178,6 +186,9 @@ alias v="nvim"
 alias e="emacs"
 alias duh="du -h -d1"
 alias kill9="kill -9"
+
+alias venv-home="source ~/.venv/bin/activate" # source virtualenv at home directory
+alias venv-here="source .venv/bin/activate"   # source virtualenv at current directory
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
@@ -586,9 +597,9 @@ git_diff_wc(){
 }
 
 # add necessary PATH
-export PATH=~/.cargo/bin:${PATH}
-export PATH=~/bin:${PATH}
-export PATH=~/.local/share/gem/ruby/3.0.0/bin:${PATH}
+export PATH=$HOME/.cargo/bin:${PATH}
+export PATH=$HOME/bin:${PATH}
+export PATH=$HOME/.local/share/gem/ruby/3.0.0/bin:${PATH}
 
 if command -v nvim &> /dev/null
 then
@@ -620,6 +631,7 @@ if command -v sheldon &> /dev/null; then
     unset cache_dir sheldon_cache sheldon_toml
 else
     echo "sheldon not loaded"
+    echo "Therefore, z.lua not loaded"
 fi
 
 if command -v starship &> /dev/null; then
@@ -633,14 +645,6 @@ else
 %B$PROMPT_USER_NAME%b \
 in %{[1;2;32m%}$PROMPT_HOST_NAME%{[0m%} \
 in %B${PROMPT_CWD}%b -> "
-fi
-
-if $(command -v lua &> /dev/null) && [[ -f /usr/share/z.lua/z.lua ]]; then
-    eval "$(lua /usr/share/z.lua/z.lua --init zsh enhanced once echo)"
-elif $(command -v brew &> /dev/null); then
-    eval "$(lua $(brew --prefix z.lua)/share/z.lua/z.lua --init zsh)"
-else
-    echo "z.lua not loaded"
 fi
 
 ## fzf+z.lua binding
@@ -658,8 +662,31 @@ if which fzf > /dev/null && which _zlua > /dev/null; then
     zle -N zlua_fzf
     bindkey "^K" zlua_fzf
 else
-    echo "zlua_fzf" not loaded
+    echo zlua_fzf not loaded
 fi
+
+# Misc functions to test the shell color features
+test_colors(){
+    for style in {0..8}; do
+        for fg in {30..37}; do
+            for bg in {40..47}; do
+                # \e[m resets the color
+                echo -ne "\e[$style;$fg;${bg}m\\\e[$style;$fg;${bg}m\e[m ";
+            done;
+            echo;
+        done;
+    done;
+    echo ""
+}
+
+test_colors_256(){
+    for i in {0..255} ; do
+        printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
+        if (( i == 15 )) || (( i > 15 )) && (( (i-15) % 6 == 0 )); then
+            printf "\n";
+        fi
+    done
+}
 
 
 alias gpustat-all='ssh as gpustat-all'

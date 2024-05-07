@@ -1,0 +1,6 @@
+.Spotlight*
+.Trash*
+.AppleDouble*
+Thumbs.db
+.DS_Store
+.venv/
