@@ -4,3 +4,9 @@
 Thumbs.db
 .DS_Store
 .venv/
+.ruff_cache/
+.TemporaryItems/
+.fseventsd/
+$RECYCLE.BIN
+._*
+.git/

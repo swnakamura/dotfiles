@@ -15,8 +15,10 @@ end
 
 -- For example, changing the color scheme:
 
-local mycolor_dark = wezterm.color.get_builtin_schemes()['rose-pine-moon']
-local mycolor_light = wezterm.color.get_builtin_schemes()['rose-pine-dawn']
+-- local mycolor_dark = wezterm.color.get_builtin_schemes()['rose-pine-moon']
+-- local mycolor_light = wezterm.color.get_builtin_schemes()['rose-pine-dawn']
+local mycolor_dark = wezterm.color.get_builtin_schemes()['iceberg-dark']
+local mycolor_light = wezterm.color.get_builtin_schemes()['iceberg-light']
 
 -- selection_bg is used as the conversion text, so make it different from conposition text for visibility
 mycolor_dark.selection_bg = 'silver'
@@ -27,23 +29,32 @@ config.color_schemes = {
     ['My Color Light'] = mycolor_light,
 }
 
+-- dim inactive pane
+config.inactive_pane_hsb = {
+    brightness = 0.5,
+    saturation = 0.6,
+}
+
 
 local function scheme_for_appearance(appearance)
-  if appearance:find 'Dark' then
+    -- always use dark theme
+
+    -- if appearance:find 'Dark' then
+    --   return 'My Color Dark'
+    -- else
+    --   return 'My Color Light'
+    -- end
     return 'My Color Dark'
-  else
-    return 'My Color Light'
-  end
 end
 
 wezterm.on('window-config-reloaded', function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  local appearance = window:get_appearance()
-  local scheme = scheme_for_appearance(appearance)
-  if overrides.color_scheme ~= scheme then
-    overrides.color_scheme = scheme
-    window:set_config_overrides(overrides)
-  end
+    local overrides = window:get_config_overrides() or {}
+    local appearance = window:get_appearance()
+    local scheme = scheme_for_appearance(appearance)
+    if overrides.color_scheme ~= scheme then
+        overrides.color_scheme = scheme
+        window:set_config_overrides(overrides)
+    end
 end)
 
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
@@ -92,12 +103,76 @@ config.keys = {
     { key = 'DownArrow', mods = 'SHIFT',      action = act.ScrollToPrompt(1) },
     { key = 'Z',         mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
     { key = 'Enter',     mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
-    { key = 't',         mods = 'ALT',        action = act.SpawnTab 'CurrentPaneDomain' },
+    -- { key = 't',         mods = 'ALT',        action = act.SpawnTab 'CurrentPaneDomain' },
     { key = 'h',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Left' },
     { key = 'l',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Right' },
     { key = 'k',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Up' },
     { key = 'j',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Down' },
-    { key = 'w',         mods = 'SUPER', action = act.CloseCurrentPane { confirm = true } },
+    { key = 'w',         mods = 'SUPER',      action = act.CloseCurrentPane { confirm = true } },
+    -- Thank you https://zenn.dev/sankantsu/articles/e713d52825dbbb for the configuration below
+    {
+        key = 'c',
+        mods = 'SUPER|SHIFT',
+        action = act.PromptInputLine {
+            description = "(wezterm) Create new workspace:",
+            action = wezterm.action_callback(function(window, pane, line)
+                if line then
+                    window:perform_action(
+                        act.SwitchToWorkspace {
+                            name = line,
+                        },
+                        pane
+                    )
+                end
+            end),
+        }
+        ,
+    },
+    {
+        key = 'd',
+        mods = 'SUPER',
+        action = wezterm.action_callback(function(win, pane)
+            -- workspace のリストを作成
+            local workspaces = {}
+            for i, name in ipairs(wezterm.mux.get_workspace_names()) do
+                table.insert(workspaces, {
+                    id = name,
+                    label = string.format("%d. %s", i, name),
+                })
+            end
+            local current = wezterm.mux.get_active_workspace()
+            -- 選択メニューを起動
+            win:perform_action(act.InputSelector {
+                action = wezterm.action_callback(function(_, _, id, label)
+                    if not id and not label then
+                        wezterm.log_info "Workspace selection canceled"               -- 入力が空ならキャンセル
+                    else
+                        win:perform_action(act.SwitchToWorkspace { name = id }, pane) -- workspace を移動
+                    end
+                end),
+                title = "Select workspace",
+                choices = workspaces,
+                fuzzy = true,
+                -- fuzzy_description = string.format("Select workspace: %s -> ", current), -- requires nightly build
+            }, pane)
+        end),
+    },
+    {
+        key = 'r',
+        mods = 'SUPER',
+        action = act.PromptInputLine {
+            description = 'Set workspace title:',
+            action = wezterm.action_callback(function(win, pane, line)
+                if line then
+                    wezterm.mux.rename_workspace(
+                        wezterm.mux.get_active_workspace(),
+                        line
+                    )
+                end
+            end),
+        }
+        ,
+    }
 }
 
 return config

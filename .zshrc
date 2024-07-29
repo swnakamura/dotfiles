@@ -65,23 +65,17 @@ zmodload zsh/complist # used for bindkey -M menuselect
 
 
 ### Keybindings section
-bindkey -e
-bindkey '^[[7~' beginning-of-line                               # Home key
-bindkey '^[[H' beginning-of-line                                # Home key
-if [[ "${terminfo[khome]}" != "" ]]; then
-  bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
-fi
-bindkey '^[[8~' end-of-line                                     # End key
-bindkey '^[[F' end-of-line                                     # End key
-if [[ "${terminfo[kend]}" != "" ]]; then
-  bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
-fi
-bindkey '^[[2~' overwrite-mode                                  # Insert key
-bindkey '^[[3~' delete-char                                     # Delete key
-bindkey '^[[C'  forward-char                                    # Right key
-bindkey '^[[D'  backward-char                                   # Left key
-bindkey '^[[5~' history-beginning-search-backward               # Page up key
-bindkey '^[[6~' history-beginning-search-forward                # Page down key
+bindkey -v                                                 # Use vi keybindings
+
+# Easy cursor movement in insert mode inspired by emacs
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey '^B' backward-char
+bindkey '^F' forward-char
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
+bindkey '^U' backward-kill-line
+
 
 bindkey -M menuselect '^g' .send-break                        # send-break2回分の効果
 bindkey -M menuselect '^k' accept-and-infer-next-history      # 次の補完メニューを表示する
@@ -170,7 +164,7 @@ myls ()
     if command -v lsd &> /dev/null; then
         lsd $*
     else
-        ls $*
+        ls --color $*
     fi
 }
 
@@ -183,12 +177,15 @@ alias la="myls -a"
 alias lal="myls -la"
 alias lla="myls -la"
 alias v="nvim"
+alias vs='nvim -u ~/.config/nvim/simple.lua'
+alias y='yazi'
 alias e="emacs"
 alias duh="du -h -d1"
 alias kill9="kill -9"
 
 alias venv-home="source ~/.venv/bin/activate" # source virtualenv at home directory
 alias venv-here="source .venv/bin/activate"   # source virtualenv at current directory
+alias venv-this="source .venv/bin/activate"   # source virtualenv at current directory
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
@@ -196,8 +193,16 @@ alias g="git"
 alias gf="git fetch"
 alias gl='git l'
 alias gld='git ld'
+alias glo='git lo'
 
 alias fzfkill="(date; ps -ef) | fzf --bind='ctrl-r:reload(date; ps -ef)' --header=$'Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9"
+
+notify_and_say() {
+    osascript -e "display notification \"$*\" with title \"Title\""
+    say "$*"
+}
+
+alias notify-say=notify_and_say
 
 xdg_open2() {
     if uname -r | grep -q 'microsoft'; then
@@ -243,6 +248,8 @@ alias jn='jupyter notebook'
 alias wget_cache_website='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 alias jl='julia'
 alias manj='LANG=ja_JP.UTF-8 man'
+
+alias gmsg='git diff --staged | ollama run tavernari/git-commit-message | tee >(pbcopy)' # Generate commit message from staged changes
 
 ### suffix alias
 function extract() {
@@ -689,10 +696,12 @@ test_colors_256(){
 }
 
 
+# For servers
 alias gpustat-all='ssh as gpustat-all'
-alias gtop="~/scripts/gtop"
-alias gtopa="~/scripts/gtop-all"
-alias ssync="~/scripts/ssync"
+alias gtop="$HOME/scripts/gtop"
+alias gtopa="$HOME/scripts/gtop-all"
+alias ssync="$HOME/scripts/ssync"
+alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
 
 gpustat ()
 {
@@ -703,36 +712,6 @@ watch-gpustat ()
     watch 'ssh' $@' "/usr/bin/gpustat -up; ps aux --sort -%cpu" | head -n $(($(tput lines)-2)) | cut -c -$(tput cols)'
 }
 
+# Use the same completion
 compdef gtop=ssh
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/mambaforge/etc/profile.d/conda.sh" ]; then
-        . "/opt/mambaforge/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/mambaforge/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-
-if [ -f "/opt/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/opt/mambaforge/etc/profile.d/mamba.sh"
-fi
-# # <<< conda initialize <<<
-
-export BIND="\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-25-livingroom:/data/frames/2023-01-25-livingroom:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-24-livingroom:/data/frames/2023-01-24-livingroom:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-19-livingroom:/data/frames/2023-01-19-livingroom:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-18-livingroom:/data/frames/2023-01-18-livingroom:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-17-livingroom:/data/frames/2023-01-17-livingroom:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-25-openoffice:/data/frames/2023-01-25-openoffice:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-24-openoffice:/data/frames/2023-01-24-openoffice:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-19-openoffice:/data/frames/2023-01-19-openoffice:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-18-openoffice:/data/frames/2023-01-18-openoffice:image-src=/,\
-/home/snakamura/remote/temp/snakamura/DPDataset_public/frames_squashed/2023-01-17-openoffice:/data/frames/2023-01-17-openoffic:image-src=/\
-"
+compdef ssync=scp

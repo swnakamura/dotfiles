@@ -14,7 +14,7 @@
     colorMoved = default
 [user]
     name = swnakamura
-    email = piequalsabout314159@gmail.com
+    email = snakamura@vision.ist.i.kyoto-u.ac.jp
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -79,3 +79,7 @@
     unstage = reset HEAD
     stage = add
 
+[credential]
+	helper = store
+[rerere]
+	enabled = true
