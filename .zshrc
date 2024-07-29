@@ -185,7 +185,7 @@ alias kill9="kill -9"
 
 alias venv-home="source ~/.venv/bin/activate" # source virtualenv at home directory
 alias venv-here="source .venv/bin/activate"   # source virtualenv at current directory
-alias venv-this="source .venv/bin/activate"   # source virtualenv at current directory
+alias venv="venv-here || venv-home"   # Try sourcing virtualenv at current directory, then home directory
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
