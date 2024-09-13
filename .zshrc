@@ -63,6 +63,8 @@ SAVEHIST=10000
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 zmodload zsh/complist # used for bindkey -M menuselect
 
+# Export locale
+export LC_CTYPE=en_US.UTF-8
 
 ### Keybindings section
 bindkey -v                                                 # Use vi keybindings

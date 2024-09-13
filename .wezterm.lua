@@ -12,13 +12,26 @@ end
 
 -- This is where you actually apply your config choices
 
-
 -- For example, changing the color scheme:
 
 -- local mycolor_dark = wezterm.color.get_builtin_schemes()['rose-pine-moon']
 -- local mycolor_light = wezterm.color.get_builtin_schemes()['rose-pine-dawn']
 local mycolor_dark = wezterm.color.get_builtin_schemes()['iceberg-dark']
 local mycolor_light = wezterm.color.get_builtin_schemes()['iceberg-light']
+
+-- kitty key encoding to let neovim use command key
+config.enable_kitty_keyboard = true
+config.enable_csi_u_key_encoding = false
+
+-- neovim integration
+local wezterm = require('wezterm')
+local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
+-- rest of your config
+wezterm.on('user-var-changed', function(window, pane, name, value)
+    local overrides = window:get_config_overrides() or {}
+    overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
+    window:set_config_overrides(overrides)
+end)
 
 -- selection_bg is used as the conversion text, so make it different from conposition text for visibility
 mycolor_dark.selection_bg = 'silver'
@@ -29,10 +42,19 @@ config.color_schemes = {
     ['My Color Light'] = mycolor_light,
 }
 
+-- enable scrollbar
+config.enable_scroll_bar = true
+
+-- do not show titles
+config.window_decorations = "RESIZE"
+
+-- do not show tab bar when there's only one tab
+config.hide_tab_bar_if_only_one_tab = true
+
 -- dim inactive pane
 config.inactive_pane_hsb = {
-    brightness = 0.5,
-    saturation = 0.6,
+    brightness = 0.3,
+    saturation = 1,
 }
 
 
@@ -129,7 +151,7 @@ config.keys = {
         ,
     },
     {
-        key = 'd',
+        key = 'k',
         mods = 'SUPER',
         action = wezterm.action_callback(function(win, pane)
             -- workspace のリストを作成

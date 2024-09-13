@@ -10,3 +10,5 @@ Thumbs.db
 $RECYCLE.BIN
 ._*
 .git/
+__pycache__/
+*.o

@@ -2,11 +2,9 @@ keymap:
   - name: macOS binding for all applications
     remap:
       ALT-A: CTRL-A
-      ALT-R: CTRL-R
       ALT-F: CTRL-F
       ALT-Z: CTRL-Z
       ALT-L: CTRL-L
-      ALT-K: CTRL-K
       ALT-D: CTRL-D
       ALT-LEFTBRACE: ALT-Left
       ALT-RIGHTBRACE: ALT-Right
@@ -15,21 +13,29 @@ keymap:
       CTRL-M: Enter
       Super-Grave: Esc
 
-  - name: wezterm # not working somehow
+  - name: wezterm
     application:
-      only: wezterm
+      only: org.wezfurlong.wezterm.org.wezfurlong.wezterm
     remap:
       ALT-C: CTRL-SHIFT-C
       ALT-V: CTRL-SHIFT-V
+      ALT-SHIFT-C: SUPER-SHIFT-C
+      ALT-K: SUPER-K
+      ALT-R: SUPER-R
+      ALT-T: SUPER-T
+      ALT-N: CTRL-SHIFT-N
+      ALT-W: SUPER-W
 
   - name: non-wezterm
     application:
-      not: wezterm
+      not: org.wezfurlong.wezterm.org.wezfurlong.wezterm
     remap:
       ALT-C: CTRL-C
       ALT-X: CTRL-X
       ALT-V: CTRL-V
+      ALT-R: CTRL-R
       ALT-T: CTRL-T
+      ALT-K: CTRL-K
       ALT-N: CTRL-N
       ALT-P: CTRL-P
       ALT-Comma: CTRL-Comma # config

@@ -28,4 +28,5 @@ else
     # ------------
     [[ -e $HOME/.fzf/shell/key-bindings.zsh ]] && source "$HOME/.fzf/shell/key-bindings.zsh"
     [[ -e /usr/share/fzf/key-bindings.zsh ]] && source "/usr/share/fzf/key-bindings.zsh"
+    [[ -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source "/usr/share/doc/fzf/examples/key-bindings.zsh"
 fi
