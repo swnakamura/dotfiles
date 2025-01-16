@@ -1,4 +1,7 @@
-add_newline=false
+format = '''
+$time$status$all$character'''
+[line_break]
+disabled=false
 [time]
 disabled=false
 format='[$time]($style) '
