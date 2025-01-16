@@ -17,6 +17,7 @@ setopt auto_pushd         # push past working directory list automatically
 setopt prompt_subst       # eable substitution in prompt
 setopt notify             # notify background job changes immediately
 setopt equals             # expand `=command` as $(which command)
+setopt interactivecomments # Allow comments in interactive shell
 
 ## history
 setopt bang_hist            # !を使ったヒストリ展開を行う(d)
@@ -112,10 +113,33 @@ git_status() {
 }
 zle -N git_status
 
+# ^G^D to view git diff
+git_diff() {
+    echo ""
+    echo "\e[1;4;32mgit diff\e[m:"
+    git diff
+    echo ""
+    echo ""
+    # show prompt again
+    zle reset-prompt
+}
+zle -N git_diff
+bindkey "^G^D" git_diff
+
 ## fzf binding
 if [[ -f $HOME/.fzf.zsh ]]; then
-    # fzf settings
+    # load fzf settings
     source $HOME/.fzf.zsh
+
+    # Use fd command for fzf
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+    # Use mdfind command for fzf. doesn't work
+    # export FZF_DEFAULT_COMMAND='mdfind -onlyin $HOME -name "*"'
+    # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    # export FZF_ALT_C_COMMAND='mdfind -onlyin $HOME -name "* kind:folder"' 
 
     # use fzf to find repos in ghq
     fzf_pjc() {
@@ -149,7 +173,7 @@ alias .....='cd ../../../..'
 
 cdls ()
 {
-  \cd "$@" && ls -U --color
+  \cd "$@" && \ls -U --color
 }
 
 tn ()
@@ -178,7 +202,6 @@ alias ll="myls -l"
 alias la="myls -a"
 alias lal="myls -la"
 alias lla="myls -la"
-alias v="nvim"
 alias vs='nvim -u ~/.config/nvim/simple.lua'
 alias y='yazi'
 alias e="emacs"
@@ -191,12 +214,6 @@ alias venv="venv-here || venv-home"   # Try sourcing virtualenv at current direc
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
-alias g="git"
-alias gf="git fetch"
-alias gl='git l'
-alias gld='git ld'
-alias glo='git lo'
-
 alias fzfkill="(date; ps -ef) | fzf --bind='ctrl-r:reload(date; ps -ef)' --header=$'Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9"
 
 notify_and_say() {
@@ -206,8 +223,11 @@ notify_and_say() {
 
 alias notify-say=notify_and_say
 
+IS_WSL=$(uname -r | grep 'microsoft')
+IS_MACOS=$(uname | grep 'Darwin')
+
 xdg_open2() {
-    if uname -r | grep -q 'microsoft'; then
+    if [[ -n $IS_WSL ]]; then
         # WSL
         if [ -z $* ]; then
             explorer.exe .
@@ -216,7 +236,7 @@ xdg_open2() {
         fi
         return 0
     fi
-    if uname | grep -q 'Darwin'; then
+    if [[ -n $IS_MACOS ]]; then
         # macOS
         if [[ -z $* ]]; then
             open .
@@ -226,7 +246,7 @@ xdg_open2() {
         return 0
     fi
     # otherwise Linux
-    if [ -z $* ]; then
+    if [[ -z $* ]]; then
         xdg-open .
     else
         xdg-open $*
@@ -235,18 +255,13 @@ xdg_open2() {
 alias o="xdg_open2"
 alias imo='f(){convert $1 sixel:-;}; f'
 
-alias tm="tn"
-alias ks="tmux kill-session -t"
-alias kp="tmux kill-pane -t"
-alias kw="tmux kill-window -t"
-alias tls="tmux ls"
-alias ta="tmux a -t"
-# alias tac="tmux a -c \`pwd\` -t" # attach and set current directory the default directory for the session
+# If not wsl or macos, is linux and map xclip to pbcopy
+if [[ -z $IS_WSL ]] && [[ -z $IS_MACOS ]]; then
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
+
 alias pip_update_all='pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U'
-alias de='conda deactivate'
-alias py='python3'
-alias ipy='ipython'
-alias jn='jupyter notebook'
 alias wget_cache_website='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 alias jl='julia'
 alias manj='LANG=ja_JP.UTF-8 man'
@@ -660,13 +675,14 @@ fi
 if which fzf > /dev/null && which _zlua > /dev/null; then
     # use fzf to find repos in ghq
     zlua_fzf() {
-        local dir_name=$(z | tac | fzf --scheme=path)
-        local dir_name=${dir_name##* }
+        local dir_name=$(z | tac | fzf --no-sort)
+        local dir_name=${dir_name##[0-9]* }
         if [ -n "${dir_name}" ]; then
             \cd ${dir_name}
             ls
             zle redisplay
         fi
+        pwd
     }
     zle -N zlua_fzf
     bindkey "^K" zlua_fzf
@@ -697,13 +713,131 @@ test_colors_256(){
     done
 }
 
+## Abbreviations
+if command -v abbr &> /dev/null; then
+    abbr -S g="git" >/dev/null
+    abbr -S gf="git fetch" >/dev/null
+    abbr -S gl='git l' >/dev/null
+    abbr -S gld='git ld' >/dev/null
+    abbr -S glo='git lo' >/dev/null
+
+    abbr -S de='deactivate' >/dev/null
+    abbr -S py='python3' >/dev/null
+    abbr -S ipy='ipython' >/dev/null
+    abbr -S jn='jupyter notebook' >/dev/null
+
+    abbr -S v="nvim" >/dev/null
+    abbr -S n="neovide" >/dev/null
+
+    abbr -S tm="tn" >/dev/null
+    abbr -S ks="tmux -u kill-session -t" >/dev/null
+    abbr -S kp="tmux -u kill-pane -t" >/dev/null
+    abbr -S kw="tmux -u kill-window -t" >/dev/null
+    abbr -S tls="tmux -u ls" >/dev/null
+    abbr -S ta="tmux -u a -t" >/dev/null
+else
+    alias g="git" >/dev/null
+    alias gf="git fetch" >/dev/null
+    alias gl='git l' >/dev/null
+    alias gld='git ld' >/dev/null
+    alias glo='git lo' >/dev/null
+
+    alias de='deactivate' >/dev/null
+    alias py='python3' >/dev/null
+    alias ipy='ipython' >/dev/null
+    alias jn='jupyter notebook' >/dev/null
+
+    alias v="nvim" >/dev/null
+    alias n="neovide" >/dev/null
+
+    alias tm="tn" >/dev/null
+    alias ks="tmux -u kill-session -t" >/dev/null
+    alias kp="tmux -u kill-pane -t" >/dev/null
+    alias kw="tmux -u kill-window -t" >/dev/null
+    alias tls="tmux -u ls" >/dev/null
+    alias ta="tmux -u a -t" >/dev/null
+fi
 
 # For servers
 alias gpustat-all='ssh as gpustat-all'
+alias gpustat-all-fast='ssh as gpustat-all-fast'
 alias gtop="$HOME/scripts/gtop"
 alias gtopa="$HOME/scripts/gtop-all"
 alias ssync="$HOME/scripts/ssync"
 alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
+
+EXCLUDE_LIST=$(echo --exclude={"*.png","*.jpg","*.json","*.bag","*.bin","*.mp4",'*.pth',"*.h5","*.db","*.pkl","*.a","*.MP4","*.raw","*.nfs0000*",".#*"})
+
+# Copy from/to server the lap scripts
+function sync-lap-from(){
+    # Should have an argument
+    if [ $# -lt 2 ]; then
+        echo "Usage: sync-lap-from <dst> <file>"
+        return 1
+    fi
+    SERVER=$1
+    shift
+    TARGET=$1
+    shift
+    OPTIONS=$@
+    ssync -aZ --update $SERVER:~/lap/$TARGET/ $HOME/lap/$TARGET/ $OPTIONS $EXCLUDE_LIST
+}
+
+function sync-lap-to(){
+    # Should have an argument
+    if [ $# -lt 2 ]; then
+        echo "Usage: sync-lap-to <dst> <file>"
+        return 1
+    fi
+    SERVER=$1
+    shift
+    TARGET=$1
+    shift
+    OPTIONS=$@
+    ssync -aZ --update $HOME/lap/$TARGET/ $SERVER:~/lap/$TARGET/ $OPTIONS $EXCLUDE_LIST
+}
+
+# Copy scripts from/to SERVER
+function sync-from() {
+    # Should have an argument
+    if [ $# -lt 2 ]; then
+        echo "Usage: sync-from <dst> <file> <OPTIONS?>"
+        return 1
+    fi
+    SERVER=$1
+    shift
+    TARGET=$1
+    shift
+    OPTIONS=$@
+    echo "Syncing from $SERVER:$TARGET", "OPTIONS: $OPTIONS"
+    if [[ "$TARGET" == /* || "$TARGET" == ~* ]]; then
+        # TARGET is absolute path
+        ssync -aZ --update $SERVER:$TARGET/ $TARGET/ $OPTIONS $EXCLUDE_LIST
+    else
+        # TARGET is relative path
+        ssync -aZ --update $SERVER:$(pwd)/$TARGET/ $(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
+    fi
+}
+
+function sync-to(){
+    # Should have an argument
+    if [ $# -lt 2 ]; then
+        echo "Usage: sync-to <dst> <file> <OPTIONS?>"
+        return 1
+    fi
+    SERVER=$1
+    shift
+    TARGET=$1
+    shift
+    OPTIONS=$@
+    if [[ "$TARGET" == /* || "$TARGET" == ~* ]]; then
+        # TARGET is absolute path
+        ssync -aZ --update $TARGET/ $SERVER:$TARGET/ $OPTIONS $EXCLUDE_LIST
+    else
+        # TARGET is relative path
+        ssync -aZ --update $(pwd)/$TARGET/ $SERVER:$(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
+    fi
+}
 
 gpustat ()
 {
