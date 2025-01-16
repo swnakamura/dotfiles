@@ -1,11 +1,10 @@
 keymap:
   - name: macOS binding for all applications
+    application:
+      not: [emacs.Emacs]
     remap:
       ALT-A: CTRL-A
-      ALT-F: CTRL-F
       ALT-Z: CTRL-Z
-      ALT-L: CTRL-L
-      ALT-D: CTRL-D
       ALT-LEFTBRACE: ALT-Left
       ALT-RIGHTBRACE: ALT-Right
       ALT-PageUp: CTRL-PageUp
@@ -26,36 +25,39 @@ keymap:
       ALT-N: CTRL-SHIFT-N
       ALT-W: SUPER-W
 
-  - name: non-wezterm
+  - name: non-vim
     application:
-      not: org.wezfurlong.wezterm.org.wezfurlong.wezterm
+      not: [org.wezfurlong.wezterm.org.wezfurlong.wezterm, obsidian, emacs.Emacs]
     remap:
       ALT-C: CTRL-C
-      ALT-X: CTRL-X
-      ALT-V: CTRL-V
-      ALT-R: CTRL-R
-      ALT-T: CTRL-T
+      ALT-D: CTRL-D
+      ALT-F: CTRL-F
       ALT-K: CTRL-K
+      ALT-L: CTRL-L
       ALT-N: CTRL-N
       ALT-P: CTRL-P
+      ALT-R: CTRL-R
+      ALT-T: CTRL-T
+      ALT-V: CTRL-V
+      ALT-X: CTRL-X
       ALT-Comma: CTRL-Comma # config
 
   - name: obsidian
     application:
       only: obsidian
     remap:
-      ALT-J: CTRL-J # toggle bullet list
-      ALT-B: CTRL-B # toggle bold
-      ALT-I: CTRL-I # toggle italic shape
-      ALT-M: CTRL-M # toggle strikethrough
-      ALT-W: CTRL-W # close window (by alt+shift+w)
-      ALT-O: CTRL-O # open file
-      ALT-G: CTRL-G # open graph view
-      CTRL-Leftbrace: Esc # open graph view
+      CTRL-Leftbrace: Esc # Esc for vim mode
+  #     ALT-J: CTRL-J # toggle bullet list
+  #     ALT-B: CTRL-B # toggle bold
+  #     ALT-I: CTRL-I # toggle italic shape
+  #     ALT-M: CTRL-M # toggle strikethrough
+  #     ALT-W: CTRL-W # close window (by alt+shift+w)
+  #     ALT-O: CTRL-O # open file
+  #     ALT-G: CTRL-G # open graph view
 
   - name: delete window
     application:
-      not: [obsidian, wezterm]
+      not: [obsidian, wezterm, emacs.Emacs]
     remap:
       ALT-W: CTRL-W
 
@@ -75,6 +77,6 @@ keymap:
 
   - name: hide window
     application:
-      not: wezterm
+      not: [obsidian, wezterm, emacs.Emacs]
     remap:
       ALT-H: SUPER-H
