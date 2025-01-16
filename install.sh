@@ -35,6 +35,16 @@ link_to_home .config/lsd
 # link_to_home .config/karabiner/karabiner.json
 link_to_home .config/git
 link_to_home .config/zathura
+link_to_home .config/kitty
+link_to_home .config/neovide
 link_to_home .rsyncignore
 link_to_home .wezterm.lua
 link_to_home .popt
+link_to_home .spacemacs
+link_to_home scripts/ssync
+
+# If linux, link fcitx5 hotkey extension
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    link_to_home .local/share/fcitx5/addon/hotkey-extension.conf
+    link_to_home .local/share/fcitx5/lua/hotkey-extension/main.lua
+fi
