@@ -4,6 +4,10 @@ echo Script is executed at "$SCRIPTHOME"
 
 function link_to_home() {
     echo "Linking $1"
+    # If parent directory doesn't exist, create it
+    if [[ ! -e ~/$1 ]]; then
+        mkdir -p "$(dirname ~/$1)"
+    fi
     if [[ -e ~/$1 ]]; then
         if [[ -L ~/$1 ]]; then
             echo "	unlinked old link"
