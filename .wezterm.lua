@@ -46,7 +46,7 @@ config.color_schemes = {
 config.enable_scroll_bar = true
 
 -- do not show titles
-config.window_decorations = "RESIZE"
+-- config.window_decorations = "RESIZE"
 
 -- do not show tab bar when there's only one tab
 config.hide_tab_bar_if_only_one_tab = true
@@ -57,33 +57,13 @@ config.inactive_pane_hsb = {
     saturation = 1,
 }
 
-
-local function scheme_for_appearance(appearance)
-    -- always use dark theme
-
-    -- if appearance:find 'Dark' then
-    --   return 'My Color Dark'
-    -- else
-    --   return 'My Color Light'
-    -- end
-    return 'My Color Dark'
-end
-
-wezterm.on('window-config-reloaded', function(window, pane)
-    local overrides = window:get_config_overrides() or {}
-    local appearance = window:get_appearance()
-    local scheme = scheme_for_appearance(appearance)
-    if overrides.color_scheme ~= scheme then
-        overrides.color_scheme = scheme
-        window:set_config_overrides(overrides)
-    end
-end)
+config.color_scheme = "My Color Dark"
 
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 
-config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Hiragino Maru Gothic Pro" })
+config.font = wezterm.font_with_fallback({ "JetBrains Mono Light", "Hiragino Maru Gothic Pro" })
 
-config.font_size = 13
+config.font_size = 12
 
 config.enable_kitty_graphics = true
 
