@@ -1856,8 +1856,6 @@ $0
         " Less bright search color
         hi clear Search
         hi Search                guibg=NONE gui=bold,underline guisp=#e27878
-        " Less bright cursor line number
-        hi CursorLineNr guibg=NONE guifg=#abaeba
         " Do not show unnecessary separation colors
         hi LineNr                guibg=NONE
         hi SignColumn            guibg=NONE
