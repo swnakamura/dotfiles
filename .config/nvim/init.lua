@@ -685,6 +685,7 @@ require('lazy').setup({
             pyright = {},
             rust_analyzer = {},
             -- ruff_lsp = {},
+            ruff = {},
 
             lua_ls = {
               Lua = {
