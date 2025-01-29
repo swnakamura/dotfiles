@@ -851,3 +851,14 @@ watch-gpustat ()
 # Use the same completion
 compdef gtop=ssh
 compdef ssync=scp
+
+# Copy current command content to clipboard
+# https://askubuntu.com/questions/413436/copy-current-terminal-prompt-to-clipboard
+if [[ -n $DISPLAY ]]; then
+    copy_line_to_x_clipboard() {
+        echo -n $BUFFER | xclip -selection clipboard
+        zle reset-prompt
+    }
+    zle -N copy_line_to_x_clipboard
+    bindkey '^Y' copy_line_to_x_clipboard
+fi
