@@ -682,17 +682,7 @@ require('lazy').setup({
           local server2setting = {
             denols = {},
             clangd = {},
-            pyright = {
-              pyright = { autoImportCompletions = true, },
-              python = {
-                analysis = {
-                  autoSearchPaths = true,
-                  diagnosticMode = 'openFilesOnly',
-                  useLibraryCodeForTypes = true,
-                  typeCheckingMode = 'off'
-                }
-              }
-            },
+            pyright = {},
             rust_analyzer = {},
             -- ruff_lsp = {},
 
