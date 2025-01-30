@@ -1849,6 +1849,7 @@ $0
         hi Search                guibg=NONE gui=bold,underline guisp=#e27878
         " Do not show unnecessary separation colors
         hi LineNr                guibg=NONE
+        hi CursorLineNr          guibg=NONE
         hi SignColumn            guibg=NONE
         hi GitGutterAdd          guibg=NONE
         hi GitGutterChange       guibg=NONE
