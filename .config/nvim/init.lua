@@ -682,7 +682,26 @@ require('lazy').setup({
           local server2setting = {
             denols = {},
             clangd = {},
-            pyright = {},
+            -- pyright = {},
+            basedpyright = {
+              -- copied from https://kushaldas.in/posts/basedpyright-and-neovim.html
+              basedpyright = {
+                typeCheckingMode = 'basic', -- for backward compatibility
+                analysis = {
+                  diagnosticMode = 'openFilesOnly',
+                  typeCheckingMode = 'basic',
+                  useLibraryCodeForTypes = true,
+                  diagnosticSeverityOverrides = {
+                    autoSearchPaths = true,
+                    enableTypeIgnoreComments = false,
+                    reportGeneralTypeIssues = 'none',
+                    reportArgumentType = 'none',
+                    reportUnknownMemberType = 'none',
+                    reportAssignmentType = 'none',
+                  },
+                },
+              },
+            },
             rust_analyzer = {},
             -- pylyzer = {},
             ruff = {},
