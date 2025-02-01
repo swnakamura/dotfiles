@@ -3,8 +3,6 @@ keymap:
     application:
       not: [emacs.Emacs]
     remap:
-      ALT-A: CTRL-A
-      ALT-Z: CTRL-Z
       ALT-LEFTBRACE: ALT-Left
       ALT-RIGHTBRACE: ALT-Right
       ALT-PageUp: CTRL-PageUp
@@ -29,6 +27,8 @@ keymap:
     application:
       not: [org.wezfurlong.wezterm.org.wezfurlong.wezterm, obsidian, emacs.Emacs]
     remap:
+      ALT-A: CTRL-A
+      ALT-Z: CTRL-Z
       ALT-C: CTRL-C
       ALT-D: CTRL-D
       ALT-F: CTRL-F
