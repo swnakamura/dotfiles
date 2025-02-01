@@ -10,7 +10,7 @@ keymap:
       CTRL-M: Enter
       Super-Grave: Esc
 
-  - name: wezterm
+  - name: binding for wezterm
     application:
       only: org.wezfurlong.wezterm.org.wezfurlong.wezterm
     remap:
@@ -42,18 +42,20 @@ keymap:
       ALT-X: CTRL-X
       ALT-Comma: CTRL-Comma # config
 
+  - name: obsidian and neovide
+    application:
+      only: [obsidian, neovide.neovide]
+    remap:
+      CTRL-Leftbrace: Esc # Esc for vim mode
+      ALT-C: CTRL-C
+      ALT-V: CTRL-V
+
   - name: obsidian
     application:
       only: obsidian
     remap:
-      CTRL-Leftbrace: Esc # Esc for vim mode
-  #     ALT-J: CTRL-J # toggle bullet list
-  #     ALT-B: CTRL-B # toggle bold
-  #     ALT-I: CTRL-I # toggle italic shape
-  #     ALT-M: CTRL-M # toggle strikethrough
-  #     ALT-W: CTRL-W # close window (by alt+shift+w)
-  #     ALT-O: CTRL-O # open file
-  #     ALT-G: CTRL-G # open graph view
+        CTRL-A: Home
+        CTRL-E: End
 
   - name: delete window
     application:
