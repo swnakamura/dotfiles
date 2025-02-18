@@ -859,6 +859,13 @@ if [[ -n $DISPLAY ]]; then
         echo -n $BUFFER | xclip -selection clipboard
         zle reset-prompt
     }
-    zle -N copy_line_to_x_clipboard
-    bindkey '^Y' copy_line_to_x_clipboard
+else
+    copy_line_to_x_clipboard() {
+        # Use OSC52 to copy
+        printf "\e]52;c;%s\a" "$(echo -n $BUFFER | base64 -w 0)"
+        zle reset-prompt
+    }
+fi
+zle -N copy_line_to_x_clipboard
+bindkey '^Y' copy_line_to_x_clipboard
 fi
