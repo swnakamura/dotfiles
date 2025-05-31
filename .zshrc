@@ -687,7 +687,7 @@ fi
 if which fzf > /dev/null && which _zlua > /dev/null; then
     # use fzf to find repos in ghq
     zlua_fzf() {
-        local dir_name=$(z | tac | fzf --no-sort)
+        local dir_name=$(z | tac | fzf --no-sort --scheme=path --exact)
         local dir_name=${dir_name##[0-9]* }
         if [ -n "${dir_name}" ]; then
             \cd ${dir_name}
