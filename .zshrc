@@ -343,7 +343,11 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 # Theming section  
 autoload -U compinit colors zcalc
-compinit -d
+if [[ -n $IS_MACOS ]]; then
+    compinit -i
+else
+    compinit -d
+fi
 colors
 
 # Color man pages
