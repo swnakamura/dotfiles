@@ -14,7 +14,7 @@
 [diff]
     colorMoved = default
 [user]
-    name = swnakamura
+    name = Shu Nakamura
     email = snakamura@vision.ist.i.kyoto-u.ac.jp
 [filter "lfs"]
     clean = git-lfs clean -- %f
