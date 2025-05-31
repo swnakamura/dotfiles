@@ -149,7 +149,7 @@ if [[ -f $HOME/.fzf.zsh ]]; then
             # LBUFFER="cd ${project_full_path}"
             cd ${project_full_path}
             myls
-            zle redisplay
+            zle reset-prompt
         fi
     }
     zle -N fzf_pjc
