@@ -16,4 +16,4 @@ map_symbol = true
 disabled = false
 [cmd_duration]
 show_notifications = true
-min_time = 60_000_000
+min_time = 60_000
