@@ -24,7 +24,6 @@ config.enable_kitty_keyboard = true
 config.enable_csi_u_key_encoding = false
 
 -- neovim integration
-local wezterm = require('wezterm')
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
 -- rest of your config
 wezterm.on('user-var-changed', function(window, pane, name, value)
@@ -45,8 +44,10 @@ config.color_schemes = {
 -- enable scrollbar
 config.enable_scroll_bar = true
 
--- do not show titles
--- config.window_decorations = "RESIZE"
+-- do not show titles if linux
+if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
+    config.window_decorations = "RESIZE"
+end
 
 -- do not show tab bar when there's only one tab
 config.hide_tab_bar_if_only_one_tab = true
@@ -61,9 +62,9 @@ config.color_scheme = "My Color Dark"
 
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 
-config.font = wezterm.font_with_fallback({ "JetBrains Mono Light", "Hiragino Maru Gothic Pro" })
+config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Hiragino Maru Gothic Pro" })
 
-config.font_size = 12
+config.font_size = 11
 
 config.enable_kitty_graphics = true
 
@@ -110,6 +111,10 @@ config.keys = {
     { key = 'l',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Right' },
     { key = 'k',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Up' },
     { key = 'j',         mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Down' },
+
+    { key = "UpArrow",   mods = "SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
+    { key = "DownArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(1) },
+
     { key = 'w',         mods = 'SUPER',      action = act.CloseCurrentPane { confirm = true } },
     -- Thank you https://zenn.dev/sankantsu/articles/e713d52825dbbb for the configuration below
     {
@@ -130,35 +135,35 @@ config.keys = {
         }
         ,
     },
-    {
-        key = 'k',
-        mods = 'SUPER',
-        action = wezterm.action_callback(function(win, pane)
-            -- workspace のリストを作成
-            local workspaces = {}
-            for i, name in ipairs(wezterm.mux.get_workspace_names()) do
-                table.insert(workspaces, {
-                    id = name,
-                    label = string.format("%d. %s", i, name),
-                })
-            end
-            local current = wezterm.mux.get_active_workspace()
-            -- 選択メニューを起動
-            win:perform_action(act.InputSelector {
-                action = wezterm.action_callback(function(_, _, id, label)
-                    if not id and not label then
-                        wezterm.log_info "Workspace selection canceled"               -- 入力が空ならキャンセル
-                    else
-                        win:perform_action(act.SwitchToWorkspace { name = id }, pane) -- workspace を移動
-                    end
-                end),
-                title = "Select workspace",
-                choices = workspaces,
-                fuzzy = true,
-                -- fuzzy_description = string.format("Select workspace: %s -> ", current), -- requires nightly build
-            }, pane)
-        end),
-    },
+    -- {
+    --     key = 'k',
+    --     mods = 'SUPER',
+    --     action = wezterm.action_callback(function(win, pane)
+    --         -- workspace のリストを作成
+    --         local workspaces = {}
+    --         for i, name in ipairs(wezterm.mux.get_workspace_names()) do
+    --             table.insert(workspaces, {
+    --                 id = name,
+    --                 label = string.format("%d. %s", i, name),
+    --             })
+    --         end
+    --         local current = wezterm.mux.get_active_workspace()
+    --         -- 選択メニューを起動
+    --         win:perform_action(act.InputSelector {
+    --             action = wezterm.action_callback(function(_, _, id, label)
+    --                 if not id and not label then
+    --                     wezterm.log_info "Workspace selection canceled"               -- 入力が空ならキャンセル
+    --                 else
+    --                     win:perform_action(act.SwitchToWorkspace { name = id }, pane) -- workspace を移動
+    --                 end
+    --             end),
+    --             title = "Select workspace",
+    --             choices = workspaces,
+    --             fuzzy = true,
+    --             -- fuzzy_description = string.format("Select workspace: %s -> ", current), -- requires nightly build
+    --         }, pane)
+    --     end),
+    -- },
     {
         key = 'r',
         mods = 'SUPER',
