@@ -864,6 +864,10 @@ watch-gpustat ()
 compdef gtop=ssh
 compdef ssync=scp
 
+# Github CLI
+bindkey '^[|' zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
+bindkey '^[\' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
+
 # Copy current command content to clipboard
 # https://askubuntu.com/questions/413436/copy-current-terminal-prompt-to-clipboard
 if [[ -n $DISPLAY ]]; then
