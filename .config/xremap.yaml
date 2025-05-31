@@ -7,7 +7,7 @@ keymap:
       ALT-RIGHTBRACE: ALT-Right
       ALT-PageUp: CTRL-PageUp
       ALT-PageDown: CTRL-PageDown
-      CTRL-M: Enter
+      # CTRL-M: Enter
       Super-Grave: Esc
 
   - name: binding for wezterm
@@ -25,7 +25,7 @@ keymap:
 
   - name: non-vim
     application:
-      not: [org.wezfurlong.wezterm.org.wezfurlong.wezterm, obsidian, emacs.Emacs]
+      not: [org.wezfurlong.wezterm.org.wezfurlong.wezterm, obsidian, emacs.Emacs, neovide.neovide]
     remap:
       ALT-A: CTRL-A
       ALT-Z: CTRL-Z
@@ -33,6 +33,7 @@ keymap:
       ALT-D: CTRL-D
       ALT-F: CTRL-F
       ALT-K: CTRL-K
+      ALT-CTRL-L: SUPER-CTRL-L # This is used for switching workspaces
       ALT-L: CTRL-L
       ALT-N: CTRL-N
       ALT-P: CTRL-P
@@ -40,11 +41,12 @@ keymap:
       ALT-T: CTRL-T
       ALT-V: CTRL-V
       ALT-X: CTRL-X
+      ALT-W: CTRL-W
       ALT-Comma: CTRL-Comma # config
 
   - name: obsidian and neovide
     application:
-      only: [obsidian, neovide.neovide]
+      only: obsidian
     remap:
       CTRL-Leftbrace: Esc # Esc for vim mode
       ALT-C: CTRL-C
@@ -56,18 +58,14 @@ keymap:
     remap:
         CTRL-A: Home
         CTRL-E: End
-
-  - name: delete window
-    application:
-      not: [obsidian, wezterm, emacs.Emacs]
-    remap:
-      ALT-W: CTRL-W
+        ALT-A: CTRL-A
 
   - name: macOS binding for slack, obsidian
     application:
       only: [Slack, obsidian]
     remap:
       ALT-1: CTRL-1 # change workspace
+      ALT-CTRL-1: ALT-CTRL-1
       ALT-2: CTRL-2
       ALT-3: CTRL-3
       ALT-4: CTRL-4
@@ -77,7 +75,7 @@ keymap:
       ALT-8: CTRL-8
       ALT-9: CTRL-9
 
-  - name: hide window
+  - name: alt to super for switching workspaces
     application:
       not: [obsidian, wezterm, emacs.Emacs]
     remap:
