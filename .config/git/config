@@ -10,6 +10,7 @@
     side-by-side = true
 [merge]
     conflictstyle = diff3
+    ff = false
 [diff]
     colorMoved = default
 [user]
@@ -20,8 +21,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[rebase]
-    autosquash = true
 [push]
     default = current
 [pull]
@@ -83,3 +82,5 @@
 	helper = store
 [rerere]
 	enabled = true
+[rebase]
+	rebaseMerges = true
