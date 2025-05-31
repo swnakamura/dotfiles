@@ -216,7 +216,11 @@ alias venv="venv-here || venv-home"   # Try sourcing virtualenv at current direc
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
-alias fzfkill="(date; ps -ef) | fzf --bind='ctrl-r:reload(date; ps -ef)' --header=$'Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9"
+fzfkill() {
+    (date; ps -ef) | fzf --bind='ctrl-r:reload(date; ps -ef)' --header=$'Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9
+}
+zle -N fzfkill
+bindkey '^Q' fzfkill
 
 notify_and_say() {
     osascript -e "display notification \"$*\" with title \"Title\""
@@ -572,6 +576,8 @@ add-zsh-hook precmd mzc_termsupport_cwd
 
 ### misc section
 stty stop undef # Do not use ctrl-s
+
+stty -ixon # Do not use ctrl-q
 
 export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
