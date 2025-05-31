@@ -706,7 +706,7 @@ fi
 test_colors(){
     for style in {0..8}; do
         for fg in {30..37}; do
-            for bg in {40..47}; do
+            for bg in {40..49}; do
                 # \e[m resets the color
                 echo -ne "\e[$style;$fg;${bg}m\\\e[$style;$fg;${bg}m\e[m ";
             done;
