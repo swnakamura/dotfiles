@@ -32,3 +32,6 @@ github = "skywind3000/z.lua"
 
 [plugins.zsh-abbr]
 github = 'olets/zsh-abbr'
+
+[plugins.zsh-github-copilot]
+github = "loiccoyle/zsh-github-copilot"
