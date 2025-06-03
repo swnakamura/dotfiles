@@ -210,9 +210,57 @@ alias e="emacs"
 alias duh="du -h -d1"
 alias kill9="kill -9"
 
-alias venv-home="source ~/.venv/bin/activate" # source virtualenv at home directory
-alias venv-here="source .venv/bin/activate"   # source virtualenv at current directory
-alias venv="venv-here || venv-home"   # Try sourcing virtualenv at current directory, then home directory
+venv() {
+    PWD_ORIG=$PWD
+    while true; do
+        if [[ -f .venv/bin/activate ]]; then
+            break
+        fi
+        if [[ $PWD == "/" ]]; then
+            printf '\033[1;31;49m%s\033[m\n' 'No virtualenv found'
+            \cd $PWD_ORIG
+            return 1
+        fi
+        \cd ..
+    done
+    source .venv/bin/activate
+    if [[ $PWD != $PWD_ORIG ]]; then
+        printf "\033[6;31;50mvenv at a different directory\033[m\n"
+    fi
+    printf 'venv at \033[1;32;49m%s\033[m\n' "$PWD"
+    \cd $PWD_ORIG
+}
+
+# In computing server, create the specified directory in /d/temp and link to it for faster access
+
+if [[ $(hostname) = 'snakamura-labdesktop' ]]; then
+    CACHE_ROOT="/mnt/storage/storage/caches/"
+else
+    CACHE_ROOT="/d/temp/snakamura/caches/"
+fi
+link-temp() {
+    if [[ -e $1 ]]; then
+	    echo "Target $1 already exists; delete it"
+	    return 1
+    fi
+    link_dir="${$(realpath $1)//\//_}"
+    link_path=$CACHE_ROOT$link_dir
+    mkdir -p $link_path
+    ln -s $link_path $1
+}
+
+# In computing server, move the existing specified directory into /d/temp and link it
+move-temp() {
+    orig_path=$1
+    link_dir="${$(realpath $1)//\//_}"
+    link_path=$CACHE_ROOT$link_dir
+    if [[ -e $link_path ]]; then
+        echo "$link_path already exists; delete it manually"
+        return 1
+    fi
+    mv $1 $link_path
+    ln -s $link_path $1
+}
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
 
