@@ -872,10 +872,10 @@ function sync-from() {
     echo "Syncing from $SERVER:$TARGET", "OPTIONS: $OPTIONS"
     if [[ "$TARGET" == /* || "$TARGET" == ~* ]]; then
         # TARGET is absolute path
-        ssync -aZ --update $SERVER:$TARGET/ $TARGET/ $OPTIONS $EXCLUDE_LIST
+        ssync -aZ --update --no-links $SERVER:$TARGET/ $TARGET/ $OPTIONS $EXCLUDE_LIST
     else
         # TARGET is relative path
-        ssync -aZ --update $SERVER:$(pwd)/$TARGET/ $(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
+        ssync -aZ --update --no-links $SERVER:$(pwd)/$TARGET/ $(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
     fi
 }
 
@@ -892,10 +892,10 @@ function sync-to(){
     OPTIONS=$@
     if [[ "$TARGET" == /* || "$TARGET" == ~* ]]; then
         # TARGET is absolute path
-        ssync -aZ --update $TARGET/ $SERVER:$TARGET/ $OPTIONS $EXCLUDE_LIST
+        ssync -aZ --update --no-links $TARGET/ $SERVER:$TARGET/ $OPTIONS $EXCLUDE_LIST
     else
         # TARGET is relative path
-        ssync -aZ --update $(pwd)/$TARGET/ $SERVER:$(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
+        ssync -aZ --update --no-links $(pwd)/$TARGET/ $SERVER:$(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
     fi
 }
 
