@@ -843,9 +843,13 @@ function sync-from() {
     echo "Syncing from $server:$target", "options: $options"
     if [[ "$target" != /* && "$target" != ~* ]]; then
         # target is relative path
-        target=$(pwd)/$target
+        target="$(pwd)/$target"
     fi
-    ssync -aZ --update --no-links $server:$target/ $target/ $options $EXCLUDE_LIST
+    if [[ -d $target ]]; then
+        # If target is a directory, append trailing slash
+        target="$target/"
+    fi
+    ssync -aZ --update --no-links $server:$target $target $options $EXCLUDE_LIST
 }
 
 function sync-to(){
@@ -861,9 +865,13 @@ function sync-to(){
     local options=$@
     if [[ "$target" != /* && "$target" != ~* ]]; then
         # target is relative path
-        target=$(pwd)/$target
+        target="$(pwd)/$target"
     fi
-    ssync -aZ --update --no-links $target/ $SERVER:$target/ $options $EXCLUDE_LIST
+    if [[ -d $target ]]; then
+        # If target is a directory, append trailing slash
+        target="$target/"
+    fi
+    ssync -aZ --update --no-links $target $SERVER:$target $options $EXCLUDE_LIST
 }
 
 gpustat ()
