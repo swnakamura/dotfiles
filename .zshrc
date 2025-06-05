@@ -874,6 +874,63 @@ function sync-to(){
     ssync -aZ --update --no-links $target $SERVER:$target $options $EXCLUDE_LIST
 }
 
+function sngl-exec-uv-in(){
+    local server=$1
+    shift
+    local cmd=$@
+
+    SIF=/home/snakamura/singularity/uv+.sif
+    if [[ ! -e $SIF ]]; then
+        SIF=/home/snakamura/singularity/uv.sif
+    fi
+
+    # Create log file directory
+    local time=$(date +%Y-%m-%d/%H%M%S)
+    local log_prefix=log/$time
+    mkdir -p $(dirname $log_prefix)
+
+    # Create log file
+    echo $cmd > ${log_prefix}_cmd
+
+    # Run the command in the singularity container
+    {
+        ssh $server singularity exec --nv -B /d/temp -B /home/projects $SIF "bash -c '$cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
+            echo "Failed to run command on $server."
+            echo "Command: $cmd"
+            echo
+            echo "==========Error tail log=========="
+            tail -n 10 ${log_prefix}_err
+            echo "=================================="
+            echo
+        }
+    } &
+
+    # Trap to kill the background process on exit
+    local exit_message="Command '$cmd' on $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err ."
+    local bg_pid=$!
+    trap "kill $bg_pid; echo '$exit_message'" INT EXIT
+
+    # Wait for the output file to be created
+    echo loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err
+    local waitcount=0
+    while [[ ! -f ${log_prefix}_out ]]; do
+        printf "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
+        waitcount=$((${waitcount}+1))
+        sleep 1
+        # To refresh filesystem cache
+        ls $(dirname $log_prefix) > /dev/null
+    done
+    echo ""
+    echo "Output file created: ${log_prefix}_out. Loading."
+
+    # Print the output file
+    tail -F ${log_prefix}_out 
+
+    # Explicitly kill the background process and remove the trap
+    kill $bg_pid
+    trap - INT EXIT
+}
+
 gpustat ()
 {
     ssh "$@" "/usr/bin/gpustat -up; ps aux --sort -%cpu" | head -n $(($(tput lines)-2)) | cut -c -$(tput cols)
