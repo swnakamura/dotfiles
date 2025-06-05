@@ -827,11 +827,11 @@ alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
 
 EXCLUDE_LIST=$(echo --exclude={"*.png","*.jpg","*.json","*.bag","*.bin","*.mp4",'*.pth',"*.h5","*.db","*.pkl","*.a","*.MP4","*.raw","*.nfs0000*",".#*"})
 
-# Copy scripts from/to SERVER
+# Copy scripts from/to server
 function sync-from() {
     # Should have an argument
     if [ $# -lt 2 ]; then
-        echo "Usage: sync-from <dst> <file> <OPTIONS?>"
+        echo "Usage: sync-from <dst> <file> <options?>"
         return 1
     fi
     local server=$1
@@ -870,7 +870,7 @@ function sync-to(){
         # If target is a directory, append trailing slash
         target="$target/"
     fi
-    ssync -aZ --update --no-links $target $SERVER:$target $options $EXCLUDE_LIST
+    ssync -aZ --update --no-links $target $server:$target $options $EXCLUDE_LIST
 }
 
 function sngl-exec-uv-in(){
