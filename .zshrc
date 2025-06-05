@@ -828,35 +828,6 @@ alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
 
 EXCLUDE_LIST=$(echo --exclude={"*.png","*.jpg","*.json","*.bag","*.bin","*.mp4",'*.pth',"*.h5","*.db","*.pkl","*.a","*.MP4","*.raw","*.nfs0000*",".#*"})
 
-# Copy from/to server the lap scripts
-function sync-lap-from(){
-    # Should have an argument
-    if [ $# -lt 2 ]; then
-        echo "Usage: sync-lap-from <dst> <file>"
-        return 1
-    fi
-    SERVER=$1
-    shift
-    TARGET=$1
-    shift
-    OPTIONS=$@
-    ssync -aZ --update $SERVER:~/lap/$TARGET/ $HOME/lap/$TARGET/ $OPTIONS $EXCLUDE_LIST
-}
-
-function sync-lap-to(){
-    # Should have an argument
-    if [ $# -lt 2 ]; then
-        echo "Usage: sync-lap-to <dst> <file>"
-        return 1
-    fi
-    SERVER=$1
-    shift
-    TARGET=$1
-    shift
-    OPTIONS=$@
-    ssync -aZ --update $HOME/lap/$TARGET/ $SERVER:~/lap/$TARGET/ $OPTIONS $EXCLUDE_LIST
-}
-
 # Copy scripts from/to SERVER
 function sync-from() {
     # Should have an argument
@@ -864,39 +835,35 @@ function sync-from() {
         echo "Usage: sync-from <dst> <file> <OPTIONS?>"
         return 1
     fi
-    SERVER=$1
+    local server=$1
     shift
-    TARGET=$1
+    local target=$1
     shift
-    OPTIONS=$@
-    echo "Syncing from $SERVER:$TARGET", "OPTIONS: $OPTIONS"
-    if [[ "$TARGET" == /* || "$TARGET" == ~* ]]; then
-        # TARGET is absolute path
-        ssync -aZ --update --no-links $SERVER:$TARGET/ $TARGET/ $OPTIONS $EXCLUDE_LIST
-    else
-        # TARGET is relative path
-        ssync -aZ --update --no-links $SERVER:$(pwd)/$TARGET/ $(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
+    local options=$@
+    echo "Syncing from $server:$target", "options: $options"
+    if [[ "$target" != /* && "$target" != ~* ]]; then
+        # target is relative path
+        target=$(pwd)/$target
     fi
+    ssync -aZ --update --no-links $server:$target/ $target/ $options $EXCLUDE_LIST
 }
 
 function sync-to(){
     # Should have an argument
     if [ $# -lt 2 ]; then
-        echo "Usage: sync-to <dst> <file> <OPTIONS?>"
+        echo "Usage: sync-to <dst> <file> <options?>"
         return 1
     fi
-    SERVER=$1
+    local server=$1
     shift
-    TARGET=$1
+    local target=$1
     shift
-    OPTIONS=$@
-    if [[ "$TARGET" == /* || "$TARGET" == ~* ]]; then
-        # TARGET is absolute path
-        ssync -aZ --update --no-links $TARGET/ $SERVER:$TARGET/ $OPTIONS $EXCLUDE_LIST
-    else
-        # TARGET is relative path
-        ssync -aZ --update --no-links $(pwd)/$TARGET/ $SERVER:$(pwd)/$TARGET/ $OPTIONS $EXCLUDE_LIST
+    local options=$@
+    if [[ "$target" != /* && "$target" != ~* ]]; then
+        # target is relative path
+        target=$(pwd)/$target
     fi
+    ssync -aZ --update --no-links $target/ $SERVER:$target/ $options $EXCLUDE_LIST
 }
 
 gpustat ()
