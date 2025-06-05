@@ -269,6 +269,7 @@ fzfkill() {
 }
 zle -N fzfkill
 bindkey '^Q' fzfkill
+stty -ixon # Do not use ctrl-q for control flow
 
 notify_and_say() {
     osascript -e "display notification \"$*\" with title \"Title\""
@@ -628,8 +629,6 @@ add-zsh-hook precmd mzc_termsupport_cwd
 
 ### misc section
 stty stop undef # Do not use ctrl-s
-
-stty -ixon # Do not use ctrl-q
 
 export MOZ_DBUS_REMOTE=1 # waylandでFirefoxなどをターミナルから開く際に必要
 
