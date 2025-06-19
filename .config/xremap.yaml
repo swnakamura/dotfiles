@@ -62,7 +62,7 @@ keymap:
 
   - name: macOS binding for slack, obsidian
     application:
-      only: [Slack, obsidian]
+      only: [Slack, obsidian, vivaldi-stable.Vivaldi-stable]
     remap:
       ALT-1: CTRL-1 # change workspace
       ALT-CTRL-1: ALT-CTRL-1
