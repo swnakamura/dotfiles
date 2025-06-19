@@ -885,7 +885,7 @@ function sngl-exec-uv-in(){
 
     # Create log file directory
     local time=$(date +%Y-%m-%d/%H%M%S)
-    local log_prefix=log/$time
+    local log_prefix=~/log/$time
     mkdir -p $(dirname $log_prefix)
 
     # Create log file
@@ -905,9 +905,9 @@ function sngl-exec-uv-in(){
     } &
 
     # Trap to kill the background process on exit
-    local exit_message="Command '$cmd' on $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err ."
     local bg_pid=$!
-    trap "kill $bg_pid; echo '$exit_message'" INT EXIT
+    local exit_message="\n\nCommand\n${cmd}\non $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err ."
+    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; echo \"$exit_message\"" INT EXIT
 
     # Wait for the output file to be created
     echo loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err
@@ -920,13 +920,13 @@ function sngl-exec-uv-in(){
         ls $(dirname $log_prefix) > /dev/null
     done
     echo ""
-    echo "Output file created: ${log_prefix}_out. Loading."
+    echo "Output file created: ${log_prefix}_out , showing below..."
 
     # Print the output file
     tail -F ${log_prefix}_out 
 
     # Explicitly kill the background process and remove the trap
-    kill $bg_pid
+    kill -0 $bg_pid 2>/dev/null && kill $bg_pid
     trap - INT EXIT
 }
 
