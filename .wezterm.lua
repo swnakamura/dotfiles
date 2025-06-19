@@ -79,6 +79,8 @@ config.window_padding = {
     bottom = '0',
 }
 
+config.scrollback_lines = 10000
+
 config.warn_about_missing_glyphs = false
 
 config.tab_bar_at_bottom = true
