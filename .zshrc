@@ -893,7 +893,7 @@ function sngl-exec-uv-in(){
 
     # Run the command in the singularity container
     {
-        ssh $server singularity exec --nv -B /d/temp -B /home/projects $SIF "bash -c '$cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
+        ssh $server singularity exec --nv -B /d/temp -B /home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
             echo "Failed to run command on $server."
             echo "Command: $cmd"
             echo
