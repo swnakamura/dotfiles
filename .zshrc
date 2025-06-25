@@ -963,4 +963,3 @@ else
 fi
 zle -N copy_line_to_x_clipboard
 bindkey '^Y' copy_line_to_x_clipboard
-fi
