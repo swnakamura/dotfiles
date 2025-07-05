@@ -897,9 +897,9 @@ function sngl-exec-uv-in(){
             echo "Failed to run command on $server."
             echo "Command: $cmd"
             echo
-            echo "==========Error tail log=========="
+            echo "========== Error tail log of ${log_prefix}_err =========="
             tail -n 10 ${log_prefix}_err
-            echo "=================================="
+            echo "========================================================="
             echo
         }
     } &
