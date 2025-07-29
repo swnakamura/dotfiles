@@ -957,7 +957,7 @@ bindkey '^[\' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
 
 # Copy current command content to clipboard
 # https://askubuntu.com/questions/413436/copy-current-terminal-prompt-to-clipboard
-if [[ -n $DISPLAY ]]; then
+if [[ -n $DISPLAY && $(command -v xclip > /dev/null) ]]; then
     copy_line_to_x_clipboard() {
         echo -n $BUFFER | xclip -selection clipboard
         zle reset-prompt
