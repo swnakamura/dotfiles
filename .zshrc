@@ -823,8 +823,11 @@ else
 fi
 
 # For servers
-alias gpustat-all='ssh as gpustat-all'
-alias gpustat-all-fast='ssh as gpustat-all-fast'
+# If not on ssh already ,run it on server
+if [[ -z $SSH_CONNECTION ]]; then
+    alias gpustat-all='ssh as gpustat-all'
+    alias gpustat-all-fast='ssh as gpustat-all-fast'
+fi
 alias gtop="$HOME/scripts/gtop"
 alias gtopa="$HOME/scripts/gtop-all"
 alias ssync="$HOME/scripts/ssync"
