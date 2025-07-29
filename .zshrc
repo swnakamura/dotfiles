@@ -239,27 +239,32 @@ else
     CACHE_ROOT="/d/temp/snakamura/caches/"
 fi
 link-temp() {
-    if [[ -e $1 ]]; then
-	    echo "Target $1 already exists; delete it"
+    orig_path=$1
+    if [[ -e $orig_path ]]; then
+	    echo "Target $orig_path already exists; delete it"
 	    return 1
     fi
-    link_dir="${$(realpath $1)//\//_}"
+    link_dir="${$(realpath $orig_path)//\//_}"
     link_path=$CACHE_ROOT$link_dir
     mkdir -p $link_path
-    ln -s $link_path $1
+    ln -s $link_path $orig_path
 }
 
 # In computing server, move the existing specified directory into /d/temp and link it
 move-temp() {
     orig_path=$1
-    link_dir="${$(realpath $1)//\//_}"
+    link_dir="${$(realpath $orig_path)//\//_}"
     link_path=$CACHE_ROOT$link_dir
     if [[ -e $link_path ]]; then
         echo "$link_path already exists; delete it manually"
         return 1
     fi
-    mv $1 $link_path
-    ln -s $link_path $1
+    mv $orig_path $link_path
+    if [[ $? != 0 ]]; then
+        echo "Failed to move $orig_path to $link_path. Delete the directory manually and run ln -s $link_path $orig_path"
+        return 1
+    fi
+    ln -s $link_path $orig_path
 }
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
