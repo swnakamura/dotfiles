@@ -6,19 +6,19 @@ function link_to_home() {
     echo "Linking $1"
     # If parent directory doesn't exist, create it
     if [[ ! -e ~/$1 ]]; then
-        mkdir -p "$(dirname ~/$1)"
+        mkdir -p "$(dirname ~/"$1")"
     fi
     if [[ -e ~/$1 ]]; then
         if [[ -L ~/$1 ]]; then
             echo "	unlinked old link"
-            unlink ~/$1
+            unlink ~/"$1"
         else
             echo "	Moving $1 to $1.old"
-            mv ~/$1 ~/${1}.old
+            mv ~/"$1" ~/"$1".old
         fi
     fi
     echo "	linked new link"
-    ln -s "$SCRIPTHOME"/$1 ~/$1
+    ln -s "$SCRIPTHOME"/"$1" ~/"$1"
 }
 
 link_to_home .tmux.conf
