@@ -44,7 +44,8 @@ link_to_home .spacemacs
 link_to_home scripts/ssync
 
 # If linux, link fcitx5 hotkey extension
+# To use this, you need to run: `yay -S fcitx5-lua`
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     link_to_home .local/share/fcitx5/addon/hotkey-extension.conf
-    link_to_home .local/share/fcitx5/lua/hotkey-extension/main.lua
+    link_to_home .local/share/fcitx5/lua/hotkey-extension
 fi
