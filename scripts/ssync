@@ -1,0 +1,41 @@
+#!/bin/bash
+# Safe rsync. shows you the outcome beforehand by executing the command with -nv flag. Adds `-h --info=progress2` in the final execution.
+
+if [[ $1 == -V ]]; then
+    # If the first option is -V , skip showing the file list
+    shift
+else
+    rsync -vnh --exclude-from=$HOME/.rsyncignore $@
+fi
+
+command="rsync -h --exclude-from=$HOME/.rsyncignore --info=progress2 $@"
+announce="Commencing \`${command}\`"
+
+cols=$(tput cols 2>/dev/null)
+if [[ $? != 0 ]]; then
+    # tput failed somehow
+    cols=80
+else
+    announce_len=${#announce}
+    cols=$((cols<announce_len ? cols : announce_len))
+fi
+
+sep=$(for ((i=1; i<=cols; i++)); do printf "-"; done)
+
+echo ""
+echo $sep
+echo $announce
+echo $sep
+
+read -n1 -p "ok? (y/N): " answer
+
+if [[ "$answer" != [yY] ]]; then
+    echo ""
+    echo "Aborted"
+    exit 1
+fi
+
+echo ""
+echo "Running..."
+$command
+echo "Done."

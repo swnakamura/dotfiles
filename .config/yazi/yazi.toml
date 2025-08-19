@@ -1,0 +1,10 @@
+[opener]
+openDefault = [
+    { run = 'xdg-open "$@"', desc = "Open by Default App" },
+]
+
+[open]
+prepend_rules = [
+    { name = "*", use = ["open"] },
+]
+

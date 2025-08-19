@@ -1,0 +1,4 @@
+[[mgr.prepend_keymap]]
+on = ["g", "x"]
+run = 'openDefault'
+desc = "Open in default app"
