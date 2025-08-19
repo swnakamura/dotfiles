@@ -16,11 +16,6 @@
 [user]
     name = Shu Nakamura
     email = snakamura@vision.ist.i.kyoto-u.ac.jp
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
 [push]
     default = current
 [pull]
