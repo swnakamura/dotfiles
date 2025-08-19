@@ -337,7 +337,7 @@ function extract() {
 
   while read line; do
     local suf=$(echo -n $line | cut -d' ' -f1)
-    if [[ ${archive_file_name} == *${suf} ]] then
+    if [[ ${archive_file_name} == *${suf} ]]; then
       local suffix=$suf
       local command="$(echo $line | sed -E 's/^[.a-zA-Z0-9]+ +//')"
       break
