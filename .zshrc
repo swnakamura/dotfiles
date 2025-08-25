@@ -915,14 +915,14 @@ function sngl-exec-uv-in(){
     # Trap to kill the background process on exit
     local bg_pid=$!
     local exit_message="================================================================================\n\nCommand\n${cmd}\non $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .\n================================================================================"
-    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf '\033[1;31;49m%s\033[m\n'  \"$exit_message\"" INT EXIT
+    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf '\033[1;31;49m%b\033[m\n' \"$exit_message\"" INT EXIT
 
 
     # Wait for the output file to be created
     printf '\033[1;31;49m%s\033[m\n'  "loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err"
     local waitcount=0
     while [[ ! -f ${log_prefix}_out ]]; do
-        printf '\033[1;31;49m%s\033[m\n' "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
+        printf '\033[1;31;49m%b\033[m\n' "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
         waitcount=$((${waitcount}+1))
         sleep 1
         # To refresh filesystem cache
