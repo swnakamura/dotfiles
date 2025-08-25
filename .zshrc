@@ -897,17 +897,17 @@ function sngl-exec-uv-in(){
     mkdir -p $(dirname $log_prefix)
 
     # Create log file
-    echo $cmd > ${log_prefix}_cmd
+    printf '\033[1;31;49m%s\033[m\n'  $cmd > ${log_prefix}_cmd
 
     # Run the command in the singularity container
     {
         ssh $server singularity exec --nv -B /d/temp -B /home/projects -B /d/home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
-            echo "Failed to run command on $server."
-            echo "Command: $cmd"
+            printf '\033[1;31;49m%s\033[m\n'  "Failed to run command on $server."
+            printf '\033[1;31;49m%s\033[m\n'  "Command: $cmd"
             echo
-            echo "========== Error tail log of ${log_prefix}_err =========="
+            printf '\033[1;31;49m%s\033[m\n'  "========== Error tail log of ${log_prefix}_err =========="
             tail -n 10 ${log_prefix}_err
-            echo "========================================================="
+            printf '\033[1;31;49m%s\033[m\n'  "========================================================="
             echo
         }
     } &
@@ -915,20 +915,21 @@ function sngl-exec-uv-in(){
     # Trap to kill the background process on exit
     local bg_pid=$!
     local exit_message="================================================================================\n\nCommand\n${cmd}\non $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .\n================================================================================"
-    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; echo \"$exit_message\"" INT EXIT
+    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf '\033[1;31;49m%s\033[m\n'  \"$exit_message\"" INT EXIT
+
 
     # Wait for the output file to be created
-    echo loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err
+    printf '\033[1;31;49m%s\033[m\n'  "loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err"
     local waitcount=0
     while [[ ! -f ${log_prefix}_out ]]; do
-        printf "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
+        printf '\033[1;31;49m%s\033[m\n' "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
         waitcount=$((${waitcount}+1))
         sleep 1
         # To refresh filesystem cache
         ls $(dirname $log_prefix) > /dev/null
     done
     echo ""
-    echo "Output file created: ${log_prefix}_out , showing below..."
+    printf '\033[1;31;49m%s\033[m\n'  "Output file created: ${log_prefix}_out , showing below..."
 
     # Print the output file
     tail -F ${log_prefix}_out 
