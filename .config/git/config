@@ -43,7 +43,7 @@
     ; co: check out branch
     ; cot: check out remote branch and create a corresponding local branch
     ; coh: check out specified commit (results in 'detached HEAD' state)
-    co = "!f() { args=$@; if [ -z \"$args\" ]; then branch=$(cat <(git branch --all --format='%(refname:short)' | grep -v HEAD) <$(git tag) | fzf --preview 'echo {} | xargs git log --color=always'); git checkout $(echo $branch | sed 's#remotes/##'); else git checkout $args; fi }; f"
+    co = "!f() { args=$@; if [ -z \"$args\" ]; then branch=$(cat <(git branch --all --format='%(refname:short)' | grep -v HEAD) <(git tag) | fzf --preview 'echo {} | xargs git log --color=always'); git checkout $(echo $branch | sed 's#remotes/##'); else git checkout $args; fi }; f"
     cot = "!f() { args=$@; if [ -z \"$args\" ]; then branch=$(git branch --remote --format='%(refname:short)' | grep -v HEAD                | fzf --preview 'echo {} | xargs git log --color=always'); git checkout -t $(echo $branch | sed 's#remotes/##'); else git checkout -t $args; fi }; f"
     coh = "!f() { args=$@; if [ -z \"$args\" ]; then hash=$(git log --oneline | fzf --preview 'echo {} | cut -d\" \"  -f1 | xargs git show --color=always'); git checkout ${hash%% *}; else git checkout $args; fi }; f"
 
