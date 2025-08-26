@@ -842,6 +842,13 @@ function sync-from() {
         echo "Usage: sync-from <dst> <file> <options?>"
         return 1
     fi
+    # if first argument is -y, run rsync instead of ssync
+    if [[ "$1" == "-y" ]]; then
+        local yes=1
+        shift
+    else
+        local yes=0
+    fi
     local server=$1
     shift
     local target=$1
@@ -856,7 +863,11 @@ function sync-from() {
         # If target is a directory, append trailing slash
         target="$target/"
     fi
-    ssync -aZ --update --no-links $server:$target $target $options $EXCLUDE_LIST
+    if [[ $yes -eq 1 ]]; then
+        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $server:$target $target $options $EXCLUDE_LIST
+    else
+        ssync -aZ --update --no-links $server:$target $target $options $EXCLUDE_LIST
+    fi
 }
 
 function sync-to(){
