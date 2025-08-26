@@ -943,7 +943,6 @@ function sngl-exec-uv-in(){
         # To refresh filesystem cache
         ls $(dirname $log_prefix) > /dev/null
     done
-    echo ""
     printf '\033[1;31;49m%s\033[m\n'  "Output file created: ${log_prefix}_out , showing below..."
 
     # Print the output file
