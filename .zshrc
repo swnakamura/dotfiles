@@ -929,7 +929,7 @@ function sngl-exec-uv-in(){
 
     # Trap to kill the background process on exit
     local bg_pid=$!
-    local exit_message="================================================================================\n\nCommand\n${cmd}\non $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .\n================================================================================"
+    local exit_message="\n================================================================================\n\nCommand\n${cmd}\non $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .\n================================================================================"
     trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf '\033[1;31;49m%b\033[m\n' \"$exit_message\"" INT EXIT
 
 
