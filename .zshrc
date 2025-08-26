@@ -896,6 +896,10 @@ function sngl-exec-uv-in(){
     local log_prefix=~/log/$time
     mkdir -p $(dirname $log_prefix)
 
+    # Show time info for logging in obsidian
+    local time=$(date +\[\[%Y-%m-%d]]/%H%M%S)
+    printf '\033[1;31;49m%s\033[m\n'  "Time: ($time)"
+
     # Create log file
     printf '\033[1;31;49m%s\033[m\n'  $cmd > ${log_prefix}_cmd
 
