@@ -894,7 +894,7 @@ function sync-to(){
 
 function printf_msg(){
     local msg=$@
-    printf '\033[4;34;48m%b\033[m'  "$msg"
+    printf '\033[3;34;48m%b\033[m'  "$msg"
 }
 
 function sngl-exec-uv-in(){
@@ -948,7 +948,7 @@ function sngl-exec-uv-in(){
         # To refresh filesystem cache
         ls $(dirname $log_prefix) > /dev/null
     done
-    printf_msg "Output file created: ${log_prefix}_out , showing below...\n"
+    printf_msg "\nOutput file created: ${log_prefix}_out , showing below...\n"
 
     # Print the output file
     tail -F ${log_prefix}_out 
