@@ -892,6 +892,11 @@ function sync-to(){
     ssync -aZ --update --no-links $target $server:$target $options $EXCLUDE_LIST
 }
 
+function printf_msg(){
+    local msg=$@
+    printf '\033[4;34;48m%b\033[m'  "$msg"
+}
+
 function sngl-exec-uv-in(){
     local server=$1
     shift
@@ -909,20 +914,20 @@ function sngl-exec-uv-in(){
 
     # Show time info for logging in obsidian
     local time=$(date +\[\[%Y-%m-%d]]/%H%M%S)
-    printf '\033[1;31;49m%s\033[m\n'  "Time: ($time)"
+    printf_msg "Time: ($time)\n"
 
     # Create log file
-    printf '\033[1;31;49m%s\033[m\n'  $cmd > ${log_prefix}_cmd
+    echo $cmd > ${log_prefix}_cmd
 
     # Run the command in the singularity container
     {
         ssh $server singularity exec --nv -B /d/temp -B /home/projects -B /d/home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
-            printf '\033[1;31;49m%s\033[m\n'  "Failed to run command on $server."
-            printf '\033[1;31;49m%s\033[m\n'  "Command: $cmd"
+            printf_msg "Failed to run command on $server.\n"
+            printf_msg "Command: $cmd\n"
             echo
-            printf '\033[1;31;49m%s\033[m\n'  "========== Error tail log of ${log_prefix}_err =========="
+            printf_msg "========== Error tail log of ${log_prefix}_err ==========\n"
             tail -n 10 ${log_prefix}_err
-            printf '\033[1;31;49m%s\033[m\n'  "========================================================="
+            printf_msg "=========================================================\n"
             echo
         }
     } &
@@ -934,16 +939,16 @@ function sngl-exec-uv-in(){
 
 
     # Wait for the output file to be created
-    printf '\033[1;31;49m%s\033[m\n'  "loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err"
+    printf_msg "loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err\n"
     local waitcount=0
     while [[ ! -f ${log_prefix}_out ]]; do
-        printf '\033[1;31;49m%b\033[m\n' "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
+        printf_msg "\rWaiting for ${log_prefix}_out to be created for $waitcount seconds"
         waitcount=$((${waitcount}+1))
         sleep 1
         # To refresh filesystem cache
         ls $(dirname $log_prefix) > /dev/null
     done
-    printf '\033[1;31;49m%s\033[m\n'  "Output file created: ${log_prefix}_out , showing below..."
+    printf_msg "Output file created: ${log_prefix}_out , showing below...\n"
 
     # Print the output file
     tail -F ${log_prefix}_out 
