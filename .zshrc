@@ -913,8 +913,8 @@ function sngl-exec-uv-in(){
     mkdir -p $(dirname $log_prefix)
 
     # Show time info for logging in obsidian
-    local time=$(date +\[\[%Y-%m-%d]]/%H%M%S)
-    printf_msg "Time: ($time)\n"
+    local time_obsidian=$(date +\[\[%Y-%m-%d]]/%H%M%S)
+    printf_msg "Time: ($time_obsidian)\n"
 
     # Create log file
     echo $cmd > ${log_prefix}_cmd
@@ -934,8 +934,17 @@ function sngl-exec-uv-in(){
 
     # Trap to kill the background process on exit
     local bg_pid=$!
-    local exit_message="\n================================================================================\n\nCommand\n${cmd}\non $server finished. Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .\n================================================================================"
-    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf '\033[1;31;49m%b\033[m\n' \"$exit_message\"" INT EXIT
+local exit_message=$(cat <<'EOF'
+================================================================================
+Command: ${cmd}
+
+Server: $server
+Time: $time_obsidian
+Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .
+================================================================================
+EOF
+)
+    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf_msg \"$exit_message\n\"" INT EXIT
 
 
     # Wait for the output file to be created
