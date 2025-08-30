@@ -928,9 +928,9 @@ function sngl-exec-uv-in(){
             printf_msg "Failed to run command on $server.\n"
             printf_msg "Command: $cmd\n"
             echo
-            printf_msg "========== Error tail log of ${log_prefix}_err ==========\n"
+            printf_msg "========== tail of error ==========\n"
             tail -n 10 ${log_prefix}_err
-            printf_msg "=========================================================\n"
+            printf_msg "===================================\n"
             echo
         }
     } &
@@ -942,7 +942,9 @@ local exit_message=$(cat <<'EOF'
 Command: ${cmd}
 
 Server: $server
+
 Time: $time_obsidian
+
 Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .
 ================================================================================
 EOF
