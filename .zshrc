@@ -241,8 +241,8 @@ fi
 link-temp() {
     orig_path=$1
     if [[ -e $orig_path ]]; then
-	    echo "Target $orig_path already exists; delete it"
-	    return 1
+        echo "Target $orig_path already exists; delete it"
+        return 1
     fi
     link_dir="${$(realpath $orig_path)//\//_}"
     link_path=$CACHE_ROOT$link_dir
@@ -253,11 +253,20 @@ link-temp() {
 # In computing server, move the existing specified directory into /d/temp and link it
 move-temp() {
     orig_path=$1
+    if [[ -L $orig_path ]]; then
+        echo "$orig_path is already a symlink; Not doing anything"
+        return 1
+    fi
     link_dir="${$(realpath $orig_path)//\//_}"
     link_path=$CACHE_ROOT$link_dir
     if [[ -e $link_path ]]; then
-        echo "$link_path already exists; delete it manually"
-        return 1
+        # echo "$link_path already exists; delete it manually"
+        read -q "REPLY?${link_path} already exists; delete it manually. Do you want to overwrite it? [y/N] "
+        echo ""
+        if [[ $REPLY != "y" ]]; then
+            return 1
+        fi
+        rm -rf $link_path
     fi
     mv $orig_path $link_path
     if [[ $? != 0 ]]; then
@@ -265,6 +274,7 @@ move-temp() {
         return 1
     fi
     ln -s $link_path $orig_path
+    echo "Moved $orig_path to $link_path"
 }
 
 alias rn='ranger --choosedir=/tmp/rangerdir; LASTDIR=`cat /tmp/rangerdir`; cd "$LASTDIR"'
