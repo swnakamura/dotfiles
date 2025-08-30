@@ -832,6 +832,7 @@ alias gtop="$HOME/scripts/gtop"
 alias gtopa="$HOME/scripts/gtop-all"
 alias ssync="$HOME/scripts/ssync"
 alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
+alias run_sif=~/singularity/scripts/run_sif.sh # To run sif for uv in server
 
 EXCLUDE_LIST=$(echo --exclude={"*.png","*.jpg","*.json","*.bag","*.bin","*.mp4",'*.pth',"*.h5","*.db","*.pkl","*.a","*.MP4","*.raw","*.nfs0000*",".#*"})
 
@@ -840,6 +841,7 @@ function sync-from() {
     # Should have an argument
     if [ $# -lt 2 ]; then
         echo "Usage: sync-from <dst> <file> <options?>"
+        echo "Runs ssync by default with some options, including EXCLUDE_LIST: $EXCLUDE_LIST"
         return 1
     fi
     # if first argument is -y, run rsync instead of ssync
@@ -874,6 +876,7 @@ function sync-to(){
     # Should have an argument
     if [ $# -lt 2 ]; then
         echo "Usage: sync-to <dst> <file> <options?>"
+        echo "Runs ssync by default with some options, including EXCLUDE_LIST: $EXCLUDE_LIST"
         return 1
     fi
     local server=$1
