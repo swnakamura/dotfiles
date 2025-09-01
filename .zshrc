@@ -274,7 +274,9 @@ move-temp() {
         if [[ $REPLY != "y" ]]; then
             return 1
         fi
-        rm -rf $link_path
+        local link_path_old=${link_path}_old_$(date +%s)
+        mv $link_path $link_path_old
+        rm -rf $link_path_old &
     fi
     mv $orig_path $link_path
     if [[ $? != 0 ]]; then
