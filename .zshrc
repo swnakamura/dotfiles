@@ -958,7 +958,8 @@ function sngl-exec-uv-in(){
     # Trap to kill the background process on exit
     local bg_pid=$!
 local exit_message=$(cat <<'EOF'
-================================================================================
+
+=============================== Command Finished ===============================
 Command: ${cmd}
 
 Server: $server
