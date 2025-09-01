@@ -212,6 +212,10 @@ alias kill9="kill -9"
 
 venv() {
     PWD_ORIG=$PWD
+    if ! command -v uv > /dev/null 2>&1; then
+        echo "uv command not found. Check if you're in the right environment"
+        return 1
+    fi
     while true; do
         if [[ -f .venv/bin/activate ]]; then
             break
@@ -253,6 +257,10 @@ link-temp() {
 # In computing server, move the existing specified directory into /d/temp and link it
 move-temp() {
     orig_path=$1
+    if [[ ! -e $orig_path ]]; then
+        echo "$orig_path does not exist in the first place; Not doing anything"
+        return 1
+    fi
     if [[ -L $orig_path ]]; then
         echo "$orig_path is already a symlink; Not doing anything"
         return 1
