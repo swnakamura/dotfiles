@@ -843,10 +843,15 @@ else
 fi
 
 # For servers
-# If not on ssh already ,run it on server
 if [[ -z $SSH_CONNECTION ]]; then
+    # If not on ssh already ,run it on server
     alias gpustat-all='ssh as gpustat-all'
     alias gpustat-all-fast='ssh as gpustat-all-fast'
+    # Restore default background of iceberg color on local
+    printf "\x1b]11;#161822\x1b\\"
+else
+    # Set default background to greenish color on ssh
+    printf "\x1b]11;#162218\x1b\\"
 fi
 alias gtop="$HOME/scripts/gtop"
 alias gtopa="$HOME/scripts/gtop-all"
