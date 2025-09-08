@@ -205,8 +205,6 @@ alias la="myls -a"
 alias lal="myls -la"
 alias lla="myls -la"
 alias vs='nvim -u ~/.config/nvim/simple.lua'
-alias y='yazi'
-alias e="emacs"
 alias duh="du -h -d1"
 alias kill9="kill -9"
 
@@ -798,48 +796,35 @@ test_colors_256(){
 }
 
 ## Abbreviations
+typeset -A ABBRS=(
+    [g]="git"
+    [gf]="git fetch"
+    [gl]="git l"
+    [gld]="git ld"
+    [glo]="git lo"
+    [de]="deactivate"
+    [py]="python3"
+    [ipy]="ipython"
+    [jn]="jupyter notebook"
+    [v]="nvim"
+    [n]="neovide"
+    [tm]="tn"
+    [ks]="tmux -u kill-session -t"
+    [kp]="tmux -u kill-pane -t"
+    [kw]="tmux -u kill-window -t"
+    [tls]="tmux -u ls"
+    [ta]="tmux -u a -t"
+    [y]="yazi"
+)
+
 if command -v abbr &> /dev/null; then
-    abbr -S g="git" >/dev/null
-    abbr -S gf="git fetch" >/dev/null
-    abbr -S gl='git l' >/dev/null
-    abbr -S gld='git ld' >/dev/null
-    abbr -S glo='git lo' >/dev/null
-
-    abbr -S de='deactivate' >/dev/null
-    abbr -S py='python3' >/dev/null
-    abbr -S ipy='ipython' >/dev/null
-    abbr -S jn='jupyter notebook' >/dev/null
-
-    abbr -S v="nvim" >/dev/null
-    abbr -S n="neovide" >/dev/null
-
-    abbr -S tm="tn" >/dev/null
-    abbr -S ks="tmux -u kill-session -t" >/dev/null
-    abbr -S kp="tmux -u kill-pane -t" >/dev/null
-    abbr -S kw="tmux -u kill-window -t" >/dev/null
-    abbr -S tls="tmux -u ls" >/dev/null
-    abbr -S ta="tmux -u a -t" >/dev/null
+    for key value in "${(@kv)ABBRS}"; do
+        abbr -S "$key"="$value" >/dev/null
+    done
 else
-    alias g="git" >/dev/null
-    alias gf="git fetch" >/dev/null
-    alias gl='git l' >/dev/null
-    alias gld='git ld' >/dev/null
-    alias glo='git lo' >/dev/null
-
-    alias de='deactivate' >/dev/null
-    alias py='python3' >/dev/null
-    alias ipy='ipython' >/dev/null
-    alias jn='jupyter notebook' >/dev/null
-
-    alias v="nvim" >/dev/null
-    alias n="neovide" >/dev/null
-
-    alias tm="tn" >/dev/null
-    alias ks="tmux -u kill-session -t" >/dev/null
-    alias kp="tmux -u kill-pane -t" >/dev/null
-    alias kw="tmux -u kill-window -t" >/dev/null
-    alias tls="tmux -u ls" >/dev/null
-    alias ta="tmux -u a -t" >/dev/null
+    for key value in "${(@kv)ABBRS}"; do
+        alias "$key"="$value" >/dev/null
+    done
 fi
 
 # For servers
