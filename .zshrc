@@ -934,7 +934,7 @@ function sngl-exec-uv-in(){
 
     # Run the command in the singularity container
     {
-        ssh -t $server singularity exec --nv -B /d/temp -B /home/projects -B /d/home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
+        ssh $server singularity exec --nv -B /d/temp -B /home/projects -B /d/home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
             printf_msg "Failed to run command on $server.\n"
             printf_msg "Command: $cmd\n"
             echo
