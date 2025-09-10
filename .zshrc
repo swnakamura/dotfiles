@@ -934,7 +934,7 @@ function sngl-exec-uv-in(){
 
     # Run the command in the singularity container
     {
-        ssh $server singularity exec --nv -B /d/temp -B /home/projects -B /d/home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
+        ssh -t $server singularity exec --nv -B /d/temp -B /home/projects -B /d/home/projects $SIF "bash -c 'export CUDA_DEVICE_ORDER=PCI_BUS_ID; export HYDRA_FULL_ERROR=1; $cmd' > ${log_prefix}_out 2> ${log_prefix}_err" || {
             printf_msg "Failed to run command on $server.\n"
             printf_msg "Command: $cmd\n"
             echo
@@ -983,13 +983,32 @@ EOF
     trap - INT EXIT
 }
 
-gpustat ()
-{
-    ssh "$@" "/usr/bin/gpustat -up; ps aux --sort -%cpu" | head -n $(($(tput lines)-2)) | cut -c -$(tput cols)
-}
-watch-gpustat ()
-{
-    watch 'ssh' $@' "/usr/bin/gpustat -up; ps aux --sort -%cpu" | head -n $(($(tput lines)-2)) | cut -c -$(tput cols)'
+function run-in-all-servers(){
+    local cmd=$@
+    if [[ -z $cmd ]]; then
+        echo "Usage: run-in-all-servers <command>"
+        return 1
+    fi
+    local servers=(
+        humpback
+        # shark
+        orca
+        barracuda
+        clione
+        seal
+        walrus
+        rockhopper
+        stingray
+        crayfish
+        starfish
+        catfish
+    )
+
+    # Run the command on each server
+    for server in $servers; do
+        echo "Running following command on $server: $cmd" | boxes -d INFO >&2
+        ssh -t $server "$cmd"
+    done
 }
 
 # Use the same completion
