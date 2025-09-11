@@ -841,7 +841,13 @@ function set_bgcolor() {
         printf "\x1b]11;#161822\x1b\\"
     else
         # Set default background to greenish color on ssh
-        printf "\x1b]11;#162218\x1b\\"
+        if [[ $(echo $SSH_CLIENT | awk '{print $1}') == *.148.167 ]]; then
+            # If on the humpback server, set to greenish color
+            printf "\x1b]11;#162218\x1b\\"
+        else
+            # Otherwise, set to reddish color
+            printf "\x1b]11;#221816\x1b\\"
+        fi
     fi
 }
 autoload -Uz add-zsh-hook
