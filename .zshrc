@@ -938,7 +938,7 @@ function sngl-exec-uv-in(){
 
     # Create log file directory
     local time=$(date +%Y-%m-%d/%H%M%S)
-    local log_prefix=~/log/$time
+    local log_prefix=/d/home/snakamura/log/$time
     mkdir -p $(dirname $log_prefix)
 
     # Show time info for logging in obsidian
@@ -947,6 +947,9 @@ function sngl-exec-uv-in(){
 
     # Create log file
     echo $cmd > ${log_prefix}_cmd
+
+    # Log start time to calculate elapsed time later
+    start_time=$(date +%s)
 
     # Run the command in the singularity container
     {
@@ -972,12 +975,13 @@ Server: $server
 
 Time: $time_obsidian
 
+Elapsed time: $elapsed_time seconds
+
 Output can be found in ${log_prefix}_out and errors in ${log_prefix}_err .
 ================================================================================
 EOF
 )
-    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; printf_msg \"$exit_message\n\"" INT EXIT
-
+    trap "kill -0 $bg_pid 2>/dev/null && kill $bg_pid; eval 'elapsed_time=\$((\$(date +%s) - start_time))'; printf_msg \"$exit_message\n\"" INT EXIT
 
     # Wait for the output file to be created
     printf_msg "loading output from ${log_prefix}_out . Errors can be read from ${log_prefix}_err\n"
@@ -992,7 +996,7 @@ EOF
     printf_msg "\nOutput file created: ${log_prefix}_out , showing below...\n"
 
     # Print the output file
-    tail -F ${log_prefix}_out 
+    tail -F ${log_prefix}_out
 
     # Explicitly kill the background process and remove the trap
     kill -0 $bg_pid 2>/dev/null && kill $bg_pid
