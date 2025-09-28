@@ -891,10 +891,11 @@ function sync-from() {
         # If target is a directory, append trailing slash
         target="$target/"
     fi
+    mkdir -p $(dirname $target)
     if [[ $yes -eq 1 ]]; then
-        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $server:$target $target $options $EXCLUDE_LIST
+        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $EXCLUDE_LIST $server:$target $target $options
     else
-        ssync -aZ --update --no-links $server:$target $target $options $EXCLUDE_LIST
+        ssync -aZ --update --no-links $EXCLUDE_LIST $server:$target $target $options
     fi
 }
 
@@ -905,11 +906,19 @@ function sync-to(){
         echo "Runs ssync by default with some options, including EXCLUDE_LIST: $EXCLUDE_LIST"
         return 1
     fi
+    # if first argument is -y, run rsync instead of ssync
+    if [[ "$1" == "-y" ]]; then
+        local yes=1
+        shift
+    else
+        local yes=0
+    fi
     local server=$1
     shift
     local target=$1
     shift
     local options=$@
+    echo "Syncing to $server:$target", "options: $options"
     if [[ "$target" != /* && "$target" != ~* ]]; then
         # target is relative path
         target="$(pwd)/$target"
@@ -918,7 +927,11 @@ function sync-to(){
         # If target is a directory, append trailing slash
         target="$target/"
     fi
-    ssync -aZ --update --no-links $target $server:$target $options $EXCLUDE_LIST
+    if [[ $yes -eq 1 ]]; then
+        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $EXCLUDE_LIST $target $server:$target  $options
+    else
+        ssync -aZ --update --no-links $EXCLUDE_LIST $target $server:$target $options
+    fi
 }
 
 function printf_msg(){
