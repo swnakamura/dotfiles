@@ -21,6 +21,8 @@ livepreview/
 *.rar
 *.tar
 *.zip
+*.ckpt
+*.pt
 
 # Logs and databases #
 ######################
@@ -44,3 +46,7 @@ lightning_logs*/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Package manager files #
+#########################
+*.egg-info/
