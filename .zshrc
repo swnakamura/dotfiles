@@ -860,14 +860,18 @@ alias ssync="$HOME/scripts/ssync"
 alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
 alias run_sif=~/singularity/scripts/run_sif.sh # To run sif for uv in server
 
-EXCLUDE_LIST=$(echo --exclude={"*.png","*.jpg","*.json","*.bag","*.bin","*.mp4",'*.pth',"*.h5","*.db","*.pkl","*.a","*.MP4","*.raw","*.nfs0000*",".#*"})
+INCLUDE_TEXTS=( --include={'*.c','*.cpp','*.h','*.hpp','*.py','*.sh','*.lua','*.txt','*.md','*.json','*.yaml','*.yml','*.csv','*.tsv','*.ini','*.cfg','*.conf','*.xml','*.html','*.htm','*.js','*.css','*.java','*.go','*.rs','*.rb','*.pl','*.php'} )
+INCLUDE_TEXTSONLY=( --include='*/' --include={'*.c','*.cpp','*.h','*.hpp','*.py','*.sh','*.lua','*.txt','*.md','*.json','*.yaml','*.yml','*.csv','*.tsv','*.ini','*.cfg','*.conf','*.xml','*.html','*.htm','*.js','*.css','*.java','*.go','*.rs','*.rb','*.pl','*.php'} --exclude='*' )
+
+EXCLUDE_BINS=( --exclude={'*.jpg','*.png','*.json','*.bag','*.bin','*.mp4','*.pth','*.h5','*.db','*.pkl','*.a','*.MP4','*.raw','*.nfs0000*','.#*'} )
+EXCLUDE_BINS_MORE=( --exclude={'*.png','*.jpg','*.jpeg','*.json','*.bag','*.bin','*.mp4','*.MP4','*.m4a','*.gif','*.pth','*.ckpt*','*.pt','*.h5','*.db','*.mdb','*.pkl','*.a','*.o','*.raw','*.so','*.zip','*.nfs0000*','.#*'} )
 
 # Copy scripts from/to server
 function sync-from() {
     # Should have an argument
     if [ $# -lt 2 ]; then
-        echo "Usage: sync-from <dst> <file> <options?>"
-        echo "Runs ssync by default with some options, including EXCLUDE_LIST: $EXCLUDE_LIST"
+        echo "Usage: sync-from <dst> <file> <opts?>"
+        echo "Runs ssync by default with some opts, including EXCLUDE_BINS: $EXCLUDE_BINS"
         return 1
     fi
     # if first argument is -y, run rsync instead of ssync
@@ -881,8 +885,8 @@ function sync-from() {
     shift
     local target=$1
     shift
-    local options=$@
-    echo "Syncing from $server:$target", "options: $options"
+    local opts=$@
+    echo "Syncing from $server:$target", "opts: $opts"
     if [[ "$target" != /* && "$target" != ~* ]]; then
         # target is relative path
         target="$(pwd)/$target"
@@ -893,17 +897,17 @@ function sync-from() {
     fi
     mkdir -p $(dirname $target)
     if [[ $yes -eq 1 ]]; then
-        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $EXCLUDE_LIST $server:$target $target $options
+        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $EXCLUDE_BINS $server:$target $target $opts
     else
-        ssync -aZ --update --no-links $EXCLUDE_LIST $server:$target $target $options
+        ssync -aZ --update --no-links $EXCLUDE_BINS $server:$target $target $opts
     fi
 }
 
 function sync-to(){
     # Should have an argument
     if [ $# -lt 2 ]; then
-        echo "Usage: sync-to <dst> <file> <options?>"
-        echo "Runs ssync by default with some options, including EXCLUDE_LIST: $EXCLUDE_LIST"
+        echo "Usage: sync-to <dst> <file> <opts?>"
+        echo "Runs ssync by default with some opts, including EXCLUDE_BINS: $EXCLUDE_BINS"
         return 1
     fi
     # if first argument is -y, run rsync instead of ssync
@@ -917,8 +921,8 @@ function sync-to(){
     shift
     local target=$1
     shift
-    local options=$@
-    echo "Syncing to $server:$target", "options: $options"
+    local opts=$@
+    echo "Syncing to $server:$target", "opts: $opts"
     if [[ "$target" != /* && "$target" != ~* ]]; then
         # target is relative path
         target="$(pwd)/$target"
@@ -928,9 +932,9 @@ function sync-to(){
         target="$target/"
     fi
     if [[ $yes -eq 1 ]]; then
-        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $EXCLUDE_LIST $target $server:$target  $options
+        rsync -aZ --update --no-links -h --exclude-from=$HOME/.rsyncignore --info=progress2 $EXCLUDE_BINS $target $server:$target $opts
     else
-        ssync -aZ --update --no-links $EXCLUDE_LIST $target $server:$target $options
+        ssync -aZ --update --no-links $EXCLUDE_BINS $target $server:$target $opts
     fi
 }
 
