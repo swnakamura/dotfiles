@@ -1054,6 +1054,16 @@ function run-in-all-servers(){
 compdef gtop=ssh
 compdef ssync=scp
 
+# Load configurations with confidential info
+function load_conf_conf() {
+    local conf_file="$HOME/syncthing_config/secrets.zsh"
+    if [[ -f $conf_file ]]; then
+        source $conf_file
+    else
+        echo "$conf_file not found, skipping"
+    fi
+}
+
 # Github CLI
 bindkey '^[|' zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
 bindkey '^[\' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
