@@ -37,6 +37,7 @@ link_to_home .config/git
 link_to_home .config/zathura
 link_to_home .config/kitty
 link_to_home .config/neovide
+link_to_home .config/fish
 link_to_home .rsyncignore
 link_to_home .wezterm.lua
 link_to_home .popt

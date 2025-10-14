@@ -1,5 +1,7 @@
 [ -z "$PS1" ] && return
 
+fish && exit
+
 ### Options section
 setopt correct            # Auto correct mistakes
 setopt extendedglob       # Extended globbing. Allows using regular expressions with *
