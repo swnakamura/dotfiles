@@ -25,7 +25,7 @@ keymap:
 
   - name: non-vim
     application:
-      not: [org.wezfurlong.wezterm.org.wezfurlong.wezterm, obsidian, emacs.Emacs, neovide.neovide]
+      not: [org.wezfurlong.wezterm.org.wezfurlong.wezterm, obsidian, emacs.Emacs, neovide.neovide, org.inkscape.Inkscape.Inkscape]
     remap:
       ALT-A: CTRL-A
       ALT-Z: CTRL-Z
