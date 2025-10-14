@@ -3,22 +3,23 @@ SCRIPTHOME="$( cd "$(dirname "$0")" || exit ; pwd -P )"
 echo Script is executed at "$SCRIPTHOME"
 
 function link_to_home() {
-    echo "Linking $1"
+    echo -n "Linking $1 ... "
     # If parent directory doesn't exist, create it
     if [[ ! -e ~/$1 ]]; then
         mkdir -p "$(dirname ~/"$1")"
     fi
     if [[ -e ~/$1 ]]; then
         if [[ -L ~/$1 ]]; then
-            echo "	unlinked old link"
+            echo -n "unlinked old link ... "
             unlink ~/"$1"
         else
-            echo "	Moving $1 to $1.old"
+            echo "Moving $1 to $1.old"
             mv ~/"$1" ~/"$1".old
         fi
     fi
-    echo "	linked new link"
+    echo -n "linked new link"
     ln -s "$SCRIPTHOME"/"$1" ~/"$1"
+    echo
 }
 
 link_to_home .tmux.conf
