@@ -258,34 +258,22 @@ function setup_keybinds
         echo "fzf not found"
     end
 
-    # Check if both fzf and _zlua commands are available
+    # Check if both fzf and zoxide are installed
     if type -q fzf; and type -q zoxide
 
-        # Function to find and cd to a directory using z.lua and fzf
-        function zlua_fzf
-            # Get directory list from z.lua, reverse it, and pipe to fzf
-            set -l dir_name (z | fzf --no-sort --tac --scheme=path --exact)
+        zoxide init fish --cmd='j' | source
 
-            # Proceed only if a directory was selected
-            if test -n "$dir_name"
-                # Remove the score prefix (e.g., "100.00 /path/to/dir")
-                set dir_name (string replace -r '^\d+\.?\d*\s+' '' $dir_name)
-
-                # Change to the selected directory
-                cd "$dir_name"
-
-                # List contents of the new directory
-                ls
-            end
-
+        function zi_and_prompt
+            # Get directory list from 
+            ji
             # Repaint the command line to show the new prompt
             commandline -f repaint
         end
 
         # Bind the function to Ctrl+K
-        bind -M insert \ck zlua_fzf
+        bind -M insert \ck zi_and_prompt
     else
-        echo "fzf or z.lua not found; zlua_fzf binding not loaded."
+        echo "fzf or zoxide not found; zooxide keybinding not set"
     end
 end
 
