@@ -1,5 +1,6 @@
 [ -z "$PS1" ] && return
 
+PATH=$HOME/.pixi/bin:$PATH
 fish && exit
 
 ### Options section
