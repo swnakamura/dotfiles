@@ -259,12 +259,12 @@ function setup_keybinds
     end
 
     # Check if both fzf and _zlua commands are available
-    if type -q fzf; and type -q _zlua
+    if type -q fzf; and type -q zoxide
 
         # Function to find and cd to a directory using z.lua and fzf
         function zlua_fzf
             # Get directory list from z.lua, reverse it, and pipe to fzf
-            set -l dir_name (_zlua -l | fzf --no-sort --tac --scheme=path --exact)
+            set -l dir_name (z | fzf --no-sort --tac --scheme=path --exact)
 
             # Proceed only if a directory was selected
             if test -n "$dir_name"
