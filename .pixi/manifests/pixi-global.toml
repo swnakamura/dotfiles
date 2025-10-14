@@ -34,3 +34,8 @@ exposed = { ya = "ya", yazi = "yazi" }
 channels = ["conda-forge"]
 dependencies = { go-ghq = "*" }
 exposed = { ghq = "ghq" }
+
+[envs.fd-find]
+channels = ["conda-forge"]
+dependencies = { fd-find = "*" }
+exposed = { fd = "fd" }
