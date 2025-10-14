@@ -187,6 +187,15 @@ function setup_functions
             xdg-open $argv
         end
     end
+
+    function history
+        builtin history
+    end
+
+    function fzfkill
+        { date; ps -ef } | fzf --bind='ctrl-r:reload(date; ps -ef)' --header='Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9
+    end
+    bind -M insert \cq fzfkill
 end
 
 function setup_keybinds

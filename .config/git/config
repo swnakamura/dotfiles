@@ -31,6 +31,7 @@
 [safe]
 	directory = /home/snakamura/remote/home/yubisashi_object_detection
 	directory = /home/snakamura/remote/home/pointing-dataset
+	directory = /d/temp/snakamura/caches/_d_home_snakamura_dotfiles
 
 [alias]
     l = log --graph  --abbrev-commit --all
