@@ -8,15 +8,15 @@ function setup_variables
     set -g EDITOR nvim
 
     # OSを判定してグローバル変数に設定
+    set -gx IS_MACOS ""
+    set -gx IS_LINUX ""
+    set -gx IS_WSL   ""
     set -l os (uname)
     if test "$os" = Darwin
         set -g IS_MACOS 1
-        set -g IS_WSL ""
     else if test "$os" = Linux
-        set -g IS_MACOS ""
-        set -g IS_WSL ""
+        set -g IS_LINUX 1
     else
-        set -g IS_MACOS ""
         set -g IS_WSL 1
     end
 
@@ -78,7 +78,7 @@ function setup_aliases
     alias wget_cache_website='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
 
     # Linux環境向けのクリップボードエイリアス
-    if not test -n "$IS_WSL"; and not test -n "$IS_MACOS"
+    if test -n "$IS_LINUX"
         alias pbcopy='xclip -selection clipboard'
         alias pbpaste='xclip -selection clipboard -o'
     end
