@@ -11,12 +11,12 @@ function setup_variables
     set -l os (uname)
     if test "$os" = Darwin
         set -g IS_MACOS 1
-        set -g IS_WSL 0
+        set -g IS_WSL ""
     else if test "$os" = Linux
-        set -g IS_MACOS 0
-        set -g IS_WSL 0
+        set -g IS_MACOS ""
+        set -g IS_WSL ""
     else
-        set -g IS_MACOS 0
+        set -g IS_MACOS ""
         set -g IS_WSL 1
     end
 
@@ -161,19 +161,19 @@ function setup_functions
     end
 
     alias o="xdg_open2"
-    function xdg_open2 
-        if test "$IS_WSL" = 1
+    function xdg_open2
+        if test -n $IS_WSL
             # WSL
-            if test $argv = ""
+            if test -z $argv
                 explorer.exe .
             else
                 builtin cd $argv; explorer.exe .; builtin cd -
             end
             return 0
         end
-        if test "$IS_MACOS" = 1
+        if test -n $IS_MACOS
             # macOS
-            if test $argv = ""
+            if test -z $argv
                 open .
             else
                 open $argv
