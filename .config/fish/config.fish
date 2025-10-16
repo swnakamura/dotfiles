@@ -196,6 +196,19 @@ function setup_functions
         { date; ps -ef } | fzf --bind='ctrl-r:reload(date; ps -ef)' --header='Press CTRL-R to reload\n\n' --header-lines=2 --preview='echo {}' --preview-window=down,3,wrap --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9
     end
     bind -M insert \cq fzfkill
+
+    # Copy current command content to clipboard
+    # https://askubuntu.com/questions/413436/copy-current-terminal-prompt-to-clipboard
+    function copy_line_to_clipboard
+        set cmd (commandline)
+        if set -q DISPLAY; and type -q xclip
+            echo -n $cmd | xclip -selection clipboard
+        else
+            # Use OSC52 to copy
+            printf "\e]52;c;%s\a" (echo -n $cmd | base64 | tr -d '\n')
+        end
+    end
+    bind -M insert \cy copy_line_to_clipboard
 end
 
 function setup_keybinds
