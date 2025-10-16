@@ -45,6 +45,7 @@ link_to_home .popt
 link_to_home .spacemacs
 link_to_home scripts/ssync
 link_to_home .pixi/manifests/pixi-global.toml
+link_to_home .config/zellij/config.kdl
 
 # If linux, link fcitx5 hotkey extension
 # To use this, you need to run: `yay -S fcitx5-lua`
