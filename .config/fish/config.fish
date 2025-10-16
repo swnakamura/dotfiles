@@ -102,7 +102,6 @@ function setup_aliases
     abbr --add jn "jupyter lab"
     abbr --add v nvim
     abbr --add n neovide
-    abbr --add tm tn
     abbr --add ks "tmux -u kill-session -t"
     abbr --add kp "tmux -u kill-pane -t"
     abbr --add kw "tmux -u kill-window -t"
@@ -209,6 +208,14 @@ function setup_functions
         end
     end
     bind -M insert \cy copy_line_to_clipboard
+
+    function tn
+        if test (count $argv) -eq 1
+            tmux -u new -s $argv
+        else
+            tmux -u new
+        end
+    end
 end
 
 function setup_keybinds
