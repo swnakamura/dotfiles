@@ -108,6 +108,13 @@ function setup_aliases
     abbr --add tls "tmux -u ls"
     abbr --add ta "tmux -u a -t"
     abbr --add y yazi
+    if test -n $IS_LINUX
+        abbr --add zl "systemd-run --scope --user zellij"
+    else
+        abbr --add zl "zellij"
+    end
+    abbr --add zls "zellij ls"
+    abbr --add za "zellij attach"
 end
 
 function setup_functions
