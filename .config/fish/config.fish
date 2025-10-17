@@ -10,6 +10,9 @@ function setup_variables
     # よく使う変数
     set -g EDITOR nvim
 
+    # いまはアメリカ在住
+    set -gx TZ 'America/Los_Angeles'
+
     # OSを判定してグローバル変数に設定
     set -gx IS_MACOS ""
     set -gx IS_LINUX ""
