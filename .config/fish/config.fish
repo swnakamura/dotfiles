@@ -120,7 +120,6 @@ function setup_aliases
         abbr --add zl "zellij"
     end
     abbr --add zls "zellij ls"
-    abbr --add za "zellij attach"
 end
 
 function setup_functions
@@ -228,6 +227,15 @@ function setup_functions
         else
             tmux -u new
         end
+    end
+
+    function za
+        if test (count $argv) -gt 0
+            zellij attach $argv
+            return
+        end
+    set -l target (zellij ls |sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" | fzf | cut -d' ' -f 1)
+    zellij attach $target
     end
 end
 
