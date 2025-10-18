@@ -1,7 +1,10 @@
 [ -z "$PS1" ] && return
 
-PATH=$HOME/.pixi/bin:$PATH
-fish && exit
+if [[ -f $HOME/.pixi/bin/fish ]]; then
+    $HOME/.pixi/bin/fish && exit
+else
+    echo "fish installation with pixi global not found, continuing with zsh"
+fi
 
 ### Options section
 setopt correct            # Auto correct mistakes
