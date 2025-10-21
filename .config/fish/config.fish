@@ -243,7 +243,16 @@ function setup_functions
             zellij attach $argv
             return
         end
-    set -l target (zellij ls |sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" | fzf | cut -d' ' -f 1)
+    set -l target (zellij ls -n | grep -v EXITED | fzf | cut -d' ' -f 1)
+    zellij attach $target
+    end
+
+    function zar
+        if test (count $argv) -gt 0
+            zellij attach $argv
+            return
+        end
+    set -l target (zellij ls -n | fzf | cut -d' ' -f 1)
     zellij attach $target
     end
 end
