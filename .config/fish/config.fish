@@ -2,8 +2,8 @@
 
 function setup_variables
     # PATH
-    # 仮想環境 (uv, venv, conda等) が有効でない場合のみ、pixiのパスの追加を行う
-    if not set -q VIRTUAL_ENV; and not set -q CONDA_PREFIX
+    # 仮想環境 (uv, venv等) が有効でない場合のみ、pixiのパスの追加を行う
+    if not set -q VIRTUAL_ENV
         set -g PATH $HOME/.pixi/bin $PATH
     end
 
