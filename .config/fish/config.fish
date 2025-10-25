@@ -13,6 +13,10 @@ function setup_variables
     # いまはアメリカ在住
     set -gx TZ 'America/Los_Angeles'
 
+
+    # Fishのキーバインドをviモードに変更
+    set -g fish_key_bindings fish_vi_key_bindings
+
     # OSを判定してグローバル変数に設定
     set -gx IS_MACOS ""
     set -gx IS_LINUX ""
