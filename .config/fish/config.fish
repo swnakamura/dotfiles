@@ -267,7 +267,7 @@ function setup_functions
     function extract
         set -l tmp_dir (mktemp -d --tmpdir=./)
         set -l archive_file_name (basename $argv[1])
-        set -l absolute_path (realpath (dirname $argv[1]))/$archive_file_name
+        set -l archive_file_absolute_path (realpath (dirname $argv[1]))/$archive_file_name
 
         set -l suffix
         set -l command
@@ -292,7 +292,7 @@ function setup_functions
             end
         end
 
-        ln -s $absolute_path $tmp_dir/$archive_file_name
+        ln -s $archive_file_absolute_path $tmp_dir/$archive_file_name
         cd $tmp_dir > /dev/null 2>&1
         eval $command $archive_file_name && rm $archive_file_name
         if test $status -ne 0
@@ -317,8 +317,8 @@ function setup_functions
             end
         else
             # When multiple files are extracted, rename the temp directory to the archive name without suffix
-            set extract_name (basename $archive_file_name $suffix)
-            if test -f ./$extract_name
+            set extract_name (dirname $archive_file_absolute_path)/(basename $archive_file_name $suffix)
+            if test -f $extract_name
                 echo "cannot move directory to '$extract_name': File exists" >&2
                 echo "extracted files are in  $tmp_dir" >&2
             else
