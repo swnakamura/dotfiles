@@ -267,7 +267,7 @@ function setup_functions
     function extract
         set -l tmp_dir (mktemp -d --tmpdir=./)
         set -l archive_file_name (basename $argv[1])
-        set -l absolute_path (cd (dirname $argv[1]) > /dev/null 2>&1; pwd)/$archive_file_name
+        set -l absolute_path (realpath (dirname $argv[1]))/$archive_file_name
 
         set -l suffix
         set -l command
@@ -322,7 +322,7 @@ function setup_functions
                 echo "cannot move directory to '$extract_name': File exists" >&2
                 echo "extracted files are in  $tmp_dir" >&2
             else
-                echo mv $tmp_dir $extract_name
+                echo "Moving $tmp_dir to $extract_name"
                 mv $tmp_dir $extract_name
             end
         end
