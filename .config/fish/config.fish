@@ -182,6 +182,12 @@ function setup_functions
         # alias pydoh='~/third_party_models/hold/generator/100doh/.pixi/envs/default/bin/python'
     end
 
+    function load_ffm_commands
+        alias cdroot='cd ~/projects/FFM'
+        alias pygsplat='~/projects/FFM/gsplat/.pixi/envs/default/bin/python'
+        alias pyffm='~/projects/FFM/Feed-Forward-Meshing/.pixi/envs/default/bin/python'
+    end
+
     alias o="xdg_open2"
     function xdg_open2
         if test -n $IS_WSL
