@@ -55,10 +55,6 @@ function setup_aliases
     alias jl='julia'
     alias manj='LANG=ja_JP.UTF-8 man'
 
-    # git
-    if test -n "$IS_MACOS"
-        alias gitu='git add . && git commit && git push'
-    end
     # gitのstaged内容からOllamaでコミットメッセージを生成しクリップボードにコピー
     # Zshの `>(pbcopy)` はFishではサポートされないため `tee /dev/tty | pbcopy` で代用
     alias gmsg='git diff --staged | ollama run tavernari/git-commit-message | tee /dev/tty | pbcopy'
