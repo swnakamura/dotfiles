@@ -305,7 +305,7 @@ function setup_functions
         set -l extracted_files (ls -A $tmp_dir)
         if test -d $tmp_dir/"$extracted_files" # This is satisfied when only one directory is extracted
             # If only one directory is extracted, move it to the current directory
-            set -l extracted_file extracted_files[1]
+            set -l extracted_file $extracted_files[1]
             set -e extracted_files
             if test -d ./"$extracted_file" # Check if the target directory already exists
                 echo "cannot move directory to '$extracted_file': File exists" >&2
@@ -322,6 +322,7 @@ function setup_functions
                 echo "cannot move directory to '$extract_name': File exists" >&2
                 echo "extracted files are in  $tmp_dir" >&2
             else
+                echo mv $tmp_dir $extract_name
                 mv $tmp_dir $extract_name
             end
         end
