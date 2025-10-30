@@ -12,3 +12,4 @@ $RECYCLE.BIN
 .git/
 __pycache__/
 *.o
+.pixi/
