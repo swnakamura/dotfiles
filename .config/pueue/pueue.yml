@@ -1,0 +1,20 @@
+# https://denkiwakame.notion.site/pueue-2ba3175c6b6a80e8bb4ff5b9cb65f666
+daemon:
+  pause_group_on_failure: false
+  pause_all_on_failure: false
+  env_vars: {}
+  callback_log_lines: 10
+  shell_command: null
+  callback: |
+      jq -n --argjson color "$( [ "{{ result }}" = Success ] && echo 65280 || echo 16711680 )" \
+      '{
+        embeds:[{
+          title:"Task # {{ id }}",
+          fields:[
+            {name:"Command", value: "{{ command }}", inline: true },
+            {name:"Path", value: "{{ path }}", inline: true },
+            {name:"Finished with status", value: "{{ result }}", inline: true}
+          ],
+          color:$color
+        }]
+      }' | xh post -j "$WEBHOOK_URL"
