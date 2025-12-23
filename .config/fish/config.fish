@@ -186,6 +186,37 @@ function setup_functions
         alias cdroot='cd ~/projects/FFM'
         alias pygsplat='~/projects/FFM/gsplat/.pixi/envs/default/bin/python'
         alias pyffm='~/projects/FFM/Feed-Forward-Meshing/.pixi/envs/default/bin/python'
+        alias pymilo='~/projects/FFM/Feed-Forward-Meshing/env_milo/.pixi/envs/default/bin/python'
+    end
+
+    function move-temp
+        set orig_path $argv[1]
+        if not test -e $orig_path
+            echo "$orig_path does not exist in the first place; Not doing anything"
+            return 1
+        end
+        if test -L $orig_path
+            echo "$orig_path is already a symlink; Not doing anything"
+            return 1
+        end
+        set link_dir (string replace -a "/" "_" (realpath $orig_path))
+        set link_path "$CACHE_ROOT$link_dir"
+        if test -e $link_path
+            read -l -P "$link_path already exists; delete it manually. Do you want to overwrite it? [y/N] " REPLY
+            if test "$REPLY" != "y"
+                return 1
+            end
+            set link_path_old "$link_path"_old_(date +%s)
+            mv $link_path $link_path_old
+            rm -rf $link_path_old &
+        end
+        mv $orig_path $link_path
+        if test $status -ne 0
+            echo "Failed to move $orig_path to $link_path. Delete the directory manually and run ln -s $link_path $orig_path"
+            return 1
+        end
+        ln -s $link_path $orig_path
+        echo "Moved $orig_path to $link_path"
     end
 
     alias o="xdg_open2"
@@ -213,6 +244,26 @@ function setup_functions
             xdg-open .
         else
             xdg-open $argv
+        end
+    end
+
+    function fcopy --description "フルパスを引数に取り、そのファイルをクリップボードにコピーする"
+        if test (count $argv) -ne 1
+            echo "使用法: fcopy <ファイルのフルパス>"
+            return 1
+        end
+        
+        # 渡された引数をフルパスとして使用
+        set file_path $argv[1]
+        
+        # AppleScriptを実行して、ファイルオブジェクトをクリップボードに設定
+        osascript -e "set the clipboard to (POSIX file \"$file_path\")"
+        
+        if test $status -eq 0
+            echo "✅ '$file_path' をクリップボードにコピーしました。"
+        else
+            echo "❌ ファイルのコピーに失敗しました。"
+            return 1
         end
     end
 
