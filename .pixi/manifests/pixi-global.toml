@@ -49,3 +49,23 @@ exposed = { idle3 = "idle3", "idle3.14" = "idle3.14", pydoc = "pydoc", pydoc3 = 
 channels = ["conda-forge"]
 dependencies = { dust = "*" }
 exposed = { dust = "dust" }
+
+[envs.zip]
+channels = ["conda-forge"]
+dependencies = { zip = "*" }
+exposed = { zip = "zip", zipcloak = "zipcloak", zipnote = "zipnote", zipsplit = "zipsplit" }
+
+[envs.unzip]
+channels = ["conda-forge"]
+dependencies = { unzip = "*" }
+exposed = { funzip = "funzip", unzip = "unzip", unzipsfx = "unzipsfx", zipgrep = "zipgrep", zipinfo = "zipinfo" }
+
+[envs.ffmpeg]
+channels = ["conda-forge"]
+dependencies = { ffmpeg = "*" }
+exposed = { ffmpeg = "ffmpeg", ffplay = "ffplay", ffprobe = "ffprobe" }
+
+[envs.clang]
+channels = ["conda-forge"]
+dependencies = { clang = "*" }
+exposed = { clang = "clang", clang-cl = "clang-cl", clang-cpp = "clang-cpp" }
