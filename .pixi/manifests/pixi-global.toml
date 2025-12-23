@@ -69,3 +69,48 @@ exposed = { ffmpeg = "ffmpeg", ffplay = "ffplay", ffprobe = "ffprobe" }
 channels = ["conda-forge"]
 dependencies = { clang = "*" }
 exposed = { clang = "clang", clang-cl = "clang-cl", clang-cpp = "clang-cpp" }
+
+[envs.xh]
+channels = ["conda-forge"]
+dependencies = { xh = "*" }
+exposed = { xh = "xh", xhs = "xhs" }
+
+[envs.jq]
+channels = ["conda-forge"]
+dependencies = { jq = "*" }
+exposed = { jq = "jq" }
+
+[envs.sshs]
+channels = ["conda-forge"]
+dependencies = { sshs = "*" }
+exposed = { sshs = "sshs" }
+
+[envs.pueue]
+channels = ["conda-forge"]
+dependencies = { pueue = "*" }
+exposed = { pueue = "pueue", pueued = "pueued" }
+
+[envs.hyperfine]
+channels = ["conda-forge"]
+dependencies = { hyperfine = "*" }
+exposed = { hyperfine = "hyperfine" }
+
+[envs.dua-cli]
+channels = ["conda-forge"]
+dependencies = { dua-cli = "*" }
+exposed = { dua = "dua" }
+
+[envs.diskonaut]
+channels = ["conda-forge"]
+dependencies = { diskonaut = "*" }
+exposed = { diskonaut = "diskonaut" }
+
+[envs.rclone]
+channels = ["conda-forge"]
+dependencies = { rclone = "*" }
+exposed = { rclone = "rclone" }
+
+[envs.nvim]
+channels = ["conda-forge"]
+dependencies = { nvim = "*" }
+exposed = { nvim = "nvim" }
