@@ -114,3 +114,18 @@ exposed = { rclone = "rclone" }
 channels = ["conda-forge"]
 dependencies = { nvim = "*" }
 exposed = { nvim = "nvim" }
+
+[envs.nodejs]
+channels = ["conda-forge"]
+dependencies = { nodejs = "*" }
+exposed = { node = "node", npm = "npm", npx = "npx" }
+
+[envs.yarn]
+channels = ["conda-forge"]
+dependencies = { yarn = "*" }
+exposed = { yarn = "yarn", "yarn.cmd" = "yarn.cmd", "yarn.js" = "yarn.js", "yarn.ps1" = "yarn.ps1" }
+
+[envs.tldr]
+channels = ["conda-forge"]
+dependencies = { tldr = "*" }
+exposed = { tldr = "tldr" }
