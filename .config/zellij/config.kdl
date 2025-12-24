@@ -234,6 +234,12 @@ keybinds clear-defaults=true {
         bind "\"" { NewPane "down"; SwitchToMode "normal"; }
         bind "%" { NewPane "right"; SwitchToMode "normal"; }
         bind "," { SwitchToMode "renametab"; }
+        bind "," {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "[" { SwitchToMode "scroll"; }
 
         bind "b" { Write 2; SwitchToMode "normal"; }
