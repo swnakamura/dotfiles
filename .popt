@@ -1,1 +1,0 @@
-rsync alias -Z --no-p --no-g --chmod=D2775,F664
