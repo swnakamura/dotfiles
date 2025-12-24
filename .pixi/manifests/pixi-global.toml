@@ -129,3 +129,8 @@ exposed = { yarn = "yarn", "yarn.cmd" = "yarn.cmd", "yarn.js" = "yarn.js", "yarn
 channels = ["conda-forge"]
 dependencies = { tldr = "*" }
 exposed = { tldr = "tldr" }
+
+[envs.tree]
+channels = ["conda-forge"]
+dependencies = { tree = "*" }
+exposed = { tree = "tree" }
