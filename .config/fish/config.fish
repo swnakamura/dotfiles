@@ -204,8 +204,8 @@ function setup_functions
             echo "$orig_path is already a symlink; Not doing anything"
             return 1
         end
-        set link_dir (string replace -a "/" "_" (realpath $orig_path))
-        set link_path "$CACHE_ROOT$link_dir"
+        set link_name (string replace -a "/" "_" (realpath $orig_path))
+        set link_path "$CACHE_ROOT$link_name"
         if test -e $link_path
             read -l -P "$link_path already exists; delete it manually. Do you want to overwrite it? [y/N] " REPLY
             if test "$REPLY" != "y"
