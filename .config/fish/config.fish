@@ -190,6 +190,11 @@ function setup_functions
     end
 
     function move-temp
+        set CACHE_ROOT /d/temp
+        if not test -d $CACHE_ROOT
+            echo "$CACHE_ROOT does not exist; create it first"
+            return 1
+        end
         set orig_path $argv[1]
         if not test -e $orig_path
             echo "$orig_path does not exist in the first place; Not doing anything"
