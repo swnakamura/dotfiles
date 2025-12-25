@@ -11,7 +11,9 @@ function setup_variables
     set -gx EDITOR nvim
 
     # いまはアメリカ在住
-    set -gx TZ 'America/Los_Angeles'
+    # set -gx TZ 'America/Los_Angeles'
+    # 日本在住に戻った
+    set -gx TZ 'Asia/Tokyo'
 
 
     # Fishのキーバインドをviモードに変更
