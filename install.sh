@@ -8,14 +8,12 @@ function link_to_home() {
     if [[ ! -e ~/$1 ]]; then
         mkdir -p "$(dirname ~/"$1")"
     fi
-    if [[ -e ~/$1 ]]; then
-        if [[ -L ~/$1 ]]; then
-            echo -n "unlinked old link ... "
-            unlink ~/"$1"
-        else
-            echo "Moving $1 to $1.old"
-            mv ~/"$1" ~/"$1".old
-        fi
+    if [[ -L ~/$1 ]]; then
+        echo -n "unlinked old link ... "
+        unlink ~/"$1"
+    elif [[ -e ~/$1 ]]; then
+        echo "Moving $1 to $1.old"
+        mv ~/"$1" ~/"$1".old
     fi
     echo -n "linked new link"
     ln -s "$SCRIPTHOME"/"$1" ~/"$1"
