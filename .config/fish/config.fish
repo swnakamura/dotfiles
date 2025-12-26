@@ -1,12 +1,6 @@
 # ~/.config/fish/config.fish
 
 function setup_variables
-    # PATH
-    # 仮想環境 (uv, venv等) が有効でない場合のみ、pixiのパスの追加を行う
-    if not set -q VIRTUAL_ENV
-        set -gx PATH $HOME/.pixi/bin $PATH
-    end
-
     # よく使う変数
     set -gx EDITOR nvim
 
