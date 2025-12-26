@@ -192,12 +192,12 @@ function setup_functions
     end
 
     function move-temp
-        set CACHE_ROOT /d/temp
+        set CACHE_ROOT /d/temp/snakamura/caches
         if not test -d $CACHE_ROOT
             echo "$CACHE_ROOT does not exist; create it first"
             return 1
         end
-        set orig_path $argv[1]
+        set orig_path (string trim $argv[1] --right --chars=/) # Remove trailing slash as it breaks ln command
         if not test -e $orig_path
             echo "$orig_path does not exist in the first place; Not doing anything"
             return 1
@@ -207,7 +207,7 @@ function setup_functions
             return 1
         end
         set link_name (string replace -a "/" "_" (realpath $orig_path))
-        set link_path "$CACHE_ROOT$link_name"
+        set link_path "$CACHE_ROOT/$link_name"
         if test -e $link_path
             read -l -P "$link_path already exists; delete it manually. Do you want to overwrite it? [y/N] " REPLY
             if test "$REPLY" != "y"
