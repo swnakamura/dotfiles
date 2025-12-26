@@ -480,20 +480,3 @@ setup_variables
 setup_aliases
 setup_functions
 setup_keybinds
-
-# 仮想環境 (uv, venv, conda等) が有効でない場合のみ、condaの初期化を行う
-if not set -q VIRTUAL_ENV; and not set -q CONDA_PREFIX
-
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    if test -f /home/snakamura/.pixi/envs/conda/bin/conda
-        eval /home/snakamura/.pixi/envs/conda/bin/conda "shell.fish" "hook" $argv | source
-    else
-        if test -f "/home/snakamura/.pixi/envs/conda/etc/fish/conf.d/conda.fish"
-            . "/home/snakamura/.pixi/envs/conda/etc/fish/conf.d/conda.fish"
-        else
-            set -x PATH "/home/snakamura/.pixi/envs/conda/bin" $PATH
-        end
-    end
-    # <<< conda initialize <<<
-end
