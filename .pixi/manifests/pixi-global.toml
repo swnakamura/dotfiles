@@ -30,11 +30,6 @@ channels = ["conda-forge"]
 dependencies = { fd-find = "*" }
 exposed = { fd = "fd" }
 
-[envs.conda]
-channels = ["conda-forge"]
-dependencies = { conda = "*" }
-exposed = { activate = "activate", conda = "conda", conda-env = "conda-env", deactivate = "deactivate" }
-
 [envs.zellij]
 channels = ["conda-forge"]
 dependencies = { zellij = "*" }
@@ -105,11 +100,6 @@ channels = ["conda-forge"]
 dependencies = { diskonaut = "*" }
 exposed = { diskonaut = "diskonaut" }
 
-[envs.rclone]
-channels = ["conda-forge"]
-dependencies = { rclone = "*" }
-exposed = { rclone = "rclone" }
-
 [envs.nvim]
 channels = ["conda-forge"]
 dependencies = { nvim = "*" }
@@ -139,3 +129,38 @@ exposed = { tree = "tree" }
 channels = ["conda-forge"]
 dependencies = { git = "*" }
 exposed = { git = "git", git-credential-osxkeychain = "git-credential-osxkeychain", git-cvsserver = "git-cvsserver", git-receive-pack = "git-receive-pack", git-shell = "git-shell", git-upload-archive = "git-upload-archive", git-upload-pack = "git-upload-pack", gitk = "gitk", scalar = "scalar" }
+
+[envs.jupyter]
+channels = ["conda-forge"]
+dependencies = { jupyter = "*" }
+exposed = { jupyter = "jupyter" }
+
+[envs.bat]
+channels = ["conda-forge"]
+dependencies = { bat = "*" }
+exposed = { bat = "bat" }
+
+[envs.git-delta]
+channels = ["conda-forge"]
+dependencies = { git-delta = "*" }
+exposed = { delta = "delta" }
+
+[envs.ripgrep]
+channels = ["conda-forge"]
+dependencies = { ripgrep = "*" }
+exposed = { rg = "rg" }
+
+[envs.parallel]
+channels = ["conda-forge"]
+dependencies = { parallel = "*" }
+exposed = { env_parallel = "env_parallel", "env_parallel.ash" = "env_parallel.ash", "env_parallel.dash" = "env_parallel.dash", "env_parallel.mksh" = "env_parallel.mksh", "env_parallel.pdksh" = "env_parallel.pdksh", niceload = "niceload", parallel = "parallel", parcat = "parcat", parset = "parset", parsort = "parsort", sem = "sem", sql = "sql" }
+
+[envs.ninja]
+channels = ["conda-forge"]
+dependencies = { ninja = "*" }
+exposed = { ninja = "ninja" }
+
+[envs.htop]
+channels = ["conda-forge"]
+dependencies = { htop = "*" }
+exposed = { htop = "htop" }
