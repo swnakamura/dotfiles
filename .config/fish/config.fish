@@ -108,7 +108,6 @@ function setup_aliases
     abbr --add kp "tmux -u kill-pane -t"
     abbr --add kw "tmux -u kill-window -t"
     abbr --add tls "tmux -u ls"
-    abbr --add ta "tmux -u a -t"
     abbr --add y yazi
     if test -n $IS_LINUX
         abbr --add zl "systemd-run --scope --user zellij"
@@ -296,6 +295,15 @@ function setup_functions
         else
             tmux -u new
         end
+    end
+
+    function ta --description "tmuxセッションにアタッチ。引数があればそのセッションにアタッチ、なければfzfで選択"
+        if test (count $argv) -gt 0
+            tmux -u attach -t $argv
+            return
+        end
+        set -l target (tmux -u ls | grep -v 'no server running' | fzf | cut -d: -f1)
+        tmux -u attach -t $target
     end
 
     function za
