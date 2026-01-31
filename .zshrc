@@ -1042,9 +1042,9 @@ function run-in-all-servers(){
         walrus
         rockhopper
         stingray
-        crayfish
+        # crayfish
         starfish
-        catfish
+        # catfish
     )
 
     # Run the command on each server
