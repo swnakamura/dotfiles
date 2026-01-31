@@ -30,11 +30,6 @@ channels = ["conda-forge"]
 dependencies = { fd-find = "*" }
 exposed = { fd = "fd" }
 
-[envs.zellij]
-channels = ["conda-forge"]
-dependencies = { zellij = "*" }
-exposed = { zellij = "zellij" }
-
 [envs.python]
 channels = ["conda-forge"]
 dependencies = { python = "*", "pip" = "*"  }
