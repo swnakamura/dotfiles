@@ -159,3 +159,23 @@ exposed = { ninja = "ninja" }
 channels = ["conda-forge"]
 dependencies = { htop = "*" }
 exposed = { htop = "htop" }
+
+[envs.git-lfs]
+channels = ["conda-forge"]
+dependencies = { git-lfs = "*" }
+exposed = { git-lfs = "git-lfs" }
+
+[envs.nvtop]
+channels = ["conda-forge"]
+dependencies = { nvtop = "*" }
+exposed = { nvtop = "nvtop" }
+
+[envs.btop]
+channels = ["conda-forge"]
+dependencies = { btop = "*" }
+exposed = { btop = "btop" }
+
+[envs.ruff]
+channels = ["conda-forge"]
+dependencies = { ruff = "*" }
+exposed = { ruff = "ruff" }
