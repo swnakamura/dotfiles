@@ -33,8 +33,9 @@ function setup_variables
     set -gx EXCLUDE_BINS --exclude={'*.jpg','*.png','*.json','*.bag','*.bin','*.mp4','*.pth','*.h5','*.db','*.pkl','*.a','*.MP4','*.raw','*.nfs0000*','.#*'}
     set -gx EXCLUDE_BINS_MORE --exclude={'*.png','*.jpg','*.jpeg','*.json','*.bag','*.bin','*.mp4','*.MP4','*.m4a','*.gif','*.pth','*.ckpt*','*.pt','*.h5','*.db','*.mdb','*.pkl','*.a','*.o','*.raw','*.so','*.zip','*.nfs0000*','.#*'}
 
-    # そのほか
+    # 補完設定
     pixi completion --shell fish | source
+    pueue completions fish | source
 end
 
 function setup_aliases
