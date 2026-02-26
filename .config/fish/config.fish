@@ -140,6 +140,9 @@ function setup_keybinds
 
     # fzf の設定
     if type -q fzf
+
+        fzf --fish | source
+
         # fzfが使うデフォルトコマンドを `fd` に設定
         set -x FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
         set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
@@ -153,6 +156,9 @@ function setup_keybinds
 
     # Check if both fzf and zoxide are installed
     if type -q fzf; and type -q zoxide
+
+        zoxide init fish --cmd='j' | source
+
         # Bind the function to Ctrl+K
         bind -M insert \ck zi_and_prompt
     else
