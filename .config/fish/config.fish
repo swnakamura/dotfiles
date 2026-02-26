@@ -331,7 +331,7 @@ function setup_functions
         end
     end
 
-    function ta --description "tmuxセッションにアタッチ。引数があればそのセッションにアタッチ、なければfzfで選択"
+    function tf --description "tmuxセッションにアタッチ。引数があればそのセッションにアタッチ、なければfzfで選択"
         if test (count $argv) -gt 0
             tmux -u attach -t $argv
             return
