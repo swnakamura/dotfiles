@@ -1,0 +1,114 @@
+# Font
+font-family = JetBrains Mono
+font-size = 12
+# kitty had: bold=SemiBold, bold-italic=SemiBold; let Ghostty auto-detect weight variants
+font-style = Light
+font-style-bold = SemiBold
+font-style-bold-italic = SemiBold Italic
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+
+# Window
+confirm-close-surface = true
+# background-opacity = 0.93
+
+# Scrollback (kitty had a custom nvim pager; Ghostty uses built-in scrollback)
+scrollback-limit = 100000
+
+##### Iceberg theme #####
+
+background = #161821
+foreground = #c6c8d1
+
+selection-background = #333855
+selection-foreground = #c6c8d1
+
+cursor-color = #d2d4de
+
+# black
+palette = 0=#161821
+palette = 8=#6b7089
+
+# red
+palette = 1=#e27878
+palette = 9=#e98989
+
+# green
+palette = 2=#b4be82
+palette = 10=#c0ca8e
+
+# yellow/orange
+palette = 3=#e2a478
+palette = 11=#e9b189
+
+# blue
+palette = 4=#84a0c6
+palette = 12=#91acd1
+
+# magenta/purple
+palette = 5=#a093c7
+palette = 13=#ada0d3
+
+# cyan
+palette = 6=#89b8c2
+palette = 14=#95c4ce
+
+# white
+palette = 7=#c6c8d1
+palette = 15=#d2d4de
+
+##### Iceberg theme END #####
+
+# Font size
+keybind = ctrl+shift+minus=decrease_font_size:1
+keybind = ctrl+shift+equal=increase_font_size:1
+keybind = ctrl+shift+zero=reset_font_size
+
+# Splits
+# ctrl+shift+' → hsplit (new pane right), ctrl+shift+5 → vsplit (new pane below)
+keybind = ctrl+shift+apostrophe=new_split:down
+keybind = ctrl+shift+5=new_split:right
+keybind = ctrl+shift+enter=toggle_split_zoom
+keybind = alt+z=toggle_split_zoom
+
+# Close pane/tab
+keybind = alt+w=close_surface
+keybind = super+w=close_surface
+
+# Tabs
+keybind = alt+c=new_tab
+keybind = alt+t=new_tab
+keybind = super+t=new_tab
+
+keybind = alt+n=next_tab
+keybind = alt+p=previous_tab
+keybind = ctrl+shift+page_down=next_tab
+keybind = ctrl+shift+page_up=previous_tab
+
+# Tab by number
+keybind = super+one=goto_tab:1
+keybind = super+two=goto_tab:2
+keybind = super+three=goto_tab:3
+keybind = super+four=goto_tab:4
+keybind = super+five=goto_tab:5
+keybind = super+six=goto_tab:6
+keybind = super+seven=goto_tab:7
+keybind = super+eight=goto_tab:8
+keybind = super+nine=goto_tab:9
+
+# Split navigation
+keybind = ctrl+shift+k=goto_split:up
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+keybind = ctrl+shift+j=goto_split:down
+
+# Move splits
+# keybind = alt+shift+k=move_split:up
+# keybind = alt+shift+h=move_split:left
+# keybind = alt+shift+l=move_split:right
+# keybind = alt+shift+j=move_split:down
+
+# Resize mode
+# keybind = alt+r=resize_split:left:10

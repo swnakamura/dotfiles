@@ -47,7 +47,7 @@ function link_to_home() {
 # link_to_home .wezterm.lua
 link_to_home .config/fish
 link_to_home .config/git
-link_to_home .config/kitty
+# link_to_home .config/kitty
 link_to_home .config/ghostty
 link_to_home .config/lsd
 link_to_home .config/neovide
