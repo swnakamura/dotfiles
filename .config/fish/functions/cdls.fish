@@ -1,3 +1,3 @@
 function cdls
-    builtin cd $argv && /bin/ls -U --color
+    builtin cd $argv && ls -U
 end
