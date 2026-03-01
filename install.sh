@@ -61,6 +61,7 @@ link_to_home .latexmkrc
 link_to_home .pixi/manifests/pixi-global.toml
 link_to_home .rsyncignore
 link_to_home .tmux.conf
+link_to_home .tmux_status_format.sh
 link_to_home .zshrc
 link_to_home scripts/ssync
 
