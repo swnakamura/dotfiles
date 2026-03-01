@@ -2422,7 +2422,7 @@ require('lazy').setup({
     config = function()
       vim.treesitter.language.register('bash', { 'sh', 'zsh' })
       vim.treesitter.language.register('latex', { 'tex' })
-      require('nvim-treesitter.configs').setup {
+      require('nvim-treesitter.config').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' },
 
