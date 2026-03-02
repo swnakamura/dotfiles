@@ -179,3 +179,8 @@ exposed = { btop = "btop" }
 channels = ["conda-forge"]
 dependencies = { ruff = "*" }
 exposed = { ruff = "ruff" }
+
+[envs.gh]
+channels = ["conda-forge"]
+dependencies = { gh = "*" }
+exposed = { gh = "gh" }
