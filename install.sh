@@ -48,6 +48,7 @@ function link_to_home() {
 link_to_home .config/nvim
 link_to_home .config/fish
 link_to_home .config/git
+link_to_home .config/crush
 # link_to_home .config/kitty
 link_to_home .config/ghostty
 link_to_home .config/lsd
