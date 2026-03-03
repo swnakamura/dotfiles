@@ -48,11 +48,11 @@ fi
 # 最終的な出力を組み立て
 # ここで #[fg=...] などの装飾もまとめて出力できます
 STATUS_BG="colour235"
-CURRENT_FG="colour252"
-CURRENT_BG2="colour67"
-CURRENT_BG1="colour239"
-ALTRNAT_BG="colour237"
-ALTRNAT_FG="colour244"
+CURRENT_FG="#cdd6f4"
+CURRENT_BG2="#385f9d"
+CURRENT_BG1="#313244"
+ALTRNAT_BG="#313244"
+ALTRNAT_FG="#cdd6f4"
 
 if [ $IS_CURRENT = 1 ]; then
     echo "#[fg=$CURRENT_BG2,bg=$STATUS_BG]#[fg=$CURRENT_FG,bg=$CURRENT_BG2]${LAST_FLAG}${WINDOW_INDEX} ${ICON} #[fg=$CURRENT_FG,bg=$CURRENT_BG1,bold] ${WINDOW_NAME}${PANE_INFO}#[fg=$CURRENT_BG1,bg=$STATUS_BG]"
