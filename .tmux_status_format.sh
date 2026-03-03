@@ -32,7 +32,7 @@ fi
 # 2. 直近ウィンドウフラグ
 LAST_FLAG=""
 if [ "$WINDOW_LAST" = "1" ]; then
-    LAST_FLAG=" 󰕌 "
+    LAST_FLAG="󰕌 "
 fi
 
 # 3. ペイン数・ズーム状態
@@ -47,8 +47,15 @@ fi
 
 # 最終的な出力を組み立て
 # ここで #[fg=...] などの装飾もまとめて出力できます
-if [ $IS_CURRENT = 0 ]; then
-    echo "#[fg=colour237,bg=default]#[fg=colour244,bg=colour237]${ICON}${LAST_FLAG} ${WINDOW_INDEX}:${WINDOW_NAME}${PANE_INFO}#[fg=colour237,bg=default]"
+STATUS_BG="colour235"
+CURRENT_FG="colour252"
+CURRENT_BG2="colour67"
+CURRENT_BG1="colour239"
+ALTRNAT_BG="colour237"
+ALTRNAT_FG="colour244"
+
+if [ $IS_CURRENT = 1 ]; then
+    echo "#[fg=$CURRENT_BG2,bg=$STATUS_BG]#[fg=$CURRENT_FG,bg=$CURRENT_BG2]${LAST_FLAG}${WINDOW_INDEX} ${ICON} #[fg=$CURRENT_FG,bg=$CURRENT_BG1,bold] ${WINDOW_NAME}${PANE_INFO}#[fg=$CURRENT_BG1,bg=$STATUS_BG]"
 else
-    echo "#[fg=colour24,bg=colour235]#[fg=colour255,bg=colour24,bold]${ICON}${LAST_FLAG} ${WINDOW_INDEX}:${WINDOW_NAME}${PANE_INFO}#[fg=colour24,bg=colour235]"
+    echo "#[fg=$ALTRNAT_BG ,bg=$STATUS_BG]#[fg=$ALTRNAT_FG,bg=$ALTRNAT_BG ]${LAST_FLAG}${WINDOW_INDEX} ${ICON} #[fg=$ALTRNAT_FG,bg=$ALTRNAT_BG      ] ${WINDOW_NAME}${PANE_INFO}#[fg=$ALTRNAT_BG,bg=$STATUS_BG ]"
 fi

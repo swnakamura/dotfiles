@@ -17,49 +17,7 @@ confirm-close-surface = true
 # Scrollback (kitty had a custom nvim pager; Ghostty uses built-in scrollback)
 scrollback-limit = 100000
 
-##### Iceberg theme #####
-
-background = #161821
-foreground = #c6c8d1
-
-selection-background = #333855
-selection-foreground = #c6c8d1
-
-cursor-color = #d2d4de
-
-# black
-palette = 0=#161821
-palette = 8=#6b7089
-
-# red
-palette = 1=#e27878
-palette = 9=#e98989
-
-# green
-palette = 2=#b4be82
-palette = 10=#c0ca8e
-
-# yellow/orange
-palette = 3=#e2a478
-palette = 11=#e9b189
-
-# blue
-palette = 4=#84a0c6
-palette = 12=#91acd1
-
-# magenta/purple
-palette = 5=#a093c7
-palette = 13=#ada0d3
-
-# cyan
-palette = 6=#89b8c2
-palette = 14=#95c4ce
-
-# white
-palette = 7=#c6c8d1
-palette = 15=#d2d4de
-
-##### Iceberg theme END #####
+theme = TokyoNight Night
 
 # Font size
 keybind = ctrl+shift+minus=decrease_font_size:1
