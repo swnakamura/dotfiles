@@ -1907,6 +1907,7 @@ require('lazy').setup({
   -- oil
   {
     cond = not Env.is_vscode,
+    lazy = false,
     keys = {
       { "<leader>e", "<CMD>Oil<CR>", desc = "Oil parent directory" },
       {
