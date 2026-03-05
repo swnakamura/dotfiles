@@ -184,3 +184,8 @@ exposed = { ruff = "ruff" }
 channels = ["conda-forge"]
 dependencies = { gh = "*" }
 exposed = { gh = "gh" }
+
+[envs.tmux]
+channels = ["conda-forge"]
+dependencies = { tmux = "3.6a.*" }
+exposed = { tmux = "tmux" }
