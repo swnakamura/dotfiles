@@ -1088,3 +1088,8 @@ else
 fi
 zle -N copy_line_to_x_clipboard
 bindkey '^Y' copy_line_to_x_clipboard
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/snakamura/.lmstudio/bin"
+# End of LM Studio CLI section
+

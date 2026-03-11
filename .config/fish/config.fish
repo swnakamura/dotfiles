@@ -170,3 +170,8 @@ end
 setup_variables
 setup_aliases
 setup_keybinds
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/snakamura/.lmstudio/bin
+# End of LM Studio CLI section
+
