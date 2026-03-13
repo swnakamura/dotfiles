@@ -2207,6 +2207,7 @@ require('lazy').setup({
           hl.BufferCurrent      = { fg = c.orange, bold = true }
           hl.NeoTreeGitModified = { link = 'DiagnosticWarn' }
           hl.NeoTreeGitUnstaged = { link = 'DiagnosticWarn' }
+          hl.DiffText = { link = 'CurSearch' }
         end
       })
       vim.cmd.colorscheme 'tokyonight-night'
