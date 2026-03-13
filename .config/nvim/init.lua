@@ -647,7 +647,7 @@ require('lazy').setup({
     cmd = "FloatermToggle",
     dependencies = "nvzone/volt",
     opts = {
-      border = false,
+      border = true,
       size = { h = 80, w = 90 },
       mappings = {
         term = function(buf)
