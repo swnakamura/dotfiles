@@ -2069,7 +2069,7 @@ require('lazy').setup({
     ft = 'markdown',
   },
   {
-    -- cond = false,
+    cond = not Env.is_vscode,
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown', 'copilot-chat' },
