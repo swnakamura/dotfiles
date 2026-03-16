@@ -41,7 +41,6 @@ function setup_aliases
     alias cp="cp -i"
     alias df='df -h'
     alias free='free -m'
-    alias history='history -E'
     alias ...='cd ../..'
     alias ....='cd ../../..'
     alias .....='cd ../../../..'
