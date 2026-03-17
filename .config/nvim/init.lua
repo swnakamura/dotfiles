@@ -144,6 +144,7 @@ require('lazy').setup({
       { "<leader>fR", function() Snacks.picker.recent({ layout = 'telescope' }) end,          desc = "Recent Files" },
       { "<leader>fp", function() Snacks.picker.projects({ layout = 'telescope' }) end,        desc = "Projects" },
       { "<leader>ff", function() Snacks.picker.files({ layout = 'telescope' }) end,           desc = "Smart Find Files" },
+      { "<D-p>", function() Snacks.picker.files({ layout = 'telescope', hidden = true }) end,           desc = "Smart Find Files" },
       { "<leader>fb", function() Snacks.picker.buffers({ layout = 'telescope' }) end,         desc = "Buffers" },
       { "<leader>fg", function() Snacks.picker.git_files({ layout = 'telescope' }) end,       desc = "Find Git Files" },
       { "<leader>fc", function() Snacks.picker.command_history({ layout = 'telescope' }) end, desc = "Command History" },
@@ -153,6 +154,28 @@ require('lazy').setup({
       { "<leader>sb", function() Snacks.picker.lines() end,                                   desc = "Buffer Lines" },
       { "<leader>sB", function() Snacks.picker.grep_buffers({ layout = 'telescope' }) end,    desc = "Grep Open Buffers" },
       { "<leader>sw", function() Snacks.picker.grep_word({ layout = 'telescope' }) end,       desc = "Visual selection or word", mode = { "n", "x" } },
+      {
+        "<D-F>",
+        function()
+          Snacks.picker.grep({
+            layout = 'telescope',
+            args = {
+              "--color=never",
+              "--no-heading",
+              "--with-filename",
+              "--line-number",
+              "--column",
+              "--smart-case",
+              "--max-columns=500",
+              "--max-columns-preview",
+              "--hidden",          -- Search hidden files
+              "-g", "!.git",       -- do not search in .git directory
+              "-u", -- added
+            }
+          })
+        end,
+        desc = "Grep"
+      },
       {
         "<leader>sg",
         function()
@@ -167,8 +190,8 @@ require('lazy').setup({
               "--smart-case",
               "--max-columns=500",
               "--max-columns-preview",
-              "-g",
-              "!.git",
+              "--hidden",          -- Search hidden files
+              "-g", "!.git",       -- do not search in .git directory
               "-u", -- added
             }
           })
@@ -647,7 +670,7 @@ require('lazy').setup({
     cmd = "FloatermToggle",
     dependencies = "nvzone/volt",
     opts = {
-      border = true,
+      border = false,
       size = { h = 80, w = 90 },
       mappings = {
         term = function(buf)
@@ -1996,7 +2019,7 @@ require('lazy').setup({
     end,
   },
 
-  -- barbar
+  -- barbar (tabline plugin)
   {
     cond = not Env.is_vscode,
     'romgrk/barbar.nvim',
@@ -2030,10 +2053,14 @@ require('lazy').setup({
       map('n', '<C-0>', '<Cmd>BufferLast<CR>', opts)
     end,
     opts = {
+      maximum_length = math.huge,
+      minimum_length = 1,
+      maximum_padding = 3,
+      minimum_padding = 3,
       icons = {
         -- Configure the base icons on the bufferline.
         -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
-        buffer_index = false,
+        buffer_index = 'superscript',
         buffer_number = false,
         button = '',
         -- Enables / disables diagnostic symbols
@@ -2050,9 +2077,6 @@ require('lazy').setup({
         -- },
         separator = { left = '', right = '' },
         separator_at_end = false,
-
-        maximum_padding = 0,
-        minimum_padding = 0,
 
         -- Configure the icons on the bufferline when modified or pinned.
         -- Supports all the base icon options.
@@ -2112,7 +2136,7 @@ require('lazy').setup({
 
   -- vim table mode for markdown
   {
-    cond = false,
+    -- cond = false,
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
     init = function()

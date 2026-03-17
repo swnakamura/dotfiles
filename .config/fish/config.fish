@@ -46,12 +46,7 @@ function setup_aliases
     alias .....='cd ../../../..'
     alias duh="du -h -d1"
     alias kill9="kill -9"
-    alias jl='julia'
     alias manj='LANG=ja_JP.UTF-8 man'
-
-    # gitのstaged内容からOllamaでコミットメッセージを生成しクリップボードにコピー
-    # Zshの `>(pbcopy)` はFishではサポートされないため `tee /dev/tty | pbcopy` で代用
-    alias gmsg='git diff --staged | ollama run tavernari/git-commit-message | tee /dev/tty | pbcopy'
 
     # ls (myls関数を使用)
     alias ls="myls"
@@ -71,10 +66,8 @@ function setup_aliases
 
     # その他ツール
     alias vs='nvim -u ~/.config/nvim/simple.lua'
-    alias rn='ranger --choosedir=/tmp/rangerdir; and set LASTDIR (cat /tmp/rangerdir); and cd "$LASTDIR"'
     alias imo='functions -c imo f; and f' # one-liner function alias
     alias notify-say=notify_and_say
-    alias pip_update_all='pip freeze --local | grep -v "^\-e" | cut -d = -f 1 | xargs pip install -U'
     alias wget_cache_website='wget --mirror --page-requisites --quiet --show-progress --no-parent --convert-links --execute robots=off'
     alias o="xdg_open2"
 
