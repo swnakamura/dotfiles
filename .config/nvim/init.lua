@@ -132,6 +132,14 @@ require('lazy').setup({
     },
   },
 
+  -- scrollbar
+  {
+    cond = not Env.is_vscode,
+    "petertriho/nvim-scrollbar",
+    event = "LazyFile",
+    opts = {}
+  },
+
   -- snacks.nvim (many QoL plugins)
   {
     cond = not Env.is_vscode,
