@@ -75,7 +75,8 @@ o.ignorecase = true
 o.smartcase = true
 
 -- Keep signcolumn on by default
-go.signcolumn = 'yes:1'
+go.numberwidth = 4
+go.signcolumn = 'no'
 go.foldcolumn = '0'
 
 -- Decrease update time
