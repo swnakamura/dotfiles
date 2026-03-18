@@ -137,7 +137,11 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     "petertriho/nvim-scrollbar",
     event = "LazyFile",
-    opts = {}
+    dependencies = {'lewis6991/gitsigns.nvim',},
+    config = function()
+      require("scrollbar.handlers.gitsigns").setup()
+      require("scrollbar").setup()
+    end
   },
 
   -- snacks.nvim (many QoL plugins)
@@ -2080,8 +2084,8 @@ require('lazy').setup({
     opts = {
       maximum_length = math.huge,
       minimum_length = 1,
-      maximum_padding = 3,
-      minimum_padding = 3,
+      maximum_padding = 2,
+      minimum_padding = 2,
       icons = {
         -- Configure the base icons on the bufferline.
         -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
@@ -2252,8 +2256,8 @@ require('lazy').setup({
       require('tokyonight').setup({
         on_colors = function(_) end,
         on_highlights = function(hl, c)
-          hl.CursorLineNr       = { fg = c.fg_dark, bold = true }
-          hl.BufferCurrent      = { fg = c.orange, bold = true }
+          hl.CursorLineNr           = { fg = c.fg_dark, bold = true }
+          hl.BufferCurrent          = { bold = true, italic = true }
           hl.NeoTreeGitModified = { link = 'DiagnosticWarn' }
           hl.NeoTreeGitUnstaged = { link = 'DiagnosticWarn' }
           hl.DiffText = { link = 'CurSearch' }
