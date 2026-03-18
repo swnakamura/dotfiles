@@ -151,8 +151,19 @@ require('lazy').setup({
       { "<leader>fr", function() Snacks.picker.smart({ layout = 'telescope' }) end,           desc = "Smart Find Files" },
       { "<leader>fR", function() Snacks.picker.recent({ layout = 'telescope' }) end,          desc = "Recent Files" },
       { "<leader>fp", function() Snacks.picker.projects({ layout = 'telescope' }) end,        desc = "Projects" },
-      { "<leader>ff", function() Snacks.picker.files({ layout = 'telescope' }) end,           desc = "Smart Find Files" },
-      { "<D-p>", function() Snacks.picker.files({ layout = 'telescope', hidden = true }) end,           desc = "Smart Find Files" },
+      { "<leader>ff", function() Snacks.picker.files({ layout = 'telescope' }) end,           desc = "Find Files" },
+      {
+        "<D-p>",
+        function()
+          local cwd = vfn.expand "%:p:h"
+          -- for Oil buffers such as "oil://~", remove "oil://"
+          if cwd:match("oil://") then
+            cwd = cwd:gsub("oil://", "")
+          end
+          Snacks.picker.smart({ layout = 'telescope', hidden = true, dirs = { cwd } })
+        end,
+        desc = "Smart Find Files"
+      },
       { "<leader>fb", function() Snacks.picker.buffers({ layout = 'telescope' }) end,         desc = "Buffers" },
       { "<leader>fg", function() Snacks.picker.git_files({ layout = 'telescope' }) end,       desc = "Find Git Files" },
       { "<leader>fc", function() Snacks.picker.command_history({ layout = 'telescope' }) end, desc = "Command History" },
@@ -163,7 +174,7 @@ require('lazy').setup({
       { "<leader>sB", function() Snacks.picker.grep_buffers({ layout = 'telescope' }) end,    desc = "Grep Open Buffers" },
       { "<leader>sw", function() Snacks.picker.grep_word({ layout = 'telescope' }) end,       desc = "Visual selection or word", mode = { "n", "x" } },
       {
-        "<D-F>",
+        "<leader>sg",
         function()
           Snacks.picker.grep({
             layout = 'telescope',
@@ -185,10 +196,16 @@ require('lazy').setup({
         desc = "Grep"
       },
       {
-        "<leader>sg",
+        "<D-F>",
         function()
+          local cwd = vfn.expand "%:p:h"
+          -- for Oil buffers such as "oil://~", remove "oil://"
+          if cwd:match("oil://") then
+            cwd = cwd:gsub("oil://", "")
+          end
           Snacks.picker.grep({
             layout = 'telescope',
+            dirs = { cwd },
             args = {
               "--color=never",
               "--no-heading",
@@ -198,8 +215,8 @@ require('lazy').setup({
               "--smart-case",
               "--max-columns=500",
               "--max-columns-preview",
-              "--hidden",          -- Search hidden files
-              "-g", "!.git",       -- do not search in .git directory
+              "-g",
+              "!.git",
               "-u", -- added
             }
           })
