@@ -2936,11 +2936,11 @@ if not Env.is_vscode then
 
   vim.cmd([[hi CursorWord guibg=#3b4261]])
   WordMatch = function()
+    DelWordMatch()
     if vim.tbl_contains({ 'fern', 'neo-tree', 'floaterm', 'oil', 'org', 'NeogitStatus', 'aerial' }, vim.bo.filetype) then
       return
     end
-    DelWordMatch()
-    if vim.o.hlsearch then
+    if vim.o.hlsearch or vim.o.diff then
       return
     end
 
