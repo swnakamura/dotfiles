@@ -350,7 +350,7 @@ MoveUntilNonWS = function(up)
     end
     local checkcolmn = math.min(curpos[3], #text)
     local char_to_check = text:sub(checkcolmn, checkcolmn)
-     if char_to_check ~= ' ' and char_to_check ~= '\t' then
+    if char_to_check ~= ' ' and char_to_check ~= '\t' then
       break
     end
   end

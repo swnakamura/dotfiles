@@ -137,7 +137,7 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     "petertriho/nvim-scrollbar",
     event = "LazyFile",
-    dependencies = {'lewis6991/gitsigns.nvim',},
+    dependencies = { 'lewis6991/gitsigns.nvim', },
     config = function()
       require("scrollbar.handlers.gitsigns").setup()
       require("scrollbar").setup()
@@ -152,10 +152,10 @@ require('lazy').setup({
     lazy = false,
     keys = {
       -- Find
-      { "<leader>fr", function() Snacks.picker.smart({ layout = 'telescope' }) end,           desc = "Smart Find Files" },
-      { "<leader>fR", function() Snacks.picker.recent({ layout = 'telescope' }) end,          desc = "Recent Files" },
-      { "<leader>fp", function() Snacks.picker.projects({ layout = 'telescope' }) end,        desc = "Projects" },
-      { "<leader>ff", function() Snacks.picker.files({ layout = 'telescope' }) end,           desc = "Find Files" },
+      { "<leader>fr", function() Snacks.picker.smart({ layout = 'telescope' }) end,    desc = "Smart Find Files" },
+      { "<leader>fR", function() Snacks.picker.recent({ layout = 'telescope' }) end,   desc = "Recent Files" },
+      { "<leader>fp", function() Snacks.picker.projects({ layout = 'telescope' }) end, desc = "Projects" },
+      { "<leader>ff", function() Snacks.picker.files({ layout = 'telescope' }) end,    desc = "Find Files" },
       {
         "<D-p>",
         function()
@@ -191,9 +191,9 @@ require('lazy').setup({
               "--smart-case",
               "--max-columns=500",
               "--max-columns-preview",
-              "--hidden",          -- Search hidden files
-              "-g", "!.git",       -- do not search in .git directory
-              "-u", -- added
+              "--hidden",    -- Search hidden files
+              "-g", "!.git", -- do not search in .git directory
+              "-u",          -- added
             }
           })
         end,
@@ -693,7 +693,7 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     "nvzone/floaterm",
     keys = {
-      { '<C-z>', mode = { 'n', 'i', 'v', 'o' }, '<Cmd>FloatermToggle<CR>' },
+      { '<C-z>', mode = { 'n', 'i', 'v', 'o' },      '<Cmd>FloatermToggle<CR>' },
       { '<C-`>', mode = { 'n', 'i', 'v', 'o', 't' }, '<Cmd>FloatermToggle<CR>' }
     },
     cmd = "FloatermToggle",
@@ -2257,11 +2257,11 @@ require('lazy').setup({
       require('tokyonight').setup({
         on_colors = function(_) end,
         on_highlights = function(hl, c)
-          hl.CursorLineNr           = { fg = c.fg_dark, bold = true }
-          hl.BufferCurrent          = { bold = true, italic = true }
+          hl.CursorLineNr       = { fg = c.fg_dark, bold = true }
+          hl.BufferCurrent      = { bold = true, italic = true }
           hl.NeoTreeGitModified = { link = 'DiagnosticWarn' }
           hl.NeoTreeGitUnstaged = { link = 'DiagnosticWarn' }
-          hl.DiffText = { link = 'CurSearch' }
+          hl.DiffText           = { link = 'CurSearch' }
         end
       })
       vim.cmd.colorscheme 'tokyonight-night'
