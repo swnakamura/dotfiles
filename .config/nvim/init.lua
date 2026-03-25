@@ -488,11 +488,11 @@ require('lazy').setup({
   -- Git related plugins
   {
     cond = not Env.is_vscode,
-    -- "NeogitOrg/neogit",
+    "NeogitOrg/neogit",
 
     -- Use my forked version until the PR is merged: https://github.com/NeogitOrg/neogit/issues/1620
-    "swnakamura/neogit",
-    branch = 'feat/fix-autosquash',
+    -- "swnakamura/neogit",
+    -- branch = 'feat/fix-autosquash',
 
     dependencies = {
       "nvim-lua/plenary.nvim",  -- required
@@ -2257,11 +2257,21 @@ require('lazy').setup({
       require('tokyonight').setup({
         on_colors = function(_) end,
         on_highlights = function(hl, c)
-          hl.CursorLineNr       = { fg = c.fg_dark, bold = true }
-          hl.BufferCurrent      = { bold = true, italic = true }
-          hl.NeoTreeGitModified = { link = 'DiagnosticWarn' }
-          hl.NeoTreeGitUnstaged = { link = 'DiagnosticWarn' }
-          hl.DiffText           = { link = 'CurSearch' }
+          hl.CursorLineNr              = { fg = c.fg_dark, bold = true }
+          hl.BufferCurrent             = { bold = true, italic = true }
+          hl.NeoTreeGitModified        = { link = 'DiagnosticWarn' }
+          hl.NeoTreeGitUnstaged        = { link = 'DiagnosticWarn' }
+          -- Save the original diff colors for plugins
+          hl.GitGutterAddLine          = { bg = "#243e4a" }
+          hl.NeogitDiffAdd             = { fg = "#449dab", bg = "#243e4a" }
+          hl.NeogitDiffAddHighLight    = { fg = "#449dab", bg = "#243e4a" }
+          hl.GitGutterDeleteLine       = { bg = "#4a272f" }
+          hl.NeogitDiffDelete          = { fg = "#914c54", bg = "#4a272f" }
+          hl.NeogitDiffDeleteHighLight = { fg = "#914c54", bg = "#4a272f" }
+          -- Use vivid colors for the diff text to make it more visible in the diff view
+          hl.DiffText                  = { fg = '#15161e', bg = '#ff9c0d' }
+          hl.DiffAdd                   = { fg = '#15161e', bg = '#32d721' }
+          hl.DiffDelete                = { fg = '#15161e', bg = '#d7524a' }
         end
       })
       vim.cmd.colorscheme 'tokyonight-night'
