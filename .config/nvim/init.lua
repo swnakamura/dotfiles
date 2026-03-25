@@ -2279,7 +2279,7 @@ require('lazy').setup({
   },
   -- Show modes with the current line color instead of the statusline
   {
-    cond = false,
+    cond = not Env.is_vscode,
     'mvllow/modes.nvim',
     config = function()
       require('modes').setup({
@@ -2289,8 +2289,8 @@ require('lazy').setup({
           insert = "#78ccc5",
           visual = "#c0f36e",
         },
-        -- set_number = false,
-        line_opacity = 0.1,
+        set_number = false,
+        line_opacity = 0.17,
         ignore = {
           'text',
           'markdown',
