@@ -296,7 +296,7 @@ require('lazy').setup({
               { icon = " ", key = "q", desc = "Quit", action = ":qa" },
               { icon = " ", key = "R", desc = "Remote Neovim", action = ":RemoteStart" },
               { icon = " ", key = "p", desc = "search for a project", action = ":lua Snacks.picker.projects()" },
-              { icon = " ", key = "G", desc = "Git status", action = ":lua require('neogit').open()" },
+              { icon = " ", key = "i", desc = "Git status", action = ":lua require('neogit').open()" },
             }
           },
           sections = {
