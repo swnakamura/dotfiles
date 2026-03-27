@@ -517,7 +517,11 @@ require('lazy').setup({
     opts = {
       status = {
         recent_commit_count = 30
-      }
+      },
+      -- verifying commit can be very slow, so disable it by default
+      commit_view = {
+        verify_commit = false,
+      },
     }
   },
   {
