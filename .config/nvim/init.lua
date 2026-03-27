@@ -159,12 +159,13 @@ require('lazy').setup({
       {
         "<D-p>",
         function()
-          local cwd = vfn.expand "%:p:h"
-          -- for Oil buffers such as "oil://~", remove "oil://"
-          if cwd:match("oil://") then
-            cwd = cwd:gsub("oil://", "")
+          local cwd = vfn.getcwd()
+          -- for Oil buffers, use the current directory
+          local filedir = vfn.expand "%:p:h"
+          if filedir:match("oil://") then
+            cwd = filedir:gsub("oil://", "")
           end
-          Snacks.picker.smart({ layout = 'telescope', hidden = true, dirs = { cwd } })
+          Snacks.picker.files({ dirs = { cwd }, layout = 'telescope', hidden = true, ignored = true })
         end,
         desc = "Smart Find Files"
       },
@@ -202,10 +203,11 @@ require('lazy').setup({
       {
         "<D-F>",
         function()
-          local cwd = vfn.expand "%:p:h"
-          -- for Oil buffers such as "oil://~", remove "oil://"
-          if cwd:match("oil://") then
-            cwd = cwd:gsub("oil://", "")
+          local cwd = vfn.getcwd()
+          -- for Oil buffers, use the current directory
+          local filedir = vfn.expand "%:p:h"
+          if filedir:match("oil://") then
+            cwd = filedir:gsub("oil://", "")
           end
           Snacks.picker.grep({
             layout = 'telescope',
