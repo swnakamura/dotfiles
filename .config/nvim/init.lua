@@ -540,13 +540,9 @@ require('lazy').setup({
     'tpope/vim-fugitive',
     cmd = { 'Git', 'Gwrite', 'Gclog', 'Gdiffsplit', 'Glgrep', 'GBrowse', 'Dispatch' },
     keys = {
-      { "<leader>gh", "<cmd>tab sp<CR>:0Gclog<CR>",   desc = "Git history" },
-      { "<leader>gp", "<cmd>Dispatch! git pull<CR>",  desc = "Git async pull" },
-      { "<leader>gP", "<cmd>Dispatch! git push<CR>",  desc = "Git async push" },
-      { "<leader>gf", "<cmd>Dispatch! git fetch<CR>", desc = "Git async fetch" },
-      { "<leader>gg", [[:<C-u>Glgrep ""<Left>]],      desc = "Git grep" },
+      { "gh", "<cmd>tab sp<CR>:0Gclog<CR>",   desc = "Git history" },
       {
-        "<leader>gd",
+        "gd",
         function()
           if not vim.o.diff then
             return [[<Cmd>tab sp<CR>]] ..
@@ -562,12 +558,10 @@ require('lazy').setup({
         expr = true,
         silent = true,
         desc = "Git diff"
-      }
-    },
-    dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
-    init = function()
-      -- Generate commit message with copilot and commit with `q`. Abort with `Q`
-      vim.keymap.set("n", "<leader>gm",
+      },
+      {
+        -- Generate commit message with copilot and commit with `q`. Abort with `Q`
+        "gm",
         function()
           vim.cmd("Git commit -v")
           -- wait for 0.2 seconds to wait for the commit window to open
@@ -615,8 +609,13 @@ require('lazy').setup({
               , { buffer = 0, silent = true }
             )
           end, 200)
-        end, { silent = true, desc = "Git commit with copilot commit message" })
-
+        end,
+        silent = true,
+        desc = "Git commit with copilot commit message"
+      }
+    },
+    dependencies = { 'tpope/vim-dispatch', 'tpope/vim-rhubarb', 'tyru/open-browser.vim' },
+    init = function()
       -- With the help of rhubarb and open-browser.vim, you can open the current line in the browser with `:GBrowse`
       vim.cmd([[command! -nargs=1 Browse OpenBrowser <args>]])
     end,
