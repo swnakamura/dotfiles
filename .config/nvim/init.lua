@@ -288,7 +288,7 @@ require('lazy').setup({
             keys = {
               { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
               { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-              { icon = "󰦨 ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              { icon = "󰦨 ", key = "G", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
               { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
               { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
               { icon = " ", key = "s", desc = "Restore Session", section = "session" },
@@ -298,7 +298,7 @@ require('lazy').setup({
               { icon = " ", key = "q", desc = "Quit", action = ":qa" },
               { icon = " ", key = "R", desc = "Remote Neovim", action = ":RemoteStart" },
               { icon = " ", key = "p", desc = "search for a project", action = ":lua Snacks.picker.projects()" },
-              { icon = " ", key = "i", desc = "Git status", action = ":lua require('neogit').open()" },
+              { icon = " ", key = "g", desc = "Git status", action = ":lua require('neogit').open()" },
             }
           },
           sections = {
@@ -2266,19 +2266,12 @@ require('lazy').setup({
           hl.BufferCurrent             = { bold = true, italic = true }
           hl.NeoTreeGitModified        = { link = 'DiagnosticWarn' }
           hl.NeoTreeGitUnstaged        = { link = 'DiagnosticWarn' }
-          -- Save the original diff colors for plugins
-          hl.GitGutterAddLine          = { bg = "#243e4a" }
-          hl.NeogitDiffAdd             = { fg = "#82a957", bg = "#243e4a" }
-          hl.NeogitDiffAddHighLight    = { fg = "#449dab", bg = "#243e4a" }
-          hl.NeogitDiffAddInline       = { fg = "#243e4a", bg = "#71a53a", bold = true }
-          hl.GitGutterDeleteLine       = { bg = "#4a272f" }
-          hl.NeogitDiffDelete          = { fg = "#b43e3e", bg = "#4a272f" }
-          hl.NeogitDiffDeleteHighLight = { fg = "#914c54", bg = "#4a272f" }
-          hl.NeogitDiffDeleteInline    = { fg = "#1a1b26", bg = "#e65050", bold = true }
+
           -- Use vivid colors for the diff text to make it more visible in the diff view
-          hl.DiffText                  = { fg = '#15161e', bg = '#ff9c0d' }
-          hl.DiffAdd                   = { fg = '#15161e', bg = '#32d721' }
-          hl.DiffDelete                = { fg = '#15161e', bg = '#d7524a' }
+          -- hl.DiffText                  = { undercurl = true, bold = true, italic = true, sp = '#ff9c0d' }
+
+          -- Diffview
+          hl.DiffviewDiffDelete        = { link = 'LineNr' }
         end
       })
       vim.cmd.colorscheme 'tokyonight-night'

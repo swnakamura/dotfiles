@@ -202,12 +202,12 @@ map('n', '<leader>qq', '<Cmd>quitall<CR>')
 map('n', '<leader>qs', '<Cmd>update<cr><cmd>quit<CR>')
 map('n', '<leader>qQ', '<Cmd>quitall!<CR>')
 
--- On certain files, quit by <leader>q
+-- On certain files, quit by q
 vapi.nvim_create_augroup('bdel-quit', {})
 vapi.nvim_create_autocmd('FileType', {
   pattern = { 'gitcommit', 'lazy', 'help', 'man', 'noice', 'lspinfo', 'qf' },
   callback = function()
-    map('n', '<leader>q', '<Cmd>q<CR>', { buffer = true })
+    map('n', 'q', '<Cmd>q<CR>', { buffer = true })
   end,
   group = 'bdel-quit'
 })
@@ -218,6 +218,16 @@ vapi.nvim_create_autocmd('FileType', {
   pattern = 'gitcommit',
   command = 'setlocal colorcolumn=51,+1',
   group = 'gitcommit-colorcolumn'
+})
+
+-- On diffviewfiles, set q as tabc
+vapi.nvim_create_augroup('diffviewfiles-quit', {})
+vapi.nvim_create_autocmd('FileType', {
+  pattern = 'DiffviewFiles',
+  callback = function()
+    map('n', 'q', '<Cmd>tabc<CR>', { buffer = true })
+  end,
+  group = 'diffviewfiles-quit'
 })
 
 -- always replace considering doublewidth

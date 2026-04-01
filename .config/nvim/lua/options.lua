@@ -140,3 +140,5 @@ o.matchpairs:append({ '「:」', '（:）', '『:』', '【:】', '〈:〉', '�
 
 o.spelllang = 'en,cjk'
 o.spellfile = vim.fn.stdpath('config') .. '/spell/en.utf-8.add'
+
+o.fillchars:append("diff:╱")
