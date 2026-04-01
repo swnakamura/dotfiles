@@ -163,6 +163,15 @@ setup_variables
 setup_aliases
 setup_keybinds
 
+# homebrew commands
+if test -d (brew --prefix)"/share/fish/completions"
+    set -gx fish_complete_path $fish_complete_path (brew --prefix)"/share/fish/completions"
+end
+
+if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+    set -gx fish_complete_path $fish_complete_path (brew --prefix)"/share/fish/vendor_completions.d"
+end
+
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/snakamura/.lmstudio/bin
 # End of LM Studio CLI section
