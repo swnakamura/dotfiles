@@ -134,7 +134,7 @@ require('lazy').setup({
 
   -- scrollbar
   {
-    cond = not Env.is_vscode,
+    cond = false,
     "petertriho/nvim-scrollbar",
     event = "LazyFile",
     dependencies = { 'lewis6991/gitsigns.nvim', },
