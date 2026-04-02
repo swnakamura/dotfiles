@@ -288,7 +288,7 @@ require('lazy').setup({
             keys = {
               { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.picker.files({ layout = 'telescope', hidden = true, ignored = true })" },
               { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-              { icon = "󰦨 ", key = "G", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              { icon = "󰦨 ", key = "G", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep', { layout = 'telescope', hidden = true, ignored = true })" },
               { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
               { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
               { icon = " ", key = "s", desc = "Restore Session", section = "session" },
@@ -1157,6 +1157,7 @@ require('lazy').setup({
           require('mason').setup()
           require('mason-lspconfig').setup({
             automatic_enable = true,
+            ---@diagnostic disable-next-line: invisible
             ensure_installed = vim.tbl_filter(function(k) return k ~= '*' end, vim.tbl_keys(vim.lsp.config._configs)),
           })
         end
@@ -1340,6 +1341,7 @@ require('lazy').setup({
       cmdline = {
         completion = {
           menu = {
+            ---@diagnostic disable-next-line: unused-local
             auto_show = function(ctx)
               return vfn.getcmdtype() == ':'
             end,
@@ -1426,6 +1428,7 @@ require('lazy').setup({
     "ray-x/lsp_signature.nvim",
     event = "LazyFile",
     opts = {},
+    ---@diagnostic disable-next-line: unused-local
     config = function(_, opts)
       vapi.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -1939,6 +1942,7 @@ require('lazy').setup({
           },
           commands = {
             system_open = function(state)
+              ---@diagnostic disable-next-line: undefined-field
               local node = state.tree:get_node()
               local path = node:get_id()
               path = vfn.shellescape(path, true)
@@ -1953,6 +1957,7 @@ require('lazy').setup({
         event_handlers = {
           {
             event = "neo_tree_buffer_enter",
+            ---@diagnostic disable-next-line: unused-local
             handler = function(arg)
               vim.opt.relativenumber = false
             end,
@@ -2440,7 +2445,7 @@ require('lazy').setup({
 
   -- obsidian integration
   {
-    cond = not Env.is_vscode and not Env.is_ssh and vfn.isdirectory(obsidian_vault_dir), -- run only in local neovim
+    cond = not Env.is_vscode and not Env.is_ssh and vfn.isdirectory(obsidian_vault_dir) == 1, -- run only in local neovim
     'epwalsh/obsidian.nvim',
     ft = 'markdown',
     dependencies = {
@@ -2488,6 +2493,7 @@ require('lazy').setup({
     config = function()
       vim.treesitter.language.register('bash', { 'sh', 'zsh' })
       vim.treesitter.language.register('latex', { 'tex' })
+      ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.config').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = { 'bibtex', 'bash', 'c', 'cpp', 'css', 'fish', 'go', 'html', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'latex', 'tsx', 'typescript', 'vimdoc', 'vim', 'yaml' },
@@ -2811,6 +2817,7 @@ require('lazy').setup({
     end,
     config = function()
       require('ufo').setup({
+        ---@diagnostic disable-next-line: unused-local
         provider_selector = function(bufnr, filetype, buftype)
           if filetype == 'NeogitStatus' then
             return ''
@@ -3112,6 +3119,7 @@ vapi.nvim_create_autocmd(
     pattern = 'python',
     callback = function()
       function FormatPython()
+        ---@diagnostic disable-next-line: param-type-mismatch
         pcall(vim.cmd, 'update')
         RestoreWinAfter(':silent %!ruff format --line-length=140 -')
         RestoreWinAfter(':silent %!ruff check --fix-only -q --extend-select I -')
