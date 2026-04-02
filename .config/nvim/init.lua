@@ -128,7 +128,18 @@ require('lazy').setup({
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      -- "rcarriga/nvim-notify",
+      {
+        "rcarriga/nvim-notify",
+        config = function()
+          ---@diagnostic disable-next-line: missing-fields
+          require('notify').setup({
+            render = 'compact',
+            stages = 'fade',
+            -- timeout = 5000,
+            top_down = false
+          })
+        end
+      },
     },
   },
 
@@ -1162,7 +1173,7 @@ require('lazy').setup({
           })
         end
       },
-      { 'j-hui/fidget.nvim', opts = {} },
+      -- { 'j-hui/fidget.nvim', opts = {} },
     },
   },
 
