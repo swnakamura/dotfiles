@@ -444,3 +444,28 @@ Toggle_noice = function()
   end
 end
 map('n', toggle_prefix .. 'n', Toggle_noice, { silent = true, desc = 'toggle noice' })
+
+-- Enhance <C-g> to show file and directory info
+vim.keymap.set('n', '<C-g>', function()
+  -- 1. 標準の CTRL-G 情報を取得 (redirで出力をキャプチャ)
+  local status = vim.api.nvim_exec2('normal! \7', { output = true }).output
+
+  -- 2. 各種ディレクトリ情報の取得
+  local pwd = vim.fn.getcwd(-1, -1)
+  local twd = vim.fn.haslocaldir(0, 0) == 1 and vim.fn.getcwd(0, 0) or "(global)"
+  local lwd = vim.fn.haslocaldir(-1, 0) == 1 and vim.fn.getcwd(-1, 0) or "(global)"
+
+  -- 3. メッセージの組み立て
+  local lines = {
+    status,
+    string.rep("─", 40),
+    string.format("󰉋 cd  : %s", pwd),
+    string.format("󱂬 tcd : %s", twd),
+    string.format("󱂭 lcd : %s", lwd),
+  }
+
+  -- 4. まとめて通知
+  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, {
+    title = "System Status",
+  })
+end, { silent = true, desc = "Show file and directory info" })
