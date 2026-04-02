@@ -2272,16 +2272,18 @@ require('lazy').setup({
       require('tokyonight').setup({
         on_colors = function(_) end,
         on_highlights = function(hl, c)
-          hl.CursorLineNr              = { fg = c.fg_dark, bold = true }
-          hl.BufferCurrent             = { bold = true, italic = true }
-          hl.NeoTreeGitModified        = { link = 'DiagnosticWarn' }
-          hl.NeoTreeGitUnstaged        = { link = 'DiagnosticWarn' }
+          hl.CursorLineNr          = { fg = c.fg_dark, bold = true }
+          hl.BufferCurrent         = { bold = true, italic = true }
+          hl.NeoTreeGitModified    = { link = 'DiagnosticWarn' }
+          hl.NeoTreeGitUnstaged    = { link = 'DiagnosticWarn' }
 
           -- Use vivid colors for the diff text to make it more visible in the diff view
           -- hl.DiffText                  = { undercurl = true, bold = true, italic = true, sp = '#ff9c0d' }
 
           -- Diffview
-          hl.DiffviewDiffDelete        = { link = 'LineNr' }
+          hl.DiffDelete            = { link = 'LineNr' }
+          hl.GitSignsDeletePreview = { bg = '#4a272f' }
+          hl.GitSignsDeleteVirtLn  = { bg = '#4a272f' }
         end
       })
       vim.cmd.colorscheme 'tokyonight-night'
