@@ -2325,7 +2325,14 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     'nvim-lualine/lualine.nvim',
     event = 'LazyFile',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons',
+      {
+        'ojroques/vim-scrollstatus',
+        init = function()
+          vim.g.scrollstatus_size = 12
+        end,
+      }
+    },
     config = function()
       local lualine_diff = nil
       if string.find(vim.fn.getcwd(), 'my%-text') then
@@ -2368,7 +2375,17 @@ require('lazy').setup({
             'branch',
             { "filetype",                                  icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { require 'lazyvim.util.lualine'.pretty_path() },
-            'progress', 'location', lualine_diff
+            'progress',
+            { -- show scroll status
+              function()
+                if vim.bo.buftype ~= '' then
+                  return ''
+                end
+                local scroll_status = vim.fn['ScrollStatus']()
+                return scroll_status ~= '' and scroll_status or ''
+              end
+            },
+            'location', lualine_diff
           },
           lualine_c = {
             {
@@ -2390,7 +2407,7 @@ require('lazy').setup({
               end,
             },
             'diagnostics',
-            {
+            { -- show notifications
               require("noice").api.status.message['get'],
               cond = require("noice").api.status.message['has'],
               color = function() return { fg = Snacks.util.color("Statement") } end,
