@@ -475,7 +475,7 @@ require('lazy').setup({
 
   -- remote-nvim
   {
-    cond = not Env.is_vscode,
+    cond = false,
     cmd = { "RemoteStart" },
     "hmk114/remote-nvim.nvim",
     version = "*",                     -- Pin to GitHub releases
