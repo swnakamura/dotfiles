@@ -92,6 +92,7 @@ require('lazy').setup({
     opts = {
       -- add any options here
       notify = {
+        -- disabled for now as it causes some issues with Oil buffers
         enabled = false
       },
       views = {
