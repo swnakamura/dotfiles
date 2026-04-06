@@ -194,3 +194,8 @@ exposed = { tmux = "tmux" }
 channels = ["conda-forge"]
 dependencies = { uv = "*" }
 exposed = { uv = "uv", uvx = "uvx" }
+
+[envs.inotify-tools]
+channels = ["conda-forge"]
+dependencies = { inotify-tools = "*" }
+exposed = { inotifywait = "inotifywait", inotifywatch = "inotifywatch" }
