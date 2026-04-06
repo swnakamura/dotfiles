@@ -534,6 +534,14 @@ require('lazy').setup({
       commit_view = {
         verify_commit = false,
       },
+      mappings = {
+        status = {
+          ["<Backspace>"] = "Close",
+        },
+        log = {
+          ["<Backspace>"] = "Close",
+        }
+      }
     }
   },
   {
@@ -747,7 +755,7 @@ require('lazy').setup({
 
   -- fuzzy motion (t to jump)
   {
-    'https://github.com/ggandor/leap.nvim',
+    'https://git.disroot.org/andyg/leap.nvim.git',
     keys = {
       { '<C-s>', '<Plug>(leap)',             mode = { 'n', 'x', 'o' }, desc = "Leap" },
       { 't',     '<Plug>(leap)',             mode = { 'n', 'x', 'o' }, desc = "Leap" },
@@ -1727,6 +1735,7 @@ require('lazy').setup({
 
       add("text", {
         parse("rb", "[[rb:$1>$2]]$0"),
+        parse("em", "[[emphasismark:$1>﹅]]$0"),
         parse("np", "[newpage]"),
         parse("sp", "◇　◇　◇"),
       })
@@ -3026,6 +3035,10 @@ if not Env.is_vscode then
     pattern = '*',
     callback = WordMatch
   })
+  vapi.nvim_create_autocmd('WinLeave', {
+    pattern = '*',
+    callback = DelWordMatch
+  })
 end
 
 vim.cmd([[
@@ -3158,11 +3171,11 @@ vapi.nvim_create_autocmd(
 
 -- [[ autocmd-IME ]]
 -- require('japanese.keep').setup()
-if vim.fn.has("mac") ~= 0 then
-  map({ 'n', 'i' }, '<F2>', require('japanese.mode').toggle_IME, { noremap = true, silent = true, expr = true })
+if Env.is_macos then
+  map({ 'n', 'i' }, '<F2>', require('mac_japanese').toggle_IME, { noremap = true, silent = true, expr = true })
   -- also make a command to enable japanese mode
   vapi.nvim_create_user_command('JapaneseModeToggle', function()
-    require('japanese.mode').toggle_IME()
+    require('mac_japanese').toggle_IME()
   end, { desc = 'Toggle Japanese IME mode' })
 end
 

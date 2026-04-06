@@ -1,35 +1,58 @@
 # Font
-# font-family = JetBrains Mono
-font-family = Monaspace Neon
-font-family-italic = Monaspace Argon
+font-family = JetBrains Mono
+# font-family = Monaspace Neon
+# font-family-italic = Monaspace Argon
 font-size = 15
+
+# プログラミング用フォントの視認性を比較する際、特に区別がつきにくい文字のセットをまとめました。
+
+### アルファベット・数字・記号
+#  1 l I | （数字の1、小文字のL、大文字のI、バーティカルバー）
+#  0 O o （数字の0、大文字のO、小文字のo）
+#  2 Z （数字の2、大文字のZ）
+#  5 S （数字の5、大文字のS）
+#  6 G b
+#  8 B （数字の8、大文字のB）
+#  9 g q （数字の9、小文字のg、小文字のq）
+#  u v w （小文字のu、v、w）
+#  rn m （小文字のrとnの連続、小文字のm）
+#  cl d （小文字のcとlの連続、小文字のd）
+#  vv w （小文字のvの連続、小文字のw）
+#
+# ### 記号のセット
+#  ; : （セミコロン、コロン）
+#  , . （カンマ、ピリオド）
+#  ' " ` （シングルクォート、ダブルクォート、バッククォート）
+#  - _ （ハイフン、アンダースコア）
+#  ~ - （チルダ、ハイフン）
+#  ( { [ < （各種括弧の開き）
 
 font-style = Light
 font-style-bold = SemiBold
 font-style-bold-italic = SemiBold Italic
 
-# ligatures related to the equals glyph like != and ===.
-font-feature = ss01
-# ligatures for greater/less or equal (<=, >=).
-font-feature = ss02
-# ligatures related to arrows like -> and ~>.
-font-feature = ss03
-# ligatures related to markup, like </ and />.
-font-feature = ss04
-# ligatures related to the F# programming language, like |>.
-font-feature = ss05
-# ligatures related to repeated uses of #, +, _, = and &.
-font-feature = ss06
-# ligatures related to colons like :: or =:=.
-font-feature = ss07
-# ligatures related to combinations of periods with other glyphs like ..= or .-.
-font-feature = ss08
-# ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.
-font-feature = ss09
-# other tags, like #[ and #(
-font-feature = ss10
-# like センチ, ミリバール
-font-feature = -dlig
+# # ligatures related to the equals glyph like != and ===.
+# font-feature = ss01
+# # ligatures for greater/less or equal (<=, >=).
+# font-feature = ss02
+# # ligatures related to arrows like -> and ~>.
+# font-feature = ss03
+# # ligatures related to markup, like </ and />.
+# font-feature = ss04
+# # ligatures related to the F# programming language, like |>.
+# font-feature = ss05
+# # ligatures related to repeated uses of #, +, _, = and &.
+# font-feature = ss06
+# # ligatures related to colons like :: or =:=.
+# font-feature = ss07
+# # ligatures related to combinations of periods with other glyphs like ..= or .-.
+# font-feature = ss08
+# # ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.
+# font-feature = ss09
+# # other tags, like #[ and #(
+# font-feature = ss10
+# # like センチ, ミリバール
+# font-feature = -dlig
 
 
 # Cursor

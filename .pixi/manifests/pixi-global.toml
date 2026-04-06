@@ -196,6 +196,7 @@ dependencies = { uv = "*" }
 exposed = { uv = "uv", uvx = "uvx" }
 
 [envs.inotify-tools]
+platform = "linux-64"
 channels = ["conda-forge"]
 dependencies = { inotify-tools = "*" }
 exposed = { inotifywait = "inotifywait", inotifywatch = "inotifywatch" }

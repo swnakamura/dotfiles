@@ -379,6 +379,7 @@ map({ 'n', 'v' }, '<leader>j', [[<Cmd>lua MoveUntilNonWS(1)<CR>]])
 
 -- [[ toggle/switch settings with local leader ]]
 local toggle_prefix = [[\]]
+local toggle_prefix_shifted = [[|]]
 map('n', toggle_prefix .. 's', '<Cmd>setl spell! spell?<CR>', { silent = true, desc = 'toggle spell' })
 map('n', toggle_prefix .. 'a', function()
   if vim.b.autosave_enabled then
@@ -402,15 +403,22 @@ map('n', toggle_prefix .. 'd', function()
     print('Diff on')
   end
 end, { silent = true, desc = 'toggle diff' })
-map('n', toggle_prefix .. 'D', function()
+local diff_all = function()
   if vim.o.diff then
     vim.cmd('diffoff!')
     print('Diff off for all buffers')
   else
-    vim.cmd('windo diffthis')
+    -- store current window position
+    local cursor_win = vim.api.nvim_get_current_win()
+    -- diff for all modifiable (=normal file) windows
+    vim.cmd('windo if &modifiable | diffthis | endif')
     print('Diff on for all windows')
+    -- go back cursor to the original window
+    vim.api.nvim_set_current_win(cursor_win)
   end
-end, { silent = true, desc = 'toggle diff' })
+end
+map('n', toggle_prefix .. 'D', diff_all, { silent = true, desc = 'toggle diff' })
+map('n', toggle_prefix_shifted .. 'D', diff_all, { silent = true, desc = 'toggle diff' })
 map('n', toggle_prefix .. 'c', function()
   if vim.o.conceallevel > 0 then
     vim.o.conceallevel = 0
