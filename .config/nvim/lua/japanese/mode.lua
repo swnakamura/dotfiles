@@ -1,4 +1,7 @@
 -- Define "Japanese input mode", in which the IME is enabled or disabled when entering or leaving insert mode.
+if vim.fn.has("mac") == 0 then
+  return {}
+end
 local ffi = require("ffi")
 
 ffi.cdef [[
