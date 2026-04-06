@@ -408,7 +408,7 @@ map('n', toggle_prefix .. 'D', function()
     print('Diff off for all buffers')
   else
     vim.cmd('windo diffthis')
-    print('Diff on for all buffers')
+    print('Diff on for all windows')
   end
 end, { silent = true, desc = 'toggle diff' })
 map('n', toggle_prefix .. 'c', function()
