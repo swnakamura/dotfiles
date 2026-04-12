@@ -65,6 +65,7 @@ link_to_home .tmux.conf
 link_to_home .tmux_status_format.sh
 link_to_home .zshrc
 link_to_home scripts/ssync
+link_to_home .claude/CLAUDE.md
 
 # If linux, link fcitx5 hotkey extension
 # To use this, you need to run: `yay -S fcitx5-lua`
