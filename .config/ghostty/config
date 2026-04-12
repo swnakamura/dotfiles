@@ -2,7 +2,7 @@
 font-family = JetBrains Mono
 # font-family = Monaspace Neon
 # font-family-italic = Monaspace Argon
-font-size = 15
+font-size = 13
 
 # プログラミング用フォントの視認性を比較する際、特に区別がつきにくい文字のセットをまとめました。
 
@@ -27,7 +27,7 @@ font-size = 15
 #  ~ - （チルダ、ハイフン）
 #  ( { [ < （各種括弧の開き）
 
-font-style = Light
+# font-style = Light
 font-style-bold = SemiBold
 font-style-bold-italic = SemiBold Italic
 
