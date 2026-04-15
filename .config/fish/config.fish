@@ -99,7 +99,6 @@ function setup_aliases
     abbr --add ks "tmux -u kill-session -t"
     abbr --add kp "tmux -u kill-pane -t"
     abbr --add kw "tmux -u kill-window -t"
-    abbr --add tls "tmux -u ls"
     abbr --add y yazi
     if test -n $IS_LINUX
         abbr --add zl "systemd-run --scope --user zellij"

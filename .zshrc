@@ -1,7 +1,7 @@
 [ -z "$PS1" ] && return
 
 if [[ -f $HOME/.pixi/bin/fish ]]; then
-    $HOME/.pixi/bin/fish && exit
+    exec $HOME/.pixi/bin/fish && exit
 else
     echo "fish installation with pixi global not found, continuing with zsh"
 fi
