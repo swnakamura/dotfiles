@@ -1,2 +1,5 @@
 zsh/.zcompdump
 fish_variables
+.config/fish/functions/fish_right_prompt.fish
+.config/fish/functions/fish_prompt.fish
+.config/nvim/spell/
