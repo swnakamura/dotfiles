@@ -104,7 +104,8 @@ function Quantized_l(cnt)
     return
   end
   vim.cmd('normal! l')
-  while in_indent() and not_fit_indent() do
+---@diagnostic disable-next-line: param-type-mismatch
+  while in_indent() and not_fit_indent() and vfn.col('.') < vfn.len(vfn.getline('.')) do
     vim.cmd('normal! l')
   end
 end

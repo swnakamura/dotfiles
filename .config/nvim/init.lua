@@ -812,6 +812,7 @@ require('lazy').setup({
           zsh = true,
           fish = true,
           vim = true,
+          make = true,
         },
       })
     end,
@@ -1005,9 +1006,12 @@ require('lazy').setup({
       {
         'williamboman/mason-lspconfig.nvim',
         config = function()
+          local spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
           local goodwords = {}
-          for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", 'r'):lines() do
-            table.insert(goodwords, word)
+          if vim.fn.filereadable(spellfile) == 1 then
+            for word in io.open(spellfile, 'r'):lines() do
+              table.insert(goodwords, word)
+            end
           end
           local server2setting = {
             bashls = {},
