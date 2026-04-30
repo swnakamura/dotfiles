@@ -1,5 +1,6 @@
 # Font
 font-family = JetBrains Mono
+font-family = Hiragino Maru Gothic Pro
 # font-family = Monaspace Neon
 # font-family-italic = Monaspace Argon
 font-size = 13
@@ -64,7 +65,7 @@ confirm-close-surface = true
 # background-opacity = 0.93
 
 # Scrollback (kitty had a custom nvim pager; Ghostty uses built-in scrollback)
-scrollback-limit = 100000
+scrollback-limit = 10000000
 
 theme = TokyoNight Night
 

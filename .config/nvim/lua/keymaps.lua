@@ -194,6 +194,8 @@ end
 
 -- save&exit
 map('i', '<c-l>', '<cmd>update<cr>')
+map('i', '<D-s>', '<cmd>update<cr>')
+map('n', '<D-s>', '<cmd>update<cr>')
 map('n', '<leader>fs', '<cmd>update<cr>')
 map('n', '<leader>fS', '<cmd>wall<cr>')
 -- map('n', 'sq', '<Cmd>quit<CR>')

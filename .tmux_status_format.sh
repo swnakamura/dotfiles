@@ -49,7 +49,7 @@ fi
 # ここで #[fg=...] などの装飾もまとめて出力できます
 STATUS_BG="colour235"
 CURRENT_FG="#cdd6f4"
-CURRENT_BG2="#385f9d"
+CURRENT_BG2="#3574d8"
 CURRENT_BG1="#42435c"
 ALTRNAT_BG="#42435c"
 ALTRNAT_FG="#cdd6f4"

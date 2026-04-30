@@ -95,11 +95,6 @@ channels = ["conda-forge"]
 dependencies = { diskonaut = "*" }
 exposed = { diskonaut = "diskonaut" }
 
-[envs.nvim]
-channels = ["conda-forge"]
-dependencies = { nvim = "*" }
-exposed = { nvim = "nvim" }
-
 [envs.nodejs]
 channels = ["conda-forge"]
 dependencies = { nodejs = "*" }
@@ -200,3 +195,8 @@ platform = "linux-64"
 channels = ["conda-forge"]
 dependencies = { inotify-tools = "*" }
 exposed = { inotifywait = "inotifywait", inotifywatch = "inotifywatch" }
+
+[envs.nvim]
+channels = ["conda-forge"]
+dependencies = { nvim = "0.11.*" }
+exposed = { nvim = "nvim" }

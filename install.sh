@@ -44,7 +44,7 @@ function link_to_home() {
 # link_to_home .config/karabiner/karabiner.json # karabiner settings are not portable; connected mouses and keyboards matter
 # link_to_home .config/sheldon
 # link_to_home .spacemacs
-# link_to_home .wezterm.lua
+link_to_home .wezterm.lua
 link_to_home .config/nvim
 link_to_home .config/fish
 link_to_home .config/git

@@ -350,7 +350,7 @@ require('lazy').setup({
         picker = { enabled = true, },
         scope = { enabled = true },
         scroll = {
-          enabled = not vim.g.neovide and not Env.is_ssh,
+          enabled = false,
           filter = function(buf)
             return vim.bo[buf].buftype ~= "terminal" and vim.bo[buf].filetype ~= "copilot-chat"
           end
@@ -673,7 +673,7 @@ require('lazy').setup({
           bufmap('n', downkey, function()
             if vim.wo.diff then return ']c' end
             vim.schedule(function() gs.nav_hunk('next', hunk_nav_opts) end)
-            vim.defer_fn(function() gs.preview_hunk_inline() end, 500)
+            vim.defer_fn(function() gs.preview_hunk_inline() end, 100)
             return '<Ignore>'
           end, { expr = true })
         end
@@ -682,7 +682,7 @@ require('lazy').setup({
           bufmap('n', upkey, function()
             if vim.wo.diff then return '[c' end
             vim.schedule(function() gs.nav_hunk('prev', hunk_nav_opts) end)
-            vim.defer_fn(function() gs.preview_hunk_inline() end, 500)
+            vim.defer_fn(function() gs.preview_hunk_inline() end, 100)
             return '<Ignore>'
           end, { expr = true })
         end
@@ -761,6 +761,10 @@ require('lazy').setup({
       { 't',     '<Plug>(leap)',             mode = { 'n', 'x', 'o' }, desc = "Leap" },
       { 'S',     '<Plug>(leap-from-window)', mode = { 'n', 'x', 'o' }, desc = "Leap from window" },
     },
+    opts = {
+      safe_labels = 'sfnut/',
+      labels = 'sfnjklhodweimbuyvrgtaqpcxz'
+    }
   },
 
   -- performance (faster macro execution)
@@ -976,7 +980,7 @@ require('lazy').setup({
   -- register preview
   {
     cond = not Env.is_vscode,
-    'tversteeg/registers.nvim',
+    'https://codeberg.org/fosk/registers.nvim.git',
     config = true,
     keys = {
       { [["]],   mode = { "n", "v" } },

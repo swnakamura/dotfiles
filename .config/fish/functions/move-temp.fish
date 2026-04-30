@@ -22,7 +22,7 @@ function move-temp
             return 1
         end
         set link_path_old "$link_path"_old_(date +%s)
-        echo (set_color cyan)"🔄 古いファイルをバックアップしています: $link_path_old"(set_color normal)
+        echo (set_color cyan)"🔄 古いファイルを動かし、消しています: $link_path_old"(set_color normal)
         mv $link_path $link_path_old
         rm -rf $link_path_old &
     end
