@@ -3198,14 +3198,17 @@ if not Env.is_vscode then
   vapi.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
     callback = function(ctx)
+      if type(ctx.file) ~= "string" or ctx.file == "" then
+        vim.b[ctx.buf].autosave_enabled = false
+        return
+      end
       if vim.system({ "git", "ls-files", "--error-unmatch", ctx.file }):wait().code ~= 0
           or vim.tbl_contains(autosave_disabled_ft, vim.bo[ctx.buf].ft)
           or vim.tbl_contains(autosave_disabled_suffix, ctx.file:sub(- #autosave_disabled_suffix[1]))
       then
-        vim.notify("Autosave disabled for this buffer", { title = "Autosave" }, vim.log.levels.WARN)
-        vim.b.autosave_enabled = false
+        vim.b[ctx.buf].autosave_enabled = false
       else
-        vim.b.autosave_enabled = true
+        vim.b[ctx.buf].autosave_enabled = true
       end
     end,
   })
