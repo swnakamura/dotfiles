@@ -66,10 +66,12 @@ end
 -- [[ Neovide settings ]]
 vim.g.neovide_cursor_animation_length = 0.10 -- default 0.13
 vim.g.neovide_cursor_trail_size = 0.2        -- default 0.8
-if Env.is_macos then
-  vim.o.guifont = "JetBrains Mono:h12"
-else
-  vim.o.guifont = "JetBrains Mono Light:h12"
+if vim.g.neovide then
+  if Env.is_macos then
+    vim.o.guifont = "JetBrains Mono NL:h12"
+  else
+    vim.o.guifont = "JetBrains Mono NL Light:h12"
+  end
 end
 
 local novel_formatter_dir = vfn.expand('~/novel_formatter') -- Japanese writing computer if this directory exists

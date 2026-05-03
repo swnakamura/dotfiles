@@ -1,0 +1,3 @@
+# neovide 0.16.2がneovim 0.12に対応していないのでエラーが発生する。neovim 0.11をを固定しているconda binaryを使わせる
+neovim-bin = "/Users/snakamura/.pixi/envs/nvim/bin/nvim"
+# neovim-bin = "/opt/homebrew/bin/nvim"
