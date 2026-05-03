@@ -2183,6 +2183,7 @@ require('lazy').setup({
           right_pad = 5,
         },
         checkbox = {
+          right_pad = 5,
           checked = { scope_highlight = "@markup.strikethrough" },
           custom = {
             cancelled = {
