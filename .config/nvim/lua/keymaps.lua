@@ -192,6 +192,22 @@ for i = 1, 12 do
   map('i', '<F' .. tostring(i) .. '>', '<Nop>')
 end
 
+-- open current file in neovide
+map('n', '<D-.>', function()
+  local file = vapi.nvim_buf_get_name(0)
+  if file == '' then
+    vim.notify('No file in current buffer', vim.log.levels.WARN)
+    return
+  end
+  local row, col = unpack(vapi.nvim_win_get_cursor(0))
+  local cmd = string.format(
+    [[unset VIM VIMRUNTIME MYVIMRC NVIM NVIM_LISTEN_ADDRESS NVIM_LOG_FILE VIMINIT; ]] ..
+    [[nohup /opt/homebrew/bin/neovide %s </dev/null >/dev/null 2>&1 &]],
+    vfn.shellescape(file)
+  )
+  vfn.jobstart({ 'sh', '-c', cmd }, { detach = true })
+end, { desc = 'Open current file in neovide' })
+
 -- save&exit
 map('i', '<c-l>', '<cmd>update<cr>')
 map('i', '<D-s>', '<cmd>update<cr>')
