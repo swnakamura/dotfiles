@@ -59,6 +59,10 @@ function setup_aliases
 
     # cd (cdls関数を使用)
     alias cd="cdls"
+    # ディレクトリ履歴
+    abbr -a -- -- 'cd -'
+    alias cdb='prevd; and ls -U'
+    alias cdf='nextd; and ls -U'
 
     # fzf連携 (zoxideを想定)
     alias zc="z -c"
