@@ -9,8 +9,9 @@ function setup_variables
     # 日本在住に戻った
     set -gx TZ 'Asia/Tokyo'
 
-    # path to pixi binaries
+    # path to local binaries
     fish_add_path ~/.pixi/bin/
+    fish_add_path ~/.local/bin/
 
     # Fishのキーバインドをviモードに変更
     set -g fish_key_bindings fish_vi_key_bindings
