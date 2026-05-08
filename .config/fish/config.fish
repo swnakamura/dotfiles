@@ -9,10 +9,6 @@ function setup_variables
     # 日本在住に戻った
     set -gx TZ 'Asia/Tokyo'
 
-    # path to pixi binaries
-    set -p PATH ~/.pixi/bin/
-    set -p PATH ~/.local/bin/
-
     # Fishのキーバインドをviモードに変更
     set -g fish_key_bindings fish_vi_key_bindings
 
@@ -27,6 +23,15 @@ function setup_variables
         set -g IS_LINUX 1
     else
         set -g IS_WSL 1
+    end
+
+    # path to local binaries
+    set -p PATH ~/.pixi/bin/
+    set -p PATH ~/.local/bin/
+    # For macOS (run `brew install utli-linux` to get GNU versions of coreutils, find, etc.)
+    if test -n "$IS_MACOS"
+        set -p PATH /opt/homebrew/opt/util-linux/bin
+        set -p PATH /opt/homebrew/opt/util-linux/sbin
     end
 
     # rsyncで使う変数
