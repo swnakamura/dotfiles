@@ -91,7 +91,6 @@ function setup_aliases
     alias gtop="$HOME/scripts/gtop"
     alias gtopa="$HOME/scripts/gtop-all"
     alias ssync="$HOME/scripts/ssync"
-    alias rsync="rsync --exclude-from=$HOME/.rsyncignore"
     alias run_sif=~/singularity/scripts/run_sif.sh # To run sif for uv in server
 
     # Abbreviations

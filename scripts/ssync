@@ -12,11 +12,11 @@ args=(-h --exclude-from="$HOME/.rsyncignore")
 
 if [[ -n "$ASKCOPY" ]]; then
     printf "\033[34m"
-    rsync -vn "${args[@]}" "$@"
+    rsync -vn "$@" "${args[@]}"
     printf "\033[0m"
 fi
 
-command="rsync -h --exclude-from=$HOME/.rsyncignore --info=progress2 $@"
+command="rsync --info=progress2 $@ -h --exclude-from=$HOME/.rsyncignore"
 announce="Commencing \`${command}\`"
 
 cols=$(tput cols 2>/dev/null)
@@ -48,5 +48,5 @@ fi
 
 echo ""
 echo "Running..."
-rsync --info=progress2 "${args[@]}" "$@"
+rsync --info=progress2 "$@" "${args[@]}"
 echo "Done."
