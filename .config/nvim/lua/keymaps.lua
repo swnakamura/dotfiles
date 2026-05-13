@@ -411,8 +411,26 @@ map('n', toggle_prefix .. 'a', function()
 end, { silent = true, desc = 'toggle autosave' })
 map('n', toggle_prefix .. 'l', '<Cmd>setl list! list?<CR>', { silent = true, desc = 'toggle list' })
 map('n', toggle_prefix .. 't', '<Cmd>setl expandtab! expandtab?<CR>', { silent = true, desc = 'toggle expandtab' })
+
 map('n', toggle_prefix .. 'w', '<Cmd>setl wrap! wrap?<CR>', { silent = true, desc = 'toggle wrap' })
+local wrap_all = function()
+  -- store current window position
+  local cursor_win = vim.api.nvim_get_current_win()
+  if vim.o.wrap then
+    print('Wrap off for all buffers')
+    vim.cmd('windo if &modifiable | setlocal nowrap | endif')
+  else
+    print('Wrap on for all buffers')
+    vim.cmd('windo if &modifiable | setlocal wrap | endif')
+  end
+  -- go back cursor to the original window
+  vim.api.nvim_set_current_win(cursor_win)
+end
+map('n', toggle_prefix .. 'W', wrap_all, { silent = true, desc = 'toggle wrap for all buffers' })
+map('n', toggle_prefix_shifted .. 'W', wrap_all, { silent = true, desc = 'toggle wrap for all buffers' })
+
 map('n', toggle_prefix .. 'b', '<Cmd>setl cursorbind! cursorbind?<CR>', { silent = true, desc = 'toggle cursorbind' })
+
 map('n', toggle_prefix .. 'd', function()
   if vim.o.diff then
     vim.cmd('diffoff')
@@ -438,6 +456,7 @@ local diff_all = function()
 end
 map('n', toggle_prefix .. 'D', diff_all, { silent = true, desc = 'toggle diff' })
 map('n', toggle_prefix_shifted .. 'D', diff_all, { silent = true, desc = 'toggle diff' })
+
 map('n', toggle_prefix .. 'c', function()
   if vim.o.conceallevel > 0 then
     vim.o.conceallevel = 0
