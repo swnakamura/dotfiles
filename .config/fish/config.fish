@@ -87,6 +87,11 @@ function setup_aliases
         alias pbpaste='xclip -selection clipboard -o'
     end
 
+    # mac only: 新しいhomebrewのNeovimを優先して呼び出す; vscodeでneovim拡張機能を動かすために、パス探索で最上位にあるpixiのneovimは古いバージョンに固定しているが、シェル内からは新しいバージョンを呼び出す
+    if test -n "$IS_MACOS"
+        alias nvim='/opt/homebrew/bin/nvim'
+    end
+
     # サーバー上での実行向け
     alias gtop="$HOME/scripts/gtop"
     alias gtopa="$HOME/scripts/gtop-all"
