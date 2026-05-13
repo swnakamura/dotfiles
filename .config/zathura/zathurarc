@@ -37,3 +37,6 @@ set recolor-darkcolor           "#d2d4de"
 # set recolor                     "true"
 
 set selection-clipboard clipboard
+
+set scroll-step 0.5
+set scroll-hstep 0.5

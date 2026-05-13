@@ -54,6 +54,7 @@ link_to_home .config/ghostty
 link_to_home .config/lsd
 link_to_home .config/neovide
 link_to_home .config/starship.toml
+link_to_home .config/yazi
 link_to_home .config/zathura
 link_to_home .config/zellij/config.kdl
 link_to_home .fzf.bash

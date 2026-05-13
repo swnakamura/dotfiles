@@ -1,4 +1,4 @@
 [[mgr.prepend_keymap]]
 on = ["g", "x"]
-run = 'openDefault'
+run = "shell --orphan -- open %h"
 desc = "Open in default app"
