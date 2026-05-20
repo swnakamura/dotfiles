@@ -77,6 +77,17 @@ rrb.Spatial2DView(
    ```
    2026-05-11 検証済 (rerun 0.31)
 
+### 魚眼などピンホール以外のカメラ
+**重要**: rerun の `Pinhole` は名前通り pinhole 投影しか持っていない。fisheye (KannalaBrandt8 等) や radial-tangential 歪みの強いカメラで撮った **生画像** に対し、3D エンティティを `Spatial2DView` の `contents` に含めて自動投影させると、**端ほど数十〜100 px ズレる**（コード上のバグではなくモデル限界）。
+
+回避策:
+- 3D ビューの frustum 用には Pinhole エンティティを残す（CG 表示目的なので OK）
+- 2D ビューの `contents` から **3D エンティティを除外**（`+ $origin/**` だけにする等）して自動投影を切る
+- 投影点が欲しいなら **自前で `cv2.fisheye.projectPoints` / `cv2.projectPoints` で uv を計算し、`{cam}/image/proj` の Points2D として log**
+- フレームによって投影点数が変わるとき、untracked フレームでは `rr.log(path, rr.Clear(recursive=False))` を入れないと前フレームのオーバーレイが残る
+
+代替: 画像側を undistort して pinhole 化してから渡す手もあるが、SLAM/解析パイプラインで生画像を使っている場合「viz 用に別画像を作る」と「SLAM に undistort 後を食わせた」のかと疑念を生むので、自前投影の方が混乱が少ない。2026-05-19 検証済 (rerun 0.31, ORB-SLAM3 + Go3 fisheye)。
+
 ### 自力で投影する場合 (Points2D オーバーレイ)
 Mesh3D の投影で十分でない場合 (wireframe にしたい、特定の頂点だけプロットしたい等) は自前で:
 
