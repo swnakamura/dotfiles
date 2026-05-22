@@ -10,10 +10,57 @@ fi
 
 args=(-h --exclude-from="$HOME/.rsyncignore")
 
+# sourceが末尾 / の場合、targetのbasenameがsourceのbasenameと一致していなければ警告
+positional=()
+for arg in "$@"; do
+    [[ "$arg" != -* ]] && positional+=("$arg")
+done
+n=${#positional[@]}
+if (( n >= 2 )); then
+    target="${positional[$((n-1))]}"
+    tgt_base=$(basename "$target")
+    for ((i=0; i<n-1; i++)); do
+        src="${positional[i]}"
+        if [[ "$src" == */ ]]; then
+            src_base=$(basename "$src")
+            if [[ "$src_base" != "$tgt_base" ]]; then
+                printf "\033[33m警告: source '%s' は末尾が / ですが target '%s' の basename が一致しません (期待: %s/)\033[0m\n" "$src" "$target" "$src_base" >&2
+                read -n1 -p "続行しますか? (Y/OTHERS): " warn_answer
+                echo ""
+                if [[ "$warn_answer" != "Y" ]]; then
+                    echo "Aborted"
+                    exit 1
+                fi
+            fi
+        else
+            # 末尾スラッシュなし: target配下にsourceのbasenameと同名のディレクトリが新規作成される場合は警告
+            # targetがリモート (host:path) の場合は存在確認できないのでスキップ
+            if [[ "$target" != *:* ]]; then
+                src_base=$(basename "$src")
+                if [[ -d "$target" ]]; then
+                    dest_path="${target%/}/$src_base"
+                else
+                    dest_path="$target"
+                fi
+                if [[ ! -e "$dest_path" ]]; then
+                    new_dest_warnings+=("$dest_path")
+                fi
+            fi
+        fi
+    done
+fi
+
 if [[ -n "$ASKCOPY" ]]; then
     printf "\033[34m"
     rsync -vn "$@" "${args[@]}"
     printf "\033[0m"
+fi
+
+# -vn出力後に新規作成警告を表示 (ユーザーの確認直前に流れず確実に見えるように)
+if (( ${#new_dest_warnings[@]} > 0 )); then
+    for dest_path in "${new_dest_warnings[@]}"; do
+        printf "\033[38;5;208m警告: '%s' は新しく作成されます\033[0m\n" "$dest_path" >&2
+    done
 fi
 
 command="rsync --info=progress2 $@ -h --exclude-from=$HOME/.rsyncignore"

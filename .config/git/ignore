@@ -50,3 +50,5 @@ Thumbs.db
 # Package manager files #
 #########################
 *.egg-info/
+
+**/.claude/settings.local.json

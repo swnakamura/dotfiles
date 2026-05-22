@@ -28,7 +28,8 @@ function extract
 
     ln -s $archive_file_absolute_path $tmp_dir/$archive_file_name
     cd $tmp_dir > /dev/null 2>&1
-    eval $command $archive_file_name && rm $archive_file_name
+    eval $command (string escape -- $archive_file_name)
+    and rm $archive_file_name
     if test $status -ne 0
         cd ..
         rm -rf $tmp_dir
