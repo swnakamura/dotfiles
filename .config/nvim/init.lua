@@ -2163,6 +2163,9 @@ require('lazy').setup({
     cond = not Env.is_vscode,
     'https://github.com/preservim/vim-markdown',
     ft = 'markdown',
+    init = function()
+      vim.g.vim_markdown_no_default_key_mappings = 1
+    end,
   },
   {
     cond = not Env.is_vscode,

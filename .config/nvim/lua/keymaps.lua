@@ -338,6 +338,8 @@ vapi.nvim_create_autocmd('FileType', {
     map('v', '<C-b>', '<Plug>(operator-surround-append)d*', { buffer = true, silent = true })
     map('v', '<C-i>', '<Plug>(operator-surround-append)*', { buffer = true, silent = true })
     map('v', '<Tab>', '%', { buffer = true, silent = true, remap = true })
+    map('n', ']c', '<Plug>Markdown_MoveToCurHeader', { buffer = true, remap = true })
+    map('n', ']u', '<Plug>Markdown_MoveToParentHeader', { buffer = true, remap = true })
   end,
   group = 'markdown-mapping'
 })
