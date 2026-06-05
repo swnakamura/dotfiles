@@ -39,6 +39,31 @@ rerun (rerun-sdk Python) で 3D シーン + カメラ画像 + メッシュ投影
 - **`image_plane_distance` で 3D ビューでの画像プレーン表示距離を制御** (デフォルトでは小さく見えがち)
 - **重要: `width`/`height` と intrinsics は実際に log する Image の解像度に合わせる必要あり**。画像をリサイズしたら K の fx, fy, cx, cy も同倍率でスケールしないと、画像が frustum の左上の小領域に貼られて表示される
 
+### カメラを 3D ビューで frustum 表示する (`2D visualizers require a pinhole ancestor` 回避)
+
+2026-06 検証済 (rerun 0.31)。下記 2 つを外すと、frustum が出ず Points マーカー(balls)だけ表示され、
+viewer に **`2D visualizers require a pinhole ancestor to be shown in a 3D view`** が出る。
+
+1. **Pinhole は Image の「祖先」に置く (同一エンティティ不可)**。
+   - カメラエンティティ `…/cam` に `Transform3D`(姿勢) + `Pinhole`(intrinsics) を一緒に log。
+   - 画像は **子エンティティ** `…/cam/image` に `Image`/`EncodedImage` で log。
+   - Pinhole と Image を**同じエンティティに置くと祖先にならず frustum が出ない**。
+   - 2D ビューは `Spatial2DView(origin="…/cam")`(Pinhole を持つエンティティ)を指定。
+2. **姿勢が動かないカメラ(固定カメラ等)は Transform3D+Pinhole を `static=True` で log**。
+   - static にしないと、別エンティティが時刻付き(`set_time`)で log された瞬間にタイムラインが
+     生成され、**その時刻に固定カメラの Pinhole が存在しない**ため同じエラーになり frustum が消える。
+   - 動くカメラ(SLAM/PnP 軌跡)は毎フレーム `set_time`+log するので Pinhole が各時刻に存在し問題ない。
+     → 固定カメラだけ取りこぼしやすい。
+
+### 固定カメラでも「映像」は時間変化する (静止画で固定しない)
+
+カメラの**姿勢が固定でも動画は撮れている**。固定カメラの 2D ビューを 1 枚の静止画で log すると
+ずっと同じ絵のままになる。**姿勢/Pinhole は `static=True`、画像 (`…/cam/image`) は時刻付きで
+per-frame に log** すると動画として再生される (Pinhole が static なので画像はどの時刻でも祖先を持つ)。
+- 全カメラ(固定/移動)を**共通タイムライン**(例: 同期済みの ref フレーム軸)に載せると相互に同期する。
+  各カメラのローカルフレーム番号をオフセットで ref に変換してから `set_time` する。
+- 画像 log は重いので **stride で間引き** + 縮小(K も同倍率スケール)で `.rrd` 肥大を防ぐ。
+
 ## 座標系まわり
 
 - world 用に `rr.log("/", rr.ViewCoordinates.RIGHT_HAND_Z_UP, static=True)` (Z 軸が上) や `RIGHT_HAND_Y_UP` を最初に指定する
