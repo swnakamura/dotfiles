@@ -3147,7 +3147,9 @@ if Env.is_linux then
   )
 end
 
-vim.cmd([[
+-- jupytext コマンドがある場合のみ .ipynb を py:percent 経由で編集する
+if vim.fn.executable('jupytext') == 1 then
+  vim.cmd([[
 augroup jupyter-notebook
 au!
 au BufReadPost *.ipynb %!jupytext --from ipynb --to py:percent
@@ -3157,6 +3159,10 @@ au BufWritePre *.ipynb silent %!jupytext --from py:percent --to ipynb
 au BufWritePost *.ipynb silent %!jupytext --from ipynb --to py:percent
 au BufWritePost *.ipynb if exists('g:jupyter_previous_location') | call setpos('.', g:jupyter_previous_location) | endif
 augroup END
+]])
+end
+
+vim.cmd([[
 
 augroup yank-highlight
 autocmd!
