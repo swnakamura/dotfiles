@@ -88,7 +88,13 @@ fi
 if [[ -n "$ASKCOPY" ]]; then
     printf "\033[34m"
     rsync -vn "$@" "${args[@]}"
+    dryrun_rc=$?
     printf "\033[0m"
+    # dry-run でエラー (source が無い等) なら本番に進まず中断
+    if [[ $dryrun_rc != 0 ]]; then
+        printf "\033[31mエラー: dry-run が失敗しました (rsync exit %d)。中断します\033[0m\n" "$dryrun_rc" >&2
+        exit $dryrun_rc
+    fi
 fi
 
 # -vn出力後に新規作成警告を表示 (ユーザーの確認直前に流れず確実に見えるように)
@@ -132,4 +138,9 @@ fi
 echo ""
 echo "Running..."
 rsync --info=progress2 "$@" "${args[@]}"
+rc=$?
+if [[ $rc != 0 ]]; then
+    printf "\033[31mエラー: rsync が失敗しました (exit %d)\033[0m\n" "$rc" >&2
+    exit $rc
+fi
 echo "Done."
