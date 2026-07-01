@@ -19,17 +19,33 @@ find_tty() {
 notify() {
   local title="$1"
   local msg="$2"
-  # 通知用のエスケープシーケンス (OSC 777)
+  # Escape sequence for notification (OSC 777)
   local seq="\033]777;notify;${title};${msg}\007"
 
-  # hook の stdout は Claude Code に吸われるので必ず TTY へ直接書く
+  # hook stdout is captured by Claude Code, so always write directly to the TTY
   local out="${TTY:-/dev/tty}"
 
   if [ -n "$TMUX" ]; then
-    # tmux内の場合：ラップして、内部の \033 を2重にする
-    printf "\033Ptmux;\033${seq}\033\\" >"$out"
+    # tmux passthrough (embedding into the pane's output) only reaches the outer
+    # terminal when the window containing that pane is in the foreground
+    # (it is lost on a different window/pane or when another window is fullscreen).
+    # Instead, write the OSC directly to the attached client's real tty, bypassing
+    # pane multiplexing. This delivers regardless of which window is in front.
+    # Direct write means no tmux wrapping is needed.
+    local clients
+    clients=$(tmux list-clients -F '#{client_tty}' 2>/dev/null)
+    if [ -n "$clients" ]; then
+      local ct
+      for ct in $clients; do
+        printf "${seq}" >"$ct" 2>/dev/null
+      done
+    else
+      # When detached: no target client exists. Fall back to the original tty.
+      # (If fully detached, delivery is left to the push-notification side.)
+      printf "${seq}" >"$out"
+    fi
   else
-    # tmux外の場合：そのまま送信
+    # Outside tmux: send as-is
     printf "${seq}" >"$out"
   fi
 }
@@ -37,26 +53,37 @@ notify() {
 
 TTY=$(find_tty)
 
-# Stop hook は stdin で JSON を受け取る (cwd, transcript_path など)
+# Stop / Notification hooks receive JSON on stdin (cwd, transcript_path, message, etc.)
 input=$(cat)
 cwd=$(printf '%s' "$input" | jq -r '.cwd // ""')
 transcript=$(printf '%s' "$input" | jq -r '.transcript_path // ""')
+event=$(printf '%s' "$input" | jq -r '.hook_event_name // ""')
+message=$(printf '%s' "$input" | jq -r '.message // ""')
 
 project=$(basename "${cwd:-$PWD}")
 
-# transcript (JSONL) から直近の assistant のテキスト発話を取り出す
-summary=""
-if [ -n "$transcript" ] && [ -f "$transcript" ]; then
-  summary=$(jq -rs '[.[] | select(.type=="assistant") | .message.content[]? | select(.type=="text") | .text] | last // ""' "$transcript" 2>/dev/null \
-    | tr '\n' ' ' \
-    | cut -c1-100)
-fi
-
 title="Claude Code [${project}]"
-if [ -n "$summary" ]; then
-  msg="$summary"
+
+if [ "$event" = "Notification" ]; then
+  # The Notification hook puts content like "waiting for permission/input" in .message
+  if [ -n "$message" ]; then
+    msg="$message"
+  else
+    msg="Waiting for your input."
+  fi
 else
-  msg="Stopped. Waiting for input."
+  # Stop hook: extract the most recent assistant text utterance from the transcript (JSONL)
+  summary=""
+  if [ -n "$transcript" ] && [ -f "$transcript" ]; then
+    summary=$(jq -rs '[.[] | select(.type=="assistant") | .message.content[]? | select(.type=="text") | .text] | last // ""' "$transcript" 2>/dev/null \
+      | tr '\n' ' ' \
+      | cut -c1-100)
+  fi
+  if [ -n "$summary" ]; then
+    msg="$summary"
+  else
+    msg="Stopped. Waiting for input."
+  fi
 fi
 
 notify "$title" "$msg"
